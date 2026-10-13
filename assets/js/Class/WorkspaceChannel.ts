@@ -1,4 +1,3 @@
-import { reactive } from 'vue';
 import App from '@wexample/symfony-loader/js/Class/App';
 import EventsService from '@wexample/symfony-loader/js/Services/EventsService';
 
@@ -18,15 +17,15 @@ export type WorkspaceChannelListener = (selection: WorkspaceSelection) => void;
  * from their repository, where two regions asking for the same one get the
  * same instance.
  *
- * Its state is reactive, so a vue reads it and redraws; a script that is not
- * a vue listens. Every change is also told to the document, for whoever
- * watches the page as a whole.
+ * It belongs to no framework: whoever shows the selection listens, a vue
+ * through its mixin keeping a copy of its own. Every change is also told to
+ * the document, for whoever watches the page as a whole.
  */
 export default class WorkspaceChannel {
-  public readonly selection: WorkspaceSelection = reactive({
+  public readonly selection: WorkspaceSelection = {
     ids: [],
     source: null,
-  });
+  };
 
   private readonly listeners = new Set<WorkspaceChannelListener>();
 
