@@ -1,6 +1,6 @@
 # symfony-workspace
 
-Version: 2.0.0
+Version: 2.0.1
 
 Screens of regions side by side, and the selection they share
 
@@ -26,7 +26,7 @@ Visit the [Wexample Suite documentation](https://docs.wexample.com) for the comp
 ## Dependencies
 
 - php: >=8.5
-- wexample/symfony-design-system: >=34.0.0
+- wexample/symfony-design-system: >=35.0.0
 - wexample/symfony-helpers: >=16.0.0
 
 ## Versioning & Compatibility Policy
