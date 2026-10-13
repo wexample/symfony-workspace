@@ -1,6 +1,6 @@
 # symfony-workspace
 
-Version: 1.0.0
+Version: 1.0.1
 
 ## Table of Contents
 
