@@ -7,5 +7,22 @@
     "psr-4": {
       "Wexample\\SymfonyWorkspace\\": "src/"
     }
+  },
+  "description": "Screens of regions side by side, and the selection they share",
+  "authors": [
+    {
+      "name": "weeger",
+      "email": "romain.weeger@wexample.com"
+    }
+  ],
+  "require": {
+    "php": ">=8.5",
+    "wexample/symfony-design-system": ">=32.0.0",
+    "wexample/symfony-helpers": ">=15.0.0"
+  },
+  "extra": {
+    "install": {
+      "bundle_env": "all"
+    }
   }
 }
