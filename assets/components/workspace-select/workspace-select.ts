@@ -3,7 +3,7 @@ import WorkspaceService from '../../js/Services/WorkspaceService';
 import WorkspaceChannel, { WorkspaceSelection } from '../../js/Class/WorkspaceChannel';
 
 // Options: `channel`, the name it publishes on; `source`, the name it signs
-// its choices with.
+// its choices with; `initial`, the id chosen on open when nothing is yet.
 export default class extends Component {
   private channel?: WorkspaceChannel;
   // The element it stands in, where the choices are.
@@ -16,6 +16,11 @@ export default class extends Component {
     this.scope = this.el.parentElement;
     this.channel.listen(this.onSelect);
     this.scope.addEventListener('click', this.onClick);
+
+    if (this.options.initial && !this.channel.ids.length) {
+      this.channel.select(this.options.initial, this.options.source ?? null);
+    }
+
     this.onSelect(this.channel.selection);
   }
 
