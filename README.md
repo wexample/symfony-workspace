@@ -1,6 +1,6 @@
 # symfony-workspace
 
-Version: 2.0.4
+Version: 2.0.5
 
 Screens of regions side by side, and the selection they share
 
@@ -24,8 +24,8 @@ The suite includes packages for configuration management, file handling, prompts
 ## Dependencies
 
 - php: >=8.5
-- wexample/symfony-design-system: >=38.0.0
-- wexample/symfony-helpers: >=17.0.0
+- wexample/symfony-design-system: >=39.0.0
+- wexample/symfony-helpers: >=18.0.0
 
 ## Versioning & Compatibility Policy
 
