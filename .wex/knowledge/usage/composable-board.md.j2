@@ -4,7 +4,7 @@
 
 ## Widgets
 
-A widget is a service implementing `WorkspaceWidgetInterface` — any bundle ships its own, autoconfigured and collected by `WorkspaceWidgetRegistry`: a `name` the saved arrangement keeps (never rename it), a `label` and `description` (translation keys), an `icon`, and the vue drawing it. The vue receives `zone-id`, `config` (what this zone keeps of it), `subject` (the record the zone, or a split above it, is about — the board's at the top) and `workspace`: `emit(type, detail)`, `on(type, listener)` → off, `updateConfig(zoneId, config)`.
+A widget is a service implementing `WorkspaceWidgetInterface` — any bundle ships its own, autoconfigured and collected by `WorkspaceWidgetRegistry`: a `name` the saved arrangement keeps (never rename it), a `label` and `description` (translation keys), an `icon`, and the vue drawing it. The vue receives `zone-id`, `config` (what this zone keeps of it), `subject` (the record the zone, or a split above it, is about — the board's at the top) `context` (what the page hands every widget, `workspace_board(…, { context })`: addresses, ids) and `workspace`: `emit(type, detail)`, `on(type, listener)` → off, `updateConfig(zoneId, config)`.
 
 ## The page
 

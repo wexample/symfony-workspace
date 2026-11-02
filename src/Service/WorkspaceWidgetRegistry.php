@@ -4,6 +4,9 @@ namespace Wexample\SymfonyWorkspace\Service;
 
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Environment;
+use Wexample\SymfonyLoader\Helper\ComponentPathHelper;
+use Wexample\SymfonyLoader\Twig\VueExtension;
 use Wexample\SymfonyHelpers\Attribute\WorkerSafe;
 use Wexample\SymfonyWorkspace\Interface\WorkspaceWidgetInterface;
 
@@ -23,6 +26,7 @@ class WorkspaceWidgetRegistry
         #[AutowireIterator(WorkspaceWidgetInterface::TAG)]
         iterable $widgets,
         private readonly TranslatorInterface $translator,
+        private readonly Environment $twig,
     ) {
         foreach ($widgets as $widget) {
             $this->widgets[$widget->getName()] = $widget;
@@ -66,7 +70,13 @@ class WorkspaceWidgetRegistry
                 ? $this->translator->trans($widget->getDescription())
                 : null,
             'icon' => $widget->getIcon(),
-            'view' => $widget->getView(),
+            // As the loader registers it — `components/traffic` is the vue of
+            // `components/traffic/traffic` —, the name the browser finds it by.
+            'view' => ComponentPathHelper::resolveView(
+                $this->twig,
+                $widget->getView(),
+                VueExtension::TEMPLATE_FILE_EXTENSION
+            ),
         ], $widgets);
     }
 }

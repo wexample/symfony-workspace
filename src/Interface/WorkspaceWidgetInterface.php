@@ -10,7 +10,8 @@ namespace Wexample\SymfonyWorkspace\Interface;
  * The vue receives `config` (what this zone keeps of it), `subject` (the
  * record the zone, or a section above it, is about, `{ entityName, id }`) and
  * `workspace` (the board: `emit(type, detail)`, `on(type, listener)`,
- * `updateConfig(zoneId, config)`), and `zone-id`.
+ * `updateConfig(zoneId, config)`), `context` (what the page hands every
+ * widget: addresses, ids) and `zone-id`.
  */
 interface WorkspaceWidgetInterface
 {

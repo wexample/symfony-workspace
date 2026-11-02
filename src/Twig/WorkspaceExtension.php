@@ -69,6 +69,9 @@ class WorkspaceExtension extends AbstractExtension
                 : null,
             'flush' => $options['flush'] ?? false,
             'live' => $options['live'] ?? false,
+            // What the page hands every widget: addresses, ids, the props of
+            // what a widget draws of the page's own.
+            'context' => $options['context'] ?? [],
         ];
     }
 }

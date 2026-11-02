@@ -21,13 +21,6 @@ export const WORKSPACE_EVENT = 'workspace:event';
 
 const DOMAIN = 'WexampleSymfonyWorkspaceBundle.components.workspace-board.workspace-board::';
 
-// A vue as the loader registers it: the directory and the file of the same
-// name (`…/traffic/traffic`), where a page requires it by its directory.
-const vueViewPath = (view) => {
-  const name = view.split('/').pop();
-
-  return view.endsWith(`/${name}/${name}`) ? view : `${view}/${name}`;
-};
 
 // A screen the reader composes: zones cut and sized as in a zone-tiling, each
 // showing a widget chosen among those the page offers (WorkspaceWidgetInterface
@@ -86,6 +79,12 @@ export default {
     live: {
       type: Boolean,
       default: false
+    },
+    // What the page hands every widget besides the subject — the addresses
+    // and ids a widget of this page reads —, as the widget's `context`.
+    context: {
+      type: Object,
+      default: () => ({})
     },
     // `(zone, items, board) => items`: the page's own entries in a zone's menu.
     zoneMenu: {
@@ -196,7 +195,8 @@ export default {
         return null;
       }
 
-      const view = vueViewPath(widget.view);
+      // Resolved by the server as the loader registers it.
+      const { view } = widget;
 
       if (!this.definitions[name] && this.app.getBundleClassDefinition(`vue:${view}`)) {
         this.definitions[name] = this.app
