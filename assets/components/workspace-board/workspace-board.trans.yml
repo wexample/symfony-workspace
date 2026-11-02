@@ -5,8 +5,6 @@ en:
     filter: "Filter widgets…"
     unknown: "This zone showed “%name%”, which is no longer offered."
   menu:
-    bar_add: "Add the %label% bar"
-    bar_remove: "Remove the %label% bar"
     change: "Change widget"
 
 fr:
@@ -16,8 +14,6 @@ fr:
     filter: "Filtrer les widgets…"
     unknown: "Cette zone affichait « %name% », qui n’est plus proposé."
   menu:
-    bar_add: "Ajouter la barre %label%"
-    bar_remove: "Retirer la barre %label%"
     change: "Changer de widget"
 
 zh:
@@ -27,8 +23,6 @@ zh:
     filter: "筛选组件…"
     unknown: "此区域显示过“%name%”,该组件已不再提供。"
   menu:
-    bar_add: "添加%label%栏"
-    bar_remove: "移除%label%栏"
     change: "更换组件"
 
 ar:
@@ -38,8 +32,6 @@ ar:
     filter: "تصفية الأدوات…"
     unknown: "كانت هذه المنطقة تعرض «%name%» ولم يعد متاحًا."
   menu:
-    bar_add: "إضافة شريط %label%"
-    bar_remove: "إزالة شريط %label%"
     change: "تغيير الأداة"
 
 hi:
@@ -49,8 +41,6 @@ hi:
     filter: "विजेट छाँटें…"
     unknown: "यह क्षेत्र “%name%” दिखाता था, जो अब उपलब्ध नहीं है।"
   menu:
-    bar_add: "%label% पट्टी जोड़ें"
-    bar_remove: "%label% पट्टी हटाएँ"
     change: "विजेट बदलें"
 
 he:
@@ -60,8 +50,6 @@ he:
     filter: "סינון וידג׳טים…"
     unknown: "האזור הזה הציג את „%name%”, שאינו מוצע עוד."
   menu:
-    bar_add: "הוספת סרגל %label%"
-    bar_remove: "הסרת סרגל %label%"
     change: "החלפת וידג׳ט"
 
 fa:
@@ -71,8 +59,6 @@ fa:
     filter: "پالایش ابزارک‌ها…"
     unknown: "این ناحیه «%name%» را نشان می‌داد که دیگر ارائه نمی‌شود."
   menu:
-    bar_add: "افزودن نوار %label%"
-    bar_remove: "برداشتن نوار %label%"
     change: "تغییر ابزارک"
 
 ur:
@@ -82,8 +68,6 @@ ur:
     filter: "ویجیٹس فلٹر کریں…"
     unknown: "یہ حصہ “%name%” دکھاتا تھا، جو اب دستیاب نہیں۔"
   menu:
-    bar_add: "%label% پٹی شامل کریں"
-    bar_remove: "%label% پٹی ہٹائیں"
     change: "ویجیٹ بدلیں"
 
 ja:
@@ -93,8 +77,6 @@ ja:
     filter: "ウィジェットを絞り込む…"
     unknown: "この領域は「%name%」を表示していましたが、現在は提供されていません。"
   menu:
-    bar_add: "%label%バーを追加"
-    bar_remove: "%label%バーを削除"
     change: "ウィジェットを変更"
 
 ko:
@@ -104,8 +86,6 @@ ko:
     filter: "위젯 필터…"
     unknown: "이 영역은 “%name%”을(를) 표시했지만 더 이상 제공되지 않습니다."
   menu:
-    bar_add: "%label% 막대 추가"
-    bar_remove: "%label% 막대 제거"
     change: "위젯 변경"
 
 bn:
@@ -115,8 +95,6 @@ bn:
     filter: "উইজেট ছাঁকুন…"
     unknown: "এই অংশে “%name%” দেখানো হত, যা আর দেওয়া হয় না।"
   menu:
-    bar_add: "%label% বার যোগ করুন"
-    bar_remove: "%label% বার সরান"
     change: "উইজেট বদলান"
 
 th:
@@ -126,8 +104,6 @@ th:
     filter: "กรองวิดเจ็ต…"
     unknown: "พื้นที่นี้เคยแสดง “%name%” ซึ่งไม่มีให้แล้ว"
   menu:
-    bar_add: "เพิ่มแถบ %label%"
-    bar_remove: "นำแถบ %label% ออก"
     change: "เปลี่ยนวิดเจ็ต"
 
 de:
@@ -137,8 +113,6 @@ de:
     filter: "Widgets filtern…"
     unknown: "Dieser Bereich zeigte „%name%“, das nicht mehr angeboten wird."
   menu:
-    bar_add: "Leiste %label% hinzufügen"
-    bar_remove: "Leiste %label% entfernen"
     change: "Widget wechseln"
 
 fi:
@@ -148,8 +122,6 @@ fi:
     filter: "Suodata pienoisohjelmia…"
     unknown: "Tämä alue näytti kohdetta ”%name%”, jota ei enää tarjota."
   menu:
-    bar_add: "Lisää %label%-palkki"
-    bar_remove: "Poista %label%-palkki"
     change: "Vaihda pienoisohjelma"
 
 ru:
@@ -159,8 +131,6 @@ ru:
     filter: "Фильтр виджетов…"
     unknown: "Эта зона показывала «%name%», который больше не предлагается."
   menu:
-    bar_add: "Добавить панель «%label%»"
-    bar_remove: "Убрать панель «%label%»"
     change: "Сменить виджет"
 
 pl:
@@ -170,8 +140,6 @@ pl:
     filter: "Filtruj widżety…"
     unknown: "Ta strefa pokazywała „%name%”, który nie jest już dostępny."
   menu:
-    bar_add: "Dodaj pasek %label%"
-    bar_remove: "Usuń pasek %label%"
     change: "Zmień widżet"
 
 es:
@@ -181,8 +149,6 @@ es:
     filter: "Filtrar widgets…"
     unknown: "Esta zona mostraba «%name%», que ya no se ofrece."
   menu:
-    bar_add: "Añadir la barra %label%"
-    bar_remove: "Quitar la barra %label%"
     change: "Cambiar de widget"
 
 it:
@@ -192,8 +158,6 @@ it:
     filter: "Filtra i widget…"
     unknown: "Questa zona mostrava «%name%», che non è più disponibile."
   menu:
-    bar_add: "Aggiungi la barra %label%"
-    bar_remove: "Rimuovi la barra %label%"
     change: "Cambia widget"
 
 pt_BR:
@@ -203,8 +167,6 @@ pt_BR:
     filter: "Filtrar widgets…"
     unknown: "Esta zona mostrava “%name%”, que não é mais oferecido."
   menu:
-    bar_add: "Adicionar a barra %label%"
-    bar_remove: "Remover a barra %label%"
     change: "Trocar de widget"
 
 tr:
@@ -214,8 +176,6 @@ tr:
     filter: "Bileşenleri süz…"
     unknown: "Bu alan artık sunulmayan “%name%” öğesini gösteriyordu."
   menu:
-    bar_add: "%label% çubuğunu ekle"
-    bar_remove: "%label% çubuğunu kaldır"
     change: "Bileşeni değiştir"
 
 vi:
@@ -225,8 +185,6 @@ vi:
     filter: "Lọc tiện ích…"
     unknown: "Vùng này từng hiển thị “%name%”, nay không còn được cung cấp."
   menu:
-    bar_add: "Thêm thanh %label%"
-    bar_remove: "Bỏ thanh %label%"
     change: "Đổi tiện ích"
 
 id:
@@ -236,8 +194,6 @@ id:
     filter: "Saring widget…"
     unknown: "Zona ini menampilkan “%name%”, yang tidak lagi tersedia."
   menu:
-    bar_add: "Tambahkan bilah %label%"
-    bar_remove: "Hapus bilah %label%"
     change: "Ganti widget"
 
 nl:
@@ -247,6 +203,4 @@ nl:
     filter: "Widgets filteren…"
     unknown: "Deze zone toonde „%name%”, dat niet meer wordt aangeboden."
   menu:
-    bar_add: "Balk %label% toevoegen"
-    bar_remove: "Balk %label% verwijderen"
     change: "Widget wijzigen"

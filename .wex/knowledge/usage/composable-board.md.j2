@@ -19,9 +19,9 @@ A widget is a service implementing `WorkspaceWidgetInterface` — any bundle shi
 
 `workspace_board()` hands the widgets offered (all without `widgets`), the arrangement kept for the account — or the one offered to everyone (`owner` null), or the page's `layout` — and, for an account, where to save it. The board requires the vues of the widgets it is handed. A zone without a widget, or with one no longer offered, shows the choice of one (narrowed by typing past eight); a zone showing one gets « Change widget » in its menu. `zoneMenu(zone, items, workspace)` adds the page's own entries.
 
-## Bars
+## The bar
 
-A section of the board — a split, or a zone — may carry a bar (`toolbars` of `workspace_board()`: `{ name, label, icon, view }`), set or removed from the menu of a zone under it. The bar's vue receives `values`, `node-id`, `subject`, `context` and `workspace`, and keeps what it holds with `workspace.updateValues(nodeId, values)`; every widget under it reads those values in its `scope`, the nearest bar first. What the widgets of a section share — a record chosen once — is chosen there, not in each widget.
+A board may carry a bar over its zones, the page's own (`toolbar: { view }` of `workspace_board()`): what all its widgets share, chosen once — a record they all show. Its vue receives `values`, `subject`, `context` and `workspace`, and keeps what it holds with `workspace.updateValues(values)`; every widget reads it as its `scope`. It is kept with the arrangement: what is saved is `{ tree, values }` (an arrangement kept as the tree alone is still read).
 
 ## Events
 

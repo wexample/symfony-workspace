@@ -11,8 +11,8 @@ namespace Wexample\SymfonyWorkspace\Interface;
  * record the zone, or a section above it, is about, `{ entityName, id }`) and
  * `workspace` (the board: `emit(type, detail)`, `on(type, listener)`,
  * `updateConfig(zoneId, config)`), `context` (what the page hands every
- * widget: addresses, ids), `scope` (what the bars of the sections above it
- * hold — a session chosen once for the widgets under it) and `zone-id`.
+ * widget: addresses, ids), `scope` (what the board's bar holds — a record
+ * chosen once for all its widgets) and `zone-id`.
  */
 interface WorkspaceWidgetInterface
 {

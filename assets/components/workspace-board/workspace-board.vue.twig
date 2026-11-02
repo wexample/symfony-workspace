@@ -12,13 +12,24 @@
     {%- for widget in widgets|default([]) -%}
         {{- vue_require(render_pass, widget.view) -}}
     {%- endfor -%}
-    {%- for toolbar in toolbars|default([]) -%}
+    {%- if toolbar|default(null) -%}
         {{- vue_require(render_pass, toolbar.view) -}}
-    {%- endfor -%}
+    {%- endif -%}
 {%- endblock -%}
 
 {%- block vue_body -%}
     <div class="workspace-board">
+        {#- The bar over the whole board: what its widgets share. -#}
+        <div v-if="toolbar" class="zone--panel toolbar toolbar--shaded toolbar--compact workspace-board--bar">
+            <component
+                    v-if="toolbarComponent()"
+                    :is="toolbarComponent()"
+                    :values="values"
+                    :subject="subject"
+                    :context="context"
+                    :workspace="api"
+            ></component>
+        </div>
         <zone-tiling
                 ref="tiling"
                 :model-value="tree"
@@ -26,18 +37,6 @@
                 :zone-menu="zoneMenuItems"
                 @update:model-value="onTreeChange"
         >
-            {#- The bar a section carries: what its widgets share. -#}
-            <template #toolbar="{ node }">
-                <component
-                        v-if="toolbarComponent(node.toolbar)"
-                        :is="toolbarComponent(node.toolbar)"
-                        :node-id="node.id"
-                        :values="node.values || {}"
-                        :subject="subjects[node.id] || null"
-                        :context="context"
-                        :workspace="api"
-                ></component>
-            </template>
             <template #zone="{ zone }">
                 <div v-if="showsWidget(zone)" class="workspace-board--widget">
                     <component
@@ -47,7 +46,7 @@
                             :config="zone.config || {}"
                             :subject="subjects[zone.id] || null"
                             :context="context"
-                            :scope="scopes[zone.id] || {}"
+                            :scope="values"
                             :workspace="api"
                     ></component>
                 </div>

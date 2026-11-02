@@ -56,21 +56,18 @@ class WorkspaceWidgetRegistry
     }
 
     /**
-     * The bars a page offers its sections, as the browser is told them: each
-     * `{ name, label, icon, view }`, its words translated, its vue resolved.
+     * The bar over a board, as the browser is told it: `{ view }`, its vue
+     * resolved.
      */
-    public function describeToolbars(array $toolbars): array
+    public function describeToolbar(?array $toolbar): ?array
     {
-        return array_map(fn (array $toolbar) => [
-            'name' => $toolbar['name'],
-            'label' => $this->translator->trans($toolbar['label'] ?? $toolbar['name']),
-            'icon' => $toolbar['icon'] ?? null,
+        return $toolbar ? [
             'view' => ComponentPathHelper::resolveView(
                 $this->twig,
                 $toolbar['view'],
                 VueExtension::TEMPLATE_FILE_EXTENSION
             ),
-        ], $toolbars);
+        ] : null;
     }
 
     /**
