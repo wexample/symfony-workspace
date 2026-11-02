@@ -2,7 +2,7 @@
 import ZoneTiling from '@wexample/symfony-design-system/components/zone-tiling/zone-tiling.vue';
 import AbstractDesignSystemVueMixin from '@wexample/symfony-design-system/js/Vue/AbstractDesignSystemVueMixin';
 import { uiStateGet, uiStateSet } from '@wexample/symfony-design-system/js/Helper/UiStateHelper';
-import { filterTextMatches } from '@wexample/symfony-design-system/js/Helper/FilterHelper';
+import ChoiceList from '@wexample/symfony-design-system/components/choice-list/choice-list.vue';
 
 // From how many widgets the choice of one is narrowed by typing.
 const PICKER_FILTER_FROM = 8;
@@ -38,6 +38,7 @@ export default {
   mixins: [AbstractDesignSystemVueMixin],
 
   components: {
+    ChoiceList,
     ZoneTiling
   },
 
@@ -102,7 +103,6 @@ export default {
       // What is kept: `{ tree, values }` — the arrangement, and what the bar
       // holds. An arrangement kept before the bar was is the tree alone.
       ...this.readKept(this.saveUrl ? this.layout : uiStateGet(this.app, this.stateKey(), this.layout)),
-      pickerFilter: '',
       // The board being arranged: its zones offer what can be done to them.
       editing: false,
       // The widgets' vues are loaded with the page, after the board may have
@@ -124,12 +124,18 @@ export default {
       return this.renderIcon(this.editing ? 'ph:bold/check' : 'ph:bold/layout');
     },
 
-    pickerFilterable() {
-      return this.widgets.length >= PICKER_FILTER_FROM;
+    // The widgets as the choice list reads them, by their name.
+    pickerChoices() {
+      return this.widgets.map((widget) => ({
+        value: widget.name,
+        label: widget.label,
+        icon: widget.icon,
+        description: widget.description
+      }));
     },
 
-    pickerWidgets() {
-      return this.widgets.filter((widget) => filterTextMatches(this.pickerFilter, widget.label, widget.description));
+    pickerFilterFrom() {
+      return PICKER_FILTER_FROM;
     },
 
     // Each zone's subject, the nearest one above it holding.
@@ -241,9 +247,11 @@ export default {
       return this.widgetsByName[zone.widget]?.label ?? null;
     },
 
-    pick(zone, widget) {
-      this.pickerFilter = '';
-      this.$refs.tiling.update(zone.id, { widget: widget.name, config: {} });
+    // A widget taken for a zone, by its name.
+    pick(zone, name) {
+      if (name && name !== zone.widget) {
+        this.$refs.tiling.update(zone.id, { widget: name, config: {} });
+      }
     },
 
     zoneMenuItems(zone, items) {

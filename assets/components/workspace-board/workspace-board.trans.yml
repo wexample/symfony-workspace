@@ -5,7 +5,6 @@ en:
   picker:
     none: "No widget is offered here yet."
     title: "Choose a widget"
-    filter: "Filter widgets…"
     unknown: "This zone showed “%name%”, which is no longer offered."
 
 fr:
@@ -15,7 +14,6 @@ fr:
   picker:
     none: "Aucun widget n’est encore proposé ici."
     title: "Choisir un widget"
-    filter: "Filtrer les widgets…"
     unknown: "Cette zone affichait « %name% », qui n’est plus proposé."
 
 zh:
@@ -25,7 +23,6 @@ zh:
   picker:
     none: "此处尚未提供任何组件。"
     title: "选择一个组件"
-    filter: "筛选组件…"
     unknown: "此区域显示过“%name%”,该组件已不再提供。"
 
 ar:
@@ -35,7 +32,6 @@ ar:
   picker:
     none: "لا توجد أداة متاحة هنا بعد."
     title: "اختر أداة"
-    filter: "تصفية الأدوات…"
     unknown: "كانت هذه المنطقة تعرض «%name%» ولم يعد متاحًا."
 
 hi:
@@ -45,7 +41,6 @@ hi:
   picker:
     none: "यहाँ अभी कोई विजेट उपलब्ध नहीं है।"
     title: "विजेट चुनें"
-    filter: "विजेट छाँटें…"
     unknown: "यह क्षेत्र “%name%” दिखाता था, जो अब उपलब्ध नहीं है।"
 
 he:
@@ -55,7 +50,6 @@ he:
   picker:
     none: "עדיין לא מוצע כאן וידג׳ט."
     title: "בחירת וידג׳ט"
-    filter: "סינון וידג׳טים…"
     unknown: "האזור הזה הציג את „%name%”, שאינו מוצע עוד."
 
 fa:
@@ -65,7 +59,6 @@ fa:
   picker:
     none: "هنوز هیچ ابزارکی اینجا ارائه نشده است."
     title: "انتخاب ابزارک"
-    filter: "پالایش ابزارک‌ها…"
     unknown: "این ناحیه «%name%» را نشان می‌داد که دیگر ارائه نمی‌شود."
 
 ur:
@@ -75,7 +68,6 @@ ur:
   picker:
     none: "یہاں ابھی کوئی ویجیٹ دستیاب نہیں۔"
     title: "ویجیٹ منتخب کریں"
-    filter: "ویجیٹس فلٹر کریں…"
     unknown: "یہ حصہ “%name%” دکھاتا تھا، جو اب دستیاب نہیں۔"
 
 ja:
@@ -85,7 +77,6 @@ ja:
   picker:
     none: "ここではまだウィジェットが提供されていません。"
     title: "ウィジェットを選択"
-    filter: "ウィジェットを絞り込む…"
     unknown: "この領域は「%name%」を表示していましたが、現在は提供されていません。"
 
 ko:
@@ -95,7 +86,6 @@ ko:
   picker:
     none: "아직 여기에 제공되는 위젯이 없습니다."
     title: "위젯 선택"
-    filter: "위젯 필터…"
     unknown: "이 영역은 “%name%”을(를) 표시했지만 더 이상 제공되지 않습니다."
 
 bn:
@@ -105,7 +95,6 @@ bn:
   picker:
     none: "এখানে এখনও কোনো উইজেট দেওয়া হয়নি।"
     title: "উইজেট বেছে নিন"
-    filter: "উইজেট ছাঁকুন…"
     unknown: "এই অংশে “%name%” দেখানো হত, যা আর দেওয়া হয় না।"
 
 th:
@@ -115,7 +104,6 @@ th:
   picker:
     none: "ยังไม่มีวิดเจ็ตให้ใช้ที่นี่"
     title: "เลือกวิดเจ็ต"
-    filter: "กรองวิดเจ็ต…"
     unknown: "พื้นที่นี้เคยแสดง “%name%” ซึ่งไม่มีให้แล้ว"
 
 de:
@@ -125,7 +113,6 @@ de:
   picker:
     none: "Hier wird noch kein Widget angeboten."
     title: "Widget wählen"
-    filter: "Widgets filtern…"
     unknown: "Dieser Bereich zeigte „%name%“, das nicht mehr angeboten wird."
 
 fi:
@@ -135,7 +122,6 @@ fi:
   picker:
     none: "Täällä ei vielä tarjota pienoisohjelmia."
     title: "Valitse pienoisohjelma"
-    filter: "Suodata pienoisohjelmia…"
     unknown: "Tämä alue näytti kohdetta ”%name%”, jota ei enää tarjota."
 
 ru:
@@ -145,7 +131,6 @@ ru:
   picker:
     none: "Здесь пока не предлагается ни одного виджета."
     title: "Выберите виджет"
-    filter: "Фильтр виджетов…"
     unknown: "Эта зона показывала «%name%», который больше не предлагается."
 
 pl:
@@ -155,7 +140,6 @@ pl:
   picker:
     none: "Nie ma tu jeszcze żadnego widżetu."
     title: "Wybierz widżet"
-    filter: "Filtruj widżety…"
     unknown: "Ta strefa pokazywała „%name%”, który nie jest już dostępny."
 
 es:
@@ -165,7 +149,6 @@ es:
   picker:
     none: "Aún no se ofrece ningún widget aquí."
     title: "Elegir un widget"
-    filter: "Filtrar widgets…"
     unknown: "Esta zona mostraba «%name%», que ya no se ofrece."
 
 it:
@@ -175,7 +158,6 @@ it:
   picker:
     none: "Qui non è ancora offerto alcun widget."
     title: "Scegli un widget"
-    filter: "Filtra i widget…"
     unknown: "Questa zona mostrava «%name%», che non è più disponibile."
 
 pt_BR:
@@ -185,7 +167,6 @@ pt_BR:
   picker:
     none: "Nenhum widget é oferecido aqui ainda."
     title: "Escolher um widget"
-    filter: "Filtrar widgets…"
     unknown: "Esta zona mostrava “%name%”, que não é mais oferecido."
 
 tr:
@@ -195,7 +176,6 @@ tr:
   picker:
     none: "Burada henüz bir bileşen sunulmuyor."
     title: "Bir bileşen seçin"
-    filter: "Bileşenleri süz…"
     unknown: "Bu alan artık sunulmayan “%name%” öğesini gösteriyordu."
 
 vi:
@@ -205,7 +185,6 @@ vi:
   picker:
     none: "Chưa có tiện ích nào được cung cấp ở đây."
     title: "Chọn tiện ích"
-    filter: "Lọc tiện ích…"
     unknown: "Vùng này từng hiển thị “%name%”, nay không còn được cung cấp."
 
 id:
@@ -215,7 +194,6 @@ id:
   picker:
     none: "Belum ada widget yang ditawarkan di sini."
     title: "Pilih widget"
-    filter: "Saring widget…"
     unknown: "Zona ini menampilkan “%name%”, yang tidak lagi tersedia."
 
 nl:
@@ -225,5 +203,4 @@ nl:
   picker:
     none: "Hier wordt nog geen widget aangeboden."
     title: "Kies een widget"
-    filter: "Widgets filteren…"
     unknown: "Deze zone toonde „%name%”, dat niet meer wordt aangeboden."
