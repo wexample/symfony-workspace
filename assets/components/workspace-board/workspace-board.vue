@@ -80,6 +80,13 @@ export default {
       type: Boolean,
       default: false
     },
+    // The bars a section of the board may carry — what its widgets share,
+    // chosen once over them: [{ name, label, icon, view }]. A bar's values
+    // reach every widget under it as its `scope`.
+    toolbars: {
+      type: Array,
+      default: () => []
+    },
     // What the page hands every widget besides the subject — the addresses
     // and ids a widget of this page reads —, as the widget's `context`.
     context: {
@@ -116,6 +123,28 @@ export default {
       return this.widgets.filter((widget) => filterTextMatches(this.pickerFilter, widget.label, widget.description));
     },
 
+    toolbarsByName() {
+      return Object.fromEntries(this.toolbars.map((toolbar) => [toolbar.name, toolbar]));
+    },
+
+    // What the bars above each node hold, the nearest first: a widget reads
+    // its section's choices there.
+    scopes() {
+      const scopes = {};
+      const walk = (node, inherited) => {
+        const scope = { ...inherited, ...(node.values ?? {}) };
+
+        scopes[node.id] = scope;
+        (node.children ?? []).forEach((child) => walk(child, scope));
+      };
+
+      if (this.tree) {
+        walk(this.tree, {});
+      }
+
+      return scopes;
+    },
+
     // Each zone's subject, the nearest one above it holding.
     subjects() {
       const subjects = {};
@@ -144,7 +173,9 @@ export default {
       layoutKey: this.layoutKey,
       emit: (type, detail) => this.emit(type, detail),
       on: (type, listener) => this.on(type, listener),
-      updateConfig: (zoneId, config) => this.$refs.tiling?.update(zoneId, { config })
+      updateConfig: (zoneId, config) => this.$refs.tiling?.update(zoneId, { config }),
+      // A bar keeps what it holds on the node it stands over.
+      updateValues: (nodeId, values) => this.$refs.tiling?.update(nodeId, { values })
     });
   },
 
@@ -189,22 +220,28 @@ export default {
     // Asked before its script is in, it is not there yet, and asked again
     // once the app is ready.
     widgetComponent(name) {
-      const widget = this.widgetsByName[name];
+      return this.vueComponent(this.widgetsByName[name]);
+    },
 
-      if (!widget || !this.widgetsReady) {
+    toolbarComponent(name) {
+      return this.vueComponent(this.toolbarsByName[name]);
+    },
+
+    // `view` resolved by the server as the loader registers it.
+    vueComponent(item) {
+      if (!item || !this.widgetsReady) {
         return null;
       }
 
-      // Resolved by the server as the loader registers it.
-      const { view } = widget;
+      const { view } = item;
 
-      if (!this.definitions[name] && this.app.getBundleClassDefinition(`vue:${view}`)) {
-        this.definitions[name] = this.app
+      if (!this.definitions[view] && this.app.getBundleClassDefinition(`vue:${view}`)) {
+        this.definitions[view] = this.app
           .getServiceOrFail('vue')
           .initComponent(view, this.rootComponent);
       }
 
-      return this.definitions[name] ?? null;
+      return this.definitions[view] ?? null;
     },
 
     // A zone showing a widget offered: drawn, or about to be.
@@ -217,7 +254,7 @@ export default {
       this.$refs.tiling.update(zone.id, { widget: widget.name, config: {} });
     },
 
-    zoneMenuItems(zone, items) {
+    zoneMenuItems(zone, items, tiling) {
       const own = zone.widget
         ? [
           {
@@ -229,7 +266,15 @@ export default {
           { separator: true }
         ]
         : [];
-      const all = [...own, ...items];
+      // A bar over the zone's section — the split holding it —, set or taken
+      // away from here.
+      const section = tiling.sectionOf(zone.id);
+      const bars = section
+        ? this.toolbars.map((toolbar) => (section.toolbar === toolbar.name
+          ? { value: `workspace:bar-remove:${toolbar.name}`, icon: toolbar.icon ?? 'ph:bold/rows', label: this.t('menu.bar_remove', { '%label%': toolbar.label }), run: (target, t) => t.update(section.id, { toolbar: null }) }
+          : { value: `workspace:bar-add:${toolbar.name}`, icon: toolbar.icon ?? 'ph:bold/rows', label: this.t('menu.bar_add', { '%label%': toolbar.label }), run: (target, t) => t.update(section.id, { toolbar: toolbar.name }) }))
+        : [];
+      const all = [...own, ...items, ...(bars.length ? [{ separator: true }, ...bars] : [])];
 
       return this.zoneMenu ? this.zoneMenu(zone, all, this.api) : all;
     },

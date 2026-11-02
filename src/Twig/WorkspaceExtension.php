@@ -59,6 +59,10 @@ class WorkspaceExtension extends AbstractExtension
             'widgets' => $this->widgetRegistry->describe(
                 $this->widgetRegistry->getWidgets($options['widgets'] ?? null)
             ),
+            // The bars its sections may carry, the page's own: `{ name, label,
+            // icon, view }`, the vue handed `values`, `subject`, `context`,
+            // `workspace` and `node-id`.
+            'toolbars' => $this->widgetRegistry->describeToolbars($options['toolbars'] ?? []),
             'layout' => $this->layoutService->findTree($layoutKey, $subjectType, $subjectId, $owner)
                 ?? ($options['layout'] ?? null),
             'saveUrl' => $owner
