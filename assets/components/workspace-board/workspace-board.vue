@@ -4,9 +4,6 @@ import AbstractDesignSystemVueMixin from '@wexample/symfony-design-system/js/Vue
 import { uiStateGet, uiStateSet } from '@wexample/symfony-design-system/js/Helper/UiStateHelper';
 import { filterTextMatches } from '@wexample/symfony-design-system/js/Helper/FilterHelper';
 
-// What a zone's menu adds once it shows a widget.
-export const WORKSPACE_ACTION_CHANGE = 'workspace:change';
-
 // From how many widgets the choice of one is narrowed by typing.
 const PICKER_FILTER_FROM = 8;
 
@@ -241,7 +238,7 @@ export default {
 
     // What a zone is called while the board is arranged: its widget's name.
     zoneLabel(zone) {
-      return this.widgetsByName[zone.widget]?.label ?? this.t('picker.title');
+      return this.widgetsByName[zone.widget]?.label ?? null;
     },
 
     pick(zone, widget) {
@@ -250,20 +247,7 @@ export default {
     },
 
     zoneMenuItems(zone, items) {
-      const own = zone.widget
-        ? [
-          {
-            value: WORKSPACE_ACTION_CHANGE,
-            icon: 'ph:bold/swap',
-            label: this.t('menu.change'),
-            run: (target, tiling) => tiling.update(target.id, { widget: null, config: {} })
-          },
-          { separator: true }
-        ]
-        : [];
-      const all = [...own, ...items];
-
-      return this.zoneMenu ? this.zoneMenu(zone, all, this.api) : all;
+      return this.zoneMenu ? this.zoneMenu(zone, items, this.api) : items;
     },
 
     readKept(kept) {

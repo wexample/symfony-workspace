@@ -17,7 +17,7 @@ A widget is a service implementing `WorkspaceWidgetInterface` — any bundle shi
 })) }}
 ```
 
-`workspace_board()` hands the widgets offered (all without `widgets`), the arrangement kept for the account — or the one offered to everyone (`owner` null), or the page's `layout` — and, for an account, where to save it. The board requires the vues of the widgets it is handed. The board's bar opens with « Edit the layout »: while it is on, every zone hides its widget and offers, in its middle, what can be done to it — split it, close it, « Change widget ». A zone without a widget, or with one no longer offered, shows the choice of one (narrowed by typing past eight). `zoneMenu(zone, items, workspace)` adds the page's own actions.
+`workspace_board()` hands the widgets offered (all without `widgets`), the arrangement kept for the account — or the one offered to everyone (`owner` null), or the page's `layout` — and, for an account, where to save it. The board requires the vues of the widgets it is handed. The board's bar ends with « Edit the layout »: while it is on, every zone hides its widget and shows, under a bar naming it with a pencil opening what can be done to it — split it, close it —, the widgets offered, the one it shows marked: picking another changes it. A zone without a widget, or with one no longer offered, shows the choice of one (narrowed by typing past eight). `zoneMenu(zone, items, workspace)` adds the page's own actions.
 
 ## The bar
 

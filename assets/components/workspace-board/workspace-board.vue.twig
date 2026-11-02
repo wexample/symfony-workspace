@@ -17,6 +17,39 @@
     {%- endif -%}
 {%- endblock -%}
 
+{%- set picker -%}
+<div class="workspace-board--picker">
+                    <p class="workspace-board--picker-title">[[ t('picker.title') ]]</p>
+                    <p v-if="zone.widget" class="workspace-board--picker-notice">[[ t('picker.unknown', { '%name%': zone.widget }) ]]</p>
+                    <p v-if="!widgets.length" class="workspace-board--picker-notice">[[ t('picker.none') ]]</p>
+                    <input
+                            v-if="pickerFilterable"
+                            v-model="pickerFilter"
+                            class="form--input"
+                            type="search"
+                            :placeholder="t('picker.filter')"
+                            :aria-label="t('picker.filter')"
+                    >
+                    <ul class="workspace-board--choices">
+                        <li v-for="widget in pickerWidgets" :key="widget.name">
+                            <button
+                                    type="button"
+                                    class="workspace-board--choice"
+                                    :class="{ 'is-current': zone.widget === widget.name }"
+                                    :aria-pressed="zone.widget === widget.name ? 'true' : 'false'"
+                                    @click="pick(zone, widget)"
+                            >
+                                <span v-if="widget.icon" class="workspace-board--choice-icon" v-html="renderIcon(widget.icon)"></span>
+                                <span class="workspace-board--choice-text">
+                                    <span class="workspace-board--choice-label">[[ widget.label ]]</span>
+                                    <span v-if="widget.description" class="workspace-board--choice-description">[[ widget.description ]]</span>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+{%- endset -%}
+
 {%- block vue_body -%}
     <div class="workspace-board">
         {#- The bar over the whole board. Its start is left for moving between
@@ -67,30 +100,14 @@
                 </div>
                 {#- Nothing chosen yet — or something no longer offered —: the
                     widgets the page offers, to choose one. -#}
-                <div v-else class="workspace-board--picker">
-                    <p class="workspace-board--picker-title">[[ t('picker.title') ]]</p>
-                    <p v-if="zone.widget" class="workspace-board--picker-notice">[[ t('picker.unknown', { '%name%': zone.widget }) ]]</p>
-                    <p v-if="!widgets.length" class="workspace-board--picker-notice">[[ t('picker.none') ]]</p>
-                    <input
-                            v-if="pickerFilterable"
-                            v-model="pickerFilter"
-                            class="form--input"
-                            type="search"
-                            :placeholder="t('picker.filter')"
-                            :aria-label="t('picker.filter')"
-                    >
-                    <ul class="workspace-board--choices">
-                        <li v-for="widget in pickerWidgets" :key="widget.name">
-                            <button type="button" class="workspace-board--choice" @click="pick(zone, widget)">
-                                <span v-if="widget.icon" class="workspace-board--choice-icon" v-html="renderIcon(widget.icon)"></span>
-                                <span class="workspace-board--choice-text">
-                                    <span class="workspace-board--choice-label">[[ widget.label ]]</span>
-                                    <span v-if="widget.description" class="workspace-board--choice-description">[[ widget.description ]]</span>
-                                </span>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
+                <template v-else>
+                    {{ picker }}
+                </template>
+            {#- The board being arranged: in every zone, the widgets to put in
+                it, the one it shows marked. -#}
+            <template #edit="{ zone }">
+                {{ picker }}
+            </template>
             </template>
         </zone-tiling>
     </div>

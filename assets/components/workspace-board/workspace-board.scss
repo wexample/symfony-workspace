@@ -93,6 +93,18 @@
   &:focus-visible {
     background: var(--state-hover);
   }
+
+  // The widget the zone shows, among those offered while it is arranged.
+  &.is-current {
+    border-color: var(--color-selected);
+    background: var(--color-selected);
+    color: var(--color-selected-contrast);
+
+    .workspace-board--choice-icon,
+    .workspace-board--choice-description {
+      color: inherit;
+    }
+  }
 }
 
 .workspace-board--choice-icon {

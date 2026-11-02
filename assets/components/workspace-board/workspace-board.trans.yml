@@ -7,8 +7,6 @@ en:
     title: "Choose a widget"
     filter: "Filter widgets…"
     unknown: "This zone showed “%name%”, which is no longer offered."
-  menu:
-    change: "Change widget"
 
 fr:
   edit:
@@ -19,8 +17,6 @@ fr:
     title: "Choisir un widget"
     filter: "Filtrer les widgets…"
     unknown: "Cette zone affichait « %name% », qui n’est plus proposé."
-  menu:
-    change: "Changer de widget"
 
 zh:
   edit:
@@ -31,8 +27,6 @@ zh:
     title: "选择一个组件"
     filter: "筛选组件…"
     unknown: "此区域显示过“%name%”,该组件已不再提供。"
-  menu:
-    change: "更换组件"
 
 ar:
   edit:
@@ -43,8 +37,6 @@ ar:
     title: "اختر أداة"
     filter: "تصفية الأدوات…"
     unknown: "كانت هذه المنطقة تعرض «%name%» ولم يعد متاحًا."
-  menu:
-    change: "تغيير الأداة"
 
 hi:
   edit:
@@ -55,8 +47,6 @@ hi:
     title: "विजेट चुनें"
     filter: "विजेट छाँटें…"
     unknown: "यह क्षेत्र “%name%” दिखाता था, जो अब उपलब्ध नहीं है।"
-  menu:
-    change: "विजेट बदलें"
 
 he:
   edit:
@@ -67,8 +57,6 @@ he:
     title: "בחירת וידג׳ט"
     filter: "סינון וידג׳טים…"
     unknown: "האזור הזה הציג את „%name%”, שאינו מוצע עוד."
-  menu:
-    change: "החלפת וידג׳ט"
 
 fa:
   edit:
@@ -79,8 +67,6 @@ fa:
     title: "انتخاب ابزارک"
     filter: "پالایش ابزارک‌ها…"
     unknown: "این ناحیه «%name%» را نشان می‌داد که دیگر ارائه نمی‌شود."
-  menu:
-    change: "تغییر ابزارک"
 
 ur:
   edit:
@@ -91,8 +77,6 @@ ur:
     title: "ویجیٹ منتخب کریں"
     filter: "ویجیٹس فلٹر کریں…"
     unknown: "یہ حصہ “%name%” دکھاتا تھا، جو اب دستیاب نہیں۔"
-  menu:
-    change: "ویجیٹ بدلیں"
 
 ja:
   edit:
@@ -103,8 +87,6 @@ ja:
     title: "ウィジェットを選択"
     filter: "ウィジェットを絞り込む…"
     unknown: "この領域は「%name%」を表示していましたが、現在は提供されていません。"
-  menu:
-    change: "ウィジェットを変更"
 
 ko:
   edit:
@@ -115,8 +97,6 @@ ko:
     title: "위젯 선택"
     filter: "위젯 필터…"
     unknown: "이 영역은 “%name%”을(를) 표시했지만 더 이상 제공되지 않습니다."
-  menu:
-    change: "위젯 변경"
 
 bn:
   edit:
@@ -127,8 +107,6 @@ bn:
     title: "উইজেট বেছে নিন"
     filter: "উইজেট ছাঁকুন…"
     unknown: "এই অংশে “%name%” দেখানো হত, যা আর দেওয়া হয় না।"
-  menu:
-    change: "উইজেট বদলান"
 
 th:
   edit:
@@ -139,8 +117,6 @@ th:
     title: "เลือกวิดเจ็ต"
     filter: "กรองวิดเจ็ต…"
     unknown: "พื้นที่นี้เคยแสดง “%name%” ซึ่งไม่มีให้แล้ว"
-  menu:
-    change: "เปลี่ยนวิดเจ็ต"
 
 de:
   edit:
@@ -151,8 +127,6 @@ de:
     title: "Widget wählen"
     filter: "Widgets filtern…"
     unknown: "Dieser Bereich zeigte „%name%“, das nicht mehr angeboten wird."
-  menu:
-    change: "Widget wechseln"
 
 fi:
   edit:
@@ -163,8 +137,6 @@ fi:
     title: "Valitse pienoisohjelma"
     filter: "Suodata pienoisohjelmia…"
     unknown: "Tämä alue näytti kohdetta ”%name%”, jota ei enää tarjota."
-  menu:
-    change: "Vaihda pienoisohjelma"
 
 ru:
   edit:
@@ -175,8 +147,6 @@ ru:
     title: "Выберите виджет"
     filter: "Фильтр виджетов…"
     unknown: "Эта зона показывала «%name%», который больше не предлагается."
-  menu:
-    change: "Сменить виджет"
 
 pl:
   edit:
@@ -187,8 +157,6 @@ pl:
     title: "Wybierz widżet"
     filter: "Filtruj widżety…"
     unknown: "Ta strefa pokazywała „%name%”, który nie jest już dostępny."
-  menu:
-    change: "Zmień widżet"
 
 es:
   edit:
@@ -199,8 +167,6 @@ es:
     title: "Elegir un widget"
     filter: "Filtrar widgets…"
     unknown: "Esta zona mostraba «%name%», que ya no se ofrece."
-  menu:
-    change: "Cambiar de widget"
 
 it:
   edit:
@@ -211,8 +177,6 @@ it:
     title: "Scegli un widget"
     filter: "Filtra i widget…"
     unknown: "Questa zona mostrava «%name%», che non è più disponibile."
-  menu:
-    change: "Cambia widget"
 
 pt_BR:
   edit:
@@ -223,8 +187,6 @@ pt_BR:
     title: "Escolher um widget"
     filter: "Filtrar widgets…"
     unknown: "Esta zona mostrava “%name%”, que não é mais oferecido."
-  menu:
-    change: "Trocar de widget"
 
 tr:
   edit:
@@ -235,8 +197,6 @@ tr:
     title: "Bir bileşen seçin"
     filter: "Bileşenleri süz…"
     unknown: "Bu alan artık sunulmayan “%name%” öğesini gösteriyordu."
-  menu:
-    change: "Bileşeni değiştir"
 
 vi:
   edit:
@@ -247,8 +207,6 @@ vi:
     title: "Chọn tiện ích"
     filter: "Lọc tiện ích…"
     unknown: "Vùng này từng hiển thị “%name%”, nay không còn được cung cấp."
-  menu:
-    change: "Đổi tiện ích"
 
 id:
   edit:
@@ -259,8 +217,6 @@ id:
     title: "Pilih widget"
     filter: "Saring widget…"
     unknown: "Zona ini menampilkan “%name%”, yang tidak lagi tersedia."
-  menu:
-    change: "Ganti widget"
 
 nl:
   edit:
@@ -271,5 +227,3 @@ nl:
     title: "Kies een widget"
     filter: "Widgets filteren…"
     unknown: "Deze zone toonde „%name%”, dat niet meer wordt aangeboden."
-  menu:
-    change: "Widget wijzigen"
