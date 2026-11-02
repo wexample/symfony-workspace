@@ -1,0 +1,64 @@
+{%- extends '@WexampleSymfonyDesignSystemBundle/components/_abstract/vue/vue.vue.twig' -%}
+
+{%- block vue_config -%}
+    {{ parent() }}
+    {{ trans_js(render_pass, 'WexampleSymfonyWorkspaceBundle.components.workspace-board.workspace-board::*') }}
+{%- endblock -%}
+
+{%- block vue_require -%}
+    {{- vue_require(render_pass, '@WexampleSymfonyDesignSystemBundle/components/zone-tiling') -}}
+    {#- The widgets it offers are the widgets it can draw: their vues are
+        required with it. -#}
+    {%- for widget in widgets|default([]) -%}
+        {{- vue_require(render_pass, widget.view) -}}
+    {%- endfor -%}
+{%- endblock -%}
+
+{%- block vue_body -%}
+    <div class="workspace-board">
+        <zone-tiling
+                ref="tiling"
+                :model-value="tree"
+                :flush="flush"
+                :zone-menu="zoneMenuItems"
+                @update:model-value="onTreeChange"
+        >
+            <template #zone="{ zone }">
+                <div v-if="zone.widget && widgetComponent(zone.widget)" class="workspace-board--widget">
+                    <component
+                            :is="widgetComponent(zone.widget)"
+                            :zone-id="zone.id"
+                            :config="zone.config || {}"
+                            :subject="subjects[zone.id] || null"
+                            :workspace="api"
+                    ></component>
+                </div>
+                {#- Nothing chosen yet — or something no longer offered —: the
+                    widgets the page offers, to choose one. -#}
+                <div v-else class="workspace-board--picker">
+                    <p class="workspace-board--picker-title">[[ t('picker.title') ]]</p>
+                    <p v-if="zone.widget" class="workspace-board--picker-notice">[[ t('picker.unknown', { '%name%': zone.widget }) ]]</p>
+                    <input
+                            v-if="pickerFilterable"
+                            v-model="pickerFilter"
+                            class="form--input"
+                            type="search"
+                            :placeholder="t('picker.filter')"
+                            :aria-label="t('picker.filter')"
+                    >
+                    <ul class="workspace-board--choices">
+                        <li v-for="widget in pickerWidgets" :key="widget.name">
+                            <button type="button" class="workspace-board--choice" @click="pick(zone, widget)">
+                                <span v-if="widget.icon" class="workspace-board--choice-icon" v-html="renderIcon(widget.icon)"></span>
+                                <span class="workspace-board--choice-text">
+                                    <span class="workspace-board--choice-label">[[ widget.label ]]</span>
+                                    <span v-if="widget.description" class="workspace-board--choice-description">[[ widget.description ]]</span>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </template>
+        </zone-tiling>
+    </div>
+{%- endblock -%}

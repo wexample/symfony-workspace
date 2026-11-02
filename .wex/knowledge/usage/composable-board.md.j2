@@ -1,0 +1,28 @@
+# A board the reader composes
+
+`workspace-board` is a screen of widgets the reader arranges: built on the design system's `zone-tiling`, each zone shows a widget chosen among those the page offers, the arrangement kept.
+
+## Widgets
+
+A widget is a service implementing `WorkspaceWidgetInterface` — any bundle ships its own, autoconfigured and collected by `WorkspaceWidgetRegistry`: a `name` the saved arrangement keeps (never rename it), a `label` and `description` (translation keys), an `icon`, and the vue drawing it. The vue receives `zone-id`, `config` (what this zone keeps of it), `subject` (the record the zone, or a split above it, is about — the board's at the top) and `workspace`: `emit(type, detail)`, `on(type, listener)` → off, `updateConfig(zoneId, config)`.
+
+## The page
+
+```twig
+{{ vue(render_pass, '@WexampleSymfonyWorkspaceBundle/components/workspace-board', workspace_board('project-dashboard', {
+    subject: { entityName: 'project', id: project.id },
+    widgets: ['traffic', 'errors'],
+    layout: default_tree,
+    live: true,
+})) }}
+```
+
+`workspace_board()` hands the widgets offered (all without `widgets`), the arrangement kept for the account — or the one offered to everyone (`owner` null), or the page's `layout` — and, for an account, where to save it. The board requires the vues of the widgets it is handed. A zone without a widget, or with one no longer offered, shows the choice of one (narrowed by typing past eight); a zone showing one gets « Change widget » in its menu. `zoneMenu(zone, items, workspace)` adds the page's own entries.
+
+## Events
+
+Widgets speak through the board. Every event is told on the board's element as `workspace:event` (`{ layoutKey, type, detail }`), and the page speaks to the widgets by dispatching `workspace:emit` (`{ type, detail }`) on it. With `live`, what the server publishes about the subject reaches them as `live`. The board also tells `layout` when the arrangement changes.
+
+## Keeping it
+
+`WorkspaceLayout` (`workspace_layout`): `layoutKey`, `subjectType`/`subjectId`, `owner` (an account, or none: offered to everyone), the `tree` and its `treeVersion`. The board saves a settled change (`POST _workspace/layout/save`, CSRF `workspace_layout`) for a logged-in account; a visitor's arrangement is kept in their ui state (`workspace.layout.<key>[.<entity>.<id>]`). An application installing the bundle migrates the table.
