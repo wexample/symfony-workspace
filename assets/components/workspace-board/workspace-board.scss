@@ -21,6 +21,14 @@
   flex: none;
 }
 
+// What concerns this board, at the end of its bar.
+.workspace-board--bar-end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-inline-start: auto;
+}
+
 // A widget takes its zone whole, and scrolls in it if it must.
 .workspace-board--widget {
   flex: 1;
