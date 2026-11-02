@@ -1,5 +1,6 @@
 <script>
 import ZoneTiling from '@wexample/symfony-design-system/components/zone-tiling/zone-tiling.vue';
+import AbstractDesignSystemVueMixin from '@wexample/symfony-design-system/js/Vue/AbstractDesignSystemVueMixin';
 import { uiStateGet, uiStateSet } from '@wexample/symfony-design-system/js/Helper/UiStateHelper';
 import { filterTextMatches } from '@wexample/symfony-design-system/js/Helper/FilterHelper';
 
@@ -20,6 +21,14 @@ export const WORKSPACE_EVENT = 'workspace:event';
 
 const DOMAIN = 'WexampleSymfonyWorkspaceBundle.components.workspace-board.workspace-board::';
 
+// A vue as the loader registers it: the directory and the file of the same
+// name (`…/traffic/traffic`), where a page requires it by its directory.
+const vueViewPath = (view) => {
+  const name = view.split('/').pop();
+
+  return view.endsWith(`/${name}/${name}`) ? view : `${view}/${name}`;
+};
+
 // A screen the reader composes: zones cut and sized as in a zone-tiling, each
 // showing a widget chosen among those the page offers (WorkspaceWidgetInterface
 // on the server, handed as `widgets`), the arrangement kept for the account —
@@ -35,6 +44,8 @@ const DOMAIN = 'WexampleSymfonyWorkspaceBundle.components.workspace-board.worksp
 // (`subject`); a widget is handed the nearest one, the board's at the top.
 export default {
   template: '#vue-template-wexample-symfony-workspace-bundle-components-workspace-board-workspace-board',
+
+  mixins: [AbstractDesignSystemVueMixin],
 
   components: {
     ZoneTiling
@@ -86,7 +97,10 @@ export default {
   data() {
     return {
       tree: this.saveUrl ? this.layout : uiStateGet(this.app, this.stateKey(), this.layout),
-      pickerFilter: ''
+      pickerFilter: '',
+      // The widgets' vues are loaded with the page, after the board may have
+      // drawn: they are looked for once the app says everything is in.
+      widgetsReady: false
     };
   },
 
@@ -136,6 +150,9 @@ export default {
   },
 
   mounted() {
+    this.runWhenAppReady(() => {
+      this.widgetsReady = true;
+    });
     this.$el.addEventListener(WORKSPACE_EMIT_EVENT, this.onPageEmit);
 
     if (this.live && this.subject) {
@@ -164,22 +181,35 @@ export default {
     },
 
     stateKey() {
-      return ['workspace.layout', this.layoutKey, this.subject?.entityName, this.subject?.id]
+      return ['ui.workspace.layout', this.layoutKey, this.subject?.entityName, this.subject?.id]
         .filter((part) => part !== undefined && part !== null)
         .join('.');
     },
 
     // The vue of a widget, as the loader registered it: the page required it.
+    // Asked before its script is in, it is not there yet, and asked again
+    // once the app is ready.
     widgetComponent(name) {
       const widget = this.widgetsByName[name];
 
-      if (!widget) {
+      if (!widget || !this.widgetsReady) {
         return null;
       }
 
-      return this.definitions[name] ??= this.app
-        .getServiceOrFail('vue')
-        .initComponent(widget.view, this.rootComponent);
+      const view = vueViewPath(widget.view);
+
+      if (!this.definitions[name] && this.app.getBundleClassDefinition(`vue:${view}`)) {
+        this.definitions[name] = this.app
+          .getServiceOrFail('vue')
+          .initComponent(view, this.rootComponent);
+      }
+
+      return this.definitions[name] ?? null;
+    },
+
+    // A zone showing a widget offered: drawn, or about to be.
+    showsWidget(zone) {
+      return Boolean(zone.widget && this.widgetsByName[zone.widget]);
     },
 
     pick(zone, widget) {

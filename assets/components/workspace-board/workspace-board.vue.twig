@@ -24,8 +24,9 @@
                 @update:model-value="onTreeChange"
         >
             <template #zone="{ zone }">
-                <div v-if="zone.widget && widgetComponent(zone.widget)" class="workspace-board--widget">
+                <div v-if="showsWidget(zone)" class="workspace-board--widget">
                     <component
+                            v-if="widgetComponent(zone.widget)"
                             :is="widgetComponent(zone.widget)"
                             :zone-id="zone.id"
                             :config="zone.config || {}"

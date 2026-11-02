@@ -25,4 +25,4 @@ Widgets speak through the board. Every event is told on the board's element as `
 
 ## Keeping it
 
-`WorkspaceLayout` (`workspace_layout`): `layoutKey`, `subjectType`/`subjectId`, `owner` (an account, or none: offered to everyone), the `tree` and its `treeVersion`. The board saves a settled change (`POST _workspace/layout/save`, CSRF `workspace_layout`) for a logged-in account; a visitor's arrangement is kept in their ui state (`workspace.layout.<key>[.<entity>.<id>]`). An application installing the bundle migrates the table.
+`WorkspaceLayout` (`workspace_layout`): `layoutKey`, `subjectType`/`subjectId`, `owner` (an account, or none: offered to everyone), the `tree` and its `treeVersion`. The board saves a settled change (`POST _workspace/layout/save`, CSRF `workspace_layout`) for a logged-in account; a visitor's arrangement is kept in their ui state (`ui.workspace.layout.<key>[.<entity>.<id>]`: the `ui.` keys are the ones handed to the browser). An application installing the bundle migrates the table.

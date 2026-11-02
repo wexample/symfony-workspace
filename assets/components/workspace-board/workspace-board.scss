@@ -27,10 +27,12 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  // In the middle of the zone, and from its top once taller than it.
+  justify-content: safe center;
   gap: var(--space-2);
   width: min(100%, 26rem);
   min-height: 0;
-  margin: auto;
+  margin-inline: auto;
   padding: var(--space-4);
   overflow: auto;
 }
