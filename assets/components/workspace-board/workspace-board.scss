@@ -36,6 +36,14 @@
   overflow: auto;
 }
 
+// Where a widget is chosen: the zone's room whole.
+.workspace-board--choose {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 // The choice of a widget, in the middle of an empty zone: as many as the zone
 // can list, a field to narrow them past a few.
 .workspace-board--picker {

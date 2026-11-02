@@ -100,13 +100,15 @@
                 </div>
                 {#- Nothing chosen yet — or something no longer offered —: the
                     widgets the page offers, to choose one. -#}
-                <template v-else>
+                <div v-else class="workspace-board--choose">
                     {{ picker }}
-                </template>
+                </div>
             {#- The board being arranged: in every zone, the widgets to put in
                 it, the one it shows marked. -#}
             <template #edit="{ zone }">
-                {{ picker }}
+                <div class="workspace-board--choose">
+                    {{ picker }}
+                </div>
             </template>
             </template>
         </zone-tiling>
