@@ -2,6 +2,7 @@
 @use '@wexample/symfony-design-system/components/zone-tiling/zone-tiling';
 @use '@wexample/symfony-design-system/css/shapes/form/base';
 @use '@wexample/symfony-design-system/css/shapes/toolbar';
+@use '@wexample/symfony-design-system/css/shapes/action-icon';
 
 // Its bar over its zones, a toolbar standing against them: no room between.
 .workspace-board {

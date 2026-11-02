@@ -53,19 +53,10 @@
 {%- block vue_body -%}
     <div class="workspace-board">
         {#- The bar over the whole board. Its start is left for moving between
-            boards; its end concerns this one: arranging it, then the page's
-            own bar — what its widgets share. -#}
+            boards; its end concerns this one: the page's own bar — what its
+            widgets share —, then arranging it. -#}
         <div class="toolbar toolbar--compact workspace-board--bar">
             <div class="toolbar--group workspace-board--bar-end">
-                <button
-                        type="button"
-                        class="button button--compact"
-                        :aria-pressed="editing ? 'true' : 'false'"
-                        @click="editing = !editing"
-                >
-                    <span class="button--icon" v-html="editIconHtml"></span>
-                    <span>[[ editLabel ]]</span>
-                </button>
                 <component
                         v-if="toolbar && toolbarComponent()"
                         :is="toolbarComponent()"
@@ -74,6 +65,16 @@
                         :context="context"
                         :workspace="api"
                 ></component>
+                {#- Arranging the board, last: an icon, its words its tooltip. -#}
+                <button
+                        type="button"
+                        class="action-icon"
+                        :aria-pressed="editing ? 'true' : 'false'"
+                        :aria-label="editLabel"
+                        :data-tooltip="editLabel"
+                        @click="editing = !editing"
+                        v-html="editIconHtml"
+                ></button>
             </div>
         </div>
         <zone-tiling
