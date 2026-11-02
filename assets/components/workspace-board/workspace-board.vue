@@ -106,6 +106,8 @@ export default {
       // holds. An arrangement kept before the bar was is the tree alone.
       ...this.readKept(this.saveUrl ? this.layout : uiStateGet(this.app, this.stateKey(), this.layout)),
       pickerFilter: '',
+      // The board being arranged: its zones offer what can be done to them.
+      editing: false,
       // The widgets' vues are loaded with the page, after the board may have
       // drawn: they are looked for once the app says everything is in.
       widgetsReady: false
@@ -115,6 +117,14 @@ export default {
   computed: {
     widgetsByName() {
       return Object.fromEntries(this.widgets.map((widget) => [widget.name, widget]));
+    },
+
+    editLabel() {
+      return this.t(this.editing ? 'edit.done' : 'edit.start');
+    },
+
+    editIconHtml() {
+      return this.renderIcon(this.editing ? 'ph:bold/check' : 'ph:bold/layout');
     },
 
     pickerFilterable() {
@@ -227,6 +237,11 @@ export default {
     // A zone showing a widget offered: drawn, or about to be.
     showsWidget(zone) {
       return Boolean(zone.widget && this.widgetsByName[zone.widget]);
+    },
+
+    // What a zone is called while the board is arranged: its widget's name.
+    zoneLabel(zone) {
+      return this.widgetsByName[zone.widget]?.label ?? this.t('picker.title');
     },
 
     pick(zone, widget) {

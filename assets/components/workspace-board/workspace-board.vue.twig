@@ -19,10 +19,20 @@
 
 {%- block vue_body -%}
     <div class="workspace-board">
-        {#- The bar over the whole board: what its widgets share. -#}
-        <div v-if="toolbar" class="toolbar toolbar--compact workspace-board--bar">
+        {#- The bar over the whole board: arranging it, at its start; what its
+            widgets share — the page's own bar —, after. -#}
+        <div class="toolbar toolbar--compact workspace-board--bar">
+            <button
+                    type="button"
+                    class="button button--compact"
+                    :aria-pressed="editing ? 'true' : 'false'"
+                    @click="editing = !editing"
+            >
+                <span class="button--icon" v-html="editIconHtml"></span>
+                <span>[[ editLabel ]]</span>
+            </button>
             <component
-                    v-if="toolbarComponent()"
+                    v-if="toolbar && toolbarComponent()"
                     :is="toolbarComponent()"
                     :values="values"
                     :subject="subject"
@@ -35,6 +45,8 @@
                 :model-value="tree"
                 :flush="flush"
                 :zone-menu="zoneMenuItems"
+                :zone-label="zoneLabel"
+                :editing="editing"
                 @update:model-value="onTreeChange"
         >
             <template #zone="{ zone }">

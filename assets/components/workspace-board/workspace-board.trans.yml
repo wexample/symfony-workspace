@@ -1,4 +1,7 @@
 en:
+  edit:
+    start: "Edit the layout"
+    done: "Done"
   picker:
     none: "No widget is offered here yet."
     title: "Choose a widget"
@@ -8,6 +11,9 @@ en:
     change: "Change widget"
 
 fr:
+  edit:
+    start: "Modifier la disposition"
+    done: "Terminé"
   picker:
     none: "Aucun widget n’est encore proposé ici."
     title: "Choisir un widget"
@@ -17,6 +23,9 @@ fr:
     change: "Changer de widget"
 
 zh:
+  edit:
+    start: "编辑布局"
+    done: "完成"
   picker:
     none: "此处尚未提供任何组件。"
     title: "选择一个组件"
@@ -26,6 +35,9 @@ zh:
     change: "更换组件"
 
 ar:
+  edit:
+    start: "تعديل التخطيط"
+    done: "تم"
   picker:
     none: "لا توجد أداة متاحة هنا بعد."
     title: "اختر أداة"
@@ -35,6 +47,9 @@ ar:
     change: "تغيير الأداة"
 
 hi:
+  edit:
+    start: "लेआउट संपादित करें"
+    done: "हो गया"
   picker:
     none: "यहाँ अभी कोई विजेट उपलब्ध नहीं है।"
     title: "विजेट चुनें"
@@ -44,6 +59,9 @@ hi:
     change: "विजेट बदलें"
 
 he:
+  edit:
+    start: "עריכת הפריסה"
+    done: "סיום"
   picker:
     none: "עדיין לא מוצע כאן וידג׳ט."
     title: "בחירת וידג׳ט"
@@ -53,6 +71,9 @@ he:
     change: "החלפת וידג׳ט"
 
 fa:
+  edit:
+    start: "ویرایش چیدمان"
+    done: "انجام شد"
   picker:
     none: "هنوز هیچ ابزارکی اینجا ارائه نشده است."
     title: "انتخاب ابزارک"
@@ -62,6 +83,9 @@ fa:
     change: "تغییر ابزارک"
 
 ur:
+  edit:
+    start: "ترتیب میں ترمیم کریں"
+    done: "مکمل"
   picker:
     none: "یہاں ابھی کوئی ویجیٹ دستیاب نہیں۔"
     title: "ویجیٹ منتخب کریں"
@@ -71,6 +95,9 @@ ur:
     change: "ویجیٹ بدلیں"
 
 ja:
+  edit:
+    start: "レイアウトを編集"
+    done: "完了"
   picker:
     none: "ここではまだウィジェットが提供されていません。"
     title: "ウィジェットを選択"
@@ -80,6 +107,9 @@ ja:
     change: "ウィジェットを変更"
 
 ko:
+  edit:
+    start: "레이아웃 편집"
+    done: "완료"
   picker:
     none: "아직 여기에 제공되는 위젯이 없습니다."
     title: "위젯 선택"
@@ -89,6 +119,9 @@ ko:
     change: "위젯 변경"
 
 bn:
+  edit:
+    start: "বিন্যাস সম্পাদনা"
+    done: "সম্পন্ন"
   picker:
     none: "এখানে এখনও কোনো উইজেট দেওয়া হয়নি।"
     title: "উইজেট বেছে নিন"
@@ -98,6 +131,9 @@ bn:
     change: "উইজেট বদলান"
 
 th:
+  edit:
+    start: "แก้ไขเลย์เอาต์"
+    done: "เสร็จ"
   picker:
     none: "ยังไม่มีวิดเจ็ตให้ใช้ที่นี่"
     title: "เลือกวิดเจ็ต"
@@ -107,6 +143,9 @@ th:
     change: "เปลี่ยนวิดเจ็ต"
 
 de:
+  edit:
+    start: "Anordnung bearbeiten"
+    done: "Fertig"
   picker:
     none: "Hier wird noch kein Widget angeboten."
     title: "Widget wählen"
@@ -116,6 +155,9 @@ de:
     change: "Widget wechseln"
 
 fi:
+  edit:
+    start: "Muokkaa asettelua"
+    done: "Valmis"
   picker:
     none: "Täällä ei vielä tarjota pienoisohjelmia."
     title: "Valitse pienoisohjelma"
@@ -125,6 +167,9 @@ fi:
     change: "Vaihda pienoisohjelma"
 
 ru:
+  edit:
+    start: "Изменить расположение"
+    done: "Готово"
   picker:
     none: "Здесь пока не предлагается ни одного виджета."
     title: "Выберите виджет"
@@ -134,6 +179,9 @@ ru:
     change: "Сменить виджет"
 
 pl:
+  edit:
+    start: "Edytuj układ"
+    done: "Gotowe"
   picker:
     none: "Nie ma tu jeszcze żadnego widżetu."
     title: "Wybierz widżet"
@@ -143,6 +191,9 @@ pl:
     change: "Zmień widżet"
 
 es:
+  edit:
+    start: "Editar la disposición"
+    done: "Listo"
   picker:
     none: "Aún no se ofrece ningún widget aquí."
     title: "Elegir un widget"
@@ -152,6 +203,9 @@ es:
     change: "Cambiar de widget"
 
 it:
+  edit:
+    start: "Modifica la disposizione"
+    done: "Fatto"
   picker:
     none: "Qui non è ancora offerto alcun widget."
     title: "Scegli un widget"
@@ -161,6 +215,9 @@ it:
     change: "Cambia widget"
 
 pt_BR:
+  edit:
+    start: "Editar o layout"
+    done: "Concluído"
   picker:
     none: "Nenhum widget é oferecido aqui ainda."
     title: "Escolher um widget"
@@ -170,6 +227,9 @@ pt_BR:
     change: "Trocar de widget"
 
 tr:
+  edit:
+    start: "Düzeni düzenle"
+    done: "Bitti"
   picker:
     none: "Burada henüz bir bileşen sunulmuyor."
     title: "Bir bileşen seçin"
@@ -179,6 +239,9 @@ tr:
     change: "Bileşeni değiştir"
 
 vi:
+  edit:
+    start: "Sửa bố cục"
+    done: "Xong"
   picker:
     none: "Chưa có tiện ích nào được cung cấp ở đây."
     title: "Chọn tiện ích"
@@ -188,6 +251,9 @@ vi:
     change: "Đổi tiện ích"
 
 id:
+  edit:
+    start: "Ubah tata letak"
+    done: "Selesai"
   picker:
     none: "Belum ada widget yang ditawarkan di sini."
     title: "Pilih widget"
@@ -197,6 +263,9 @@ id:
     change: "Ganti widget"
 
 nl:
+  edit:
+    start: "Indeling bewerken"
+    done: "Klaar"
   picker:
     none: "Hier wordt nog geen widget aangeboden."
     title: "Kies een widget"
