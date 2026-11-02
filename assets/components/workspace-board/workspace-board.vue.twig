@@ -20,7 +20,7 @@
 {%- set picker -%}
 <div class="workspace-board--picker">
                     <p class="workspace-board--picker-title">[[ t('picker.title') ]]</p>
-                    <p v-if="zone.widget" class="workspace-board--picker-notice">[[ t('picker.unknown', { '%name%': zone.widget }) ]]</p>
+                    <p v-if="zone.widget && !widgetsByName[zone.widget]" class="workspace-board--picker-notice">[[ t('picker.unknown', { '%name%': zone.widget }) ]]</p>
                     <p v-if="!widgets.length" class="workspace-board--picker-notice">[[ t('picker.none') ]]</p>
                     <input
                             v-if="pickerFilterable"
