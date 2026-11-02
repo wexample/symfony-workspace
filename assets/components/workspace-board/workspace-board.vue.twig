@@ -20,7 +20,7 @@
 {%- block vue_body -%}
     <div class="workspace-board">
         {#- The bar over the whole board: what its widgets share. -#}
-        <div v-if="toolbar" class="zone--panel toolbar toolbar--shaded toolbar--compact workspace-board--bar">
+        <div v-if="toolbar" class="toolbar workspace-board--bar">
             <component
                     v-if="toolbarComponent()"
                     :is="toolbarComponent()"
