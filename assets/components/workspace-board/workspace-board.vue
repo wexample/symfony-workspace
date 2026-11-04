@@ -52,7 +52,8 @@ export default {
       type: Object,
       default: null
     },
-    // [{ name, label, description, icon, view }].
+    // [{ name, label, description, icon, view, sizing }]: `sizing`, how a
+    // widget sizes its zone itself (WorkspaceWidgetSizingInterface).
     widgets: {
       type: Array,
       default: () => []
@@ -245,6 +246,11 @@ export default {
     // What a zone is called while the board is arranged: its widget's name.
     zoneLabel(zone) {
       return this.widgetsByName[zone.widget]?.label ?? null;
+    },
+
+    // How the widget a zone shows sizes it, if it does: `{ height: 'content' }`.
+    zoneSizing(zone) {
+      return this.widgetsByName[zone.widget]?.sizing ?? null;
     },
 
     // A widget taken for a zone, by its name.
