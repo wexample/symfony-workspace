@@ -34,45 +34,11 @@
                 </div>
 {%- endset -%}
 
-{%- block vue_body -%}
-    <div class="workspace-board">
-        {#- The bar over the whole board. Its start is left for moving between
-            boards; its end concerns this one: the page's own bar — what its
-            widgets share —, then arranging it. -#}
-        <div class="toolbar toolbar--compact workspace-board--bar">
-            <div class="toolbar--group workspace-board--bar-end">
-                <component
-                        v-if="toolbar && toolbarComponent()"
-                        :is="toolbarComponent()"
-                        :values="values"
-                        :subject="subject"
-                        :context="context"
-                        :workspace="api"
-                ></component>
-                {#- Arranging the board, last: an icon, its words its tooltip. -#}
-                <button
-                        type="button"
-                        class="action-icon"
-                        :aria-pressed="editing ? 'true' : 'false'"
-                        :aria-label="editLabel"
-                        :data-tooltip="editLabel"
-                        @click="editing = !editing"
-                        v-html="editIconHtml"
-                ></button>
-            </div>
-        </div>
-        <zone-tiling
-                ref="tiling"
-                :model-value="tree"
-                :flush="flush"
-                :zone-menu="zoneMenuItems"
-                :zone-label="zoneLabel"
-                :zone-sizing="zoneSizing"
-                :editing="editing"
-                @update:model-value="onTreeChange"
-        >
-            <template #zone="{ zone }">
-                <div v-if="showsWidget(zone)" class="workspace-board--widget">
+{#- What a zone shows: its widget in the frame every widget is given — a
+    zone that scrolls, the widget's own `zone--content` inside —, or the
+    widgets to choose one from. -#}
+{%- set widget_frame -%}
+                <div v-if="showsWidget(zone)" class="zone zone--scrollable workspace-board--widget">
                     <component
                             v-if="widgetComponent(zone.widget)"
                             :is="widgetComponent(zone.widget)"
@@ -89,6 +55,65 @@
                 <div v-else class="workspace-board--choose">
                     {{ picker }}
                 </div>
+{%- endset -%}
+
+{%- block vue_body -%}
+    <div class="workspace-board">
+        {#- The bar over the whole board. Its start is left for moving between
+            boards; its end concerns this one: the page's own bar — what its
+            widgets share —, then arranging it. -#}
+        <div class="toolbar toolbar--compact workspace-board--bar">
+            <div class="toolbar--group workspace-board--bar-end">
+                <component
+                        v-if="toolbar && toolbarComponent()"
+                        :is="toolbarComponent()"
+                        :values="values"
+                        :subject="subject"
+                        :context="context"
+                        :workspace="api"
+                ></component>
+                {#- Arranging the board, last: an icon, its words its tooltip.
+                    A zone alone in its window leads back to the board. -#}
+                <a
+                        v-if="soloZone"
+                        class="action-icon"
+                        :href="boardUrl"
+                        :aria-label="t('zone.back')"
+                        :data-tooltip="t('zone.back')"
+                        v-html="renderIcon('ph:bold/squares-four')"
+                ></a>
+                <button
+                        v-else
+                        type="button"
+                        class="action-icon"
+                        :aria-pressed="editing ? 'true' : 'false'"
+                        :aria-label="editLabel"
+                        :data-tooltip="editLabel"
+                        @click="editing = !editing"
+                        v-html="editIconHtml"
+                ></button>
+            </div>
+        </div>
+        {#- One zone alone, in a window of its own (`workspace_zone` in the
+            address): its widget, the board's bar over it. -#}
+        <div v-if="soloZone" class="zone zone--panel workspace-board--solo">
+            <template v-for="zone in [soloZone]" :key="zone.id">
+                {{ widget_frame }}
+            </template>
+        </div>
+        <zone-tiling
+                v-else
+                ref="tiling"
+                :model-value="tree"
+                :flush="flush"
+                :zone-menu="zoneMenuItems"
+                :zone-label="zoneLabel"
+                :zone-sizing="zoneSizing"
+                :editing="editing"
+                @update:model-value="onTreeChange"
+        >
+            <template #zone="{ zone }">
+                {{ widget_frame }}
             </template>
             {#- The board being arranged: in every zone, the widgets to put in
                 it, the one it shows marked. -#}

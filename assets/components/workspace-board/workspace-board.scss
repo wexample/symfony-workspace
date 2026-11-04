@@ -1,5 +1,6 @@
 // A screen the reader composes of widgets (zone-tiling draws the zones).
 @use '@wexample/symfony-design-system/components/zone-tiling/zone-tiling';
+@use '@wexample/symfony-design-system/css/shapes/zone';
 @use '@wexample/symfony-design-system/css/shapes/form/base';
 @use '@wexample/symfony-design-system/css/shapes/toolbar';
 @use '@wexample/symfony-design-system/css/shapes/action-icon';
@@ -31,11 +32,21 @@
   margin-inline-start: auto;
 }
 
-// A widget takes its zone whole, and scrolls in it if it must.
+// The frame every widget stands in: its zone whole, scrolling if the widget
+// asks for more (shapes/zone, `zone--scrollable`); the widget's root is a
+// `zone--content`, with the zone's room round it or none.
 .workspace-board--widget {
+  display: flex;
+  flex-direction: column;
+}
+
+// A zone alone in its window: the room under the bar whole.
+.workspace-board--solo {
   flex: 1;
   min-height: 0;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 // Where a widget is chosen: the zone's room whole.

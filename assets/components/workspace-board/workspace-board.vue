@@ -18,6 +18,13 @@ export const WORKSPACE_EVENT = 'workspace:event';
 
 const DOMAIN = 'WexampleSymfonyWorkspaceBundle.components.workspace-board.workspace-board::';
 
+// The address parameter naming the one zone a window shows, opened apart.
+export const WORKSPACE_ZONE_PARAMETER = 'workspace_zone';
+
+// The entry each zone's bar offers while the board is arranged: its widget
+// in a window of its own.
+export const WORKSPACE_ACTION_OPEN_WINDOW = 'workspace:open-window';
+
 
 // A screen the reader composes: zones cut and sized as in a zone-tiling, each
 // showing a widget chosen among those the page offers (WorkspaceWidgetInterface
@@ -32,6 +39,12 @@ const DOMAIN = 'WexampleSymfonyWorkspaceBundle.components.workspace-board.worksp
 //
 // A zone — or a split, for a section — may be about a record of its own
 // (`subject`); a widget is handed the nearest one, the board's at the top.
+//
+// Every widget stands in the same frame — a zone that scrolls —, its root a
+// `zone--content` of the design system: the room round it the zone's own, or
+// none (`zone--content--flush`) for a widget that insets itself — a stage, a
+// thread. A zone opens in a window of its own (`workspace_zone` in the
+// address): the same page, its widget alone under the board's bar.
 export default {
   template: '#vue-template-wexample-symfony-workspace-bundle-components-workspace-board-workspace-board',
 
@@ -108,7 +121,9 @@ export default {
       editing: false,
       // The widgets' vues are loaded with the page, after the board may have
       // drawn: they are looked for once the app says everything is in.
-      widgetsReady: false
+      widgetsReady: false,
+      // The zone this window shows alone, opened apart from the board.
+      soloZoneId: new URLSearchParams(window.location.search).get(WORKSPACE_ZONE_PARAMETER)
     };
   },
 
@@ -139,6 +154,20 @@ export default {
       return PICKER_FILTER_FROM;
     },
 
+    // The zone shown alone, while it still is one of the board's; gone from
+    // it, the board whole.
+    soloZone() {
+      return this.soloZoneId && this.tree ? this.findZone(this.tree, this.soloZoneId) : null;
+    },
+
+    // This page without the zone it shows alone.
+    boardUrl() {
+      const url = new URL(window.location.href);
+      url.searchParams.delete(WORKSPACE_ZONE_PARAMETER);
+
+      return url.toString();
+    },
+
     // Each zone's subject, the nearest one above it holding.
     subjects() {
       const subjects = {};
@@ -167,7 +196,7 @@ export default {
       layoutKey: this.layoutKey,
       emit: (type, detail) => this.emit(type, detail),
       on: (type, listener) => this.on(type, listener),
-      updateConfig: (zoneId, config) => this.$refs.tiling?.update(zoneId, { config }),
+      updateConfig: (zoneId, config) => this.updateZone(zoneId, { config }),
       // What the bar holds, kept with the arrangement.
       updateValues: (values) => this.onValuesChange(values)
     });
@@ -256,12 +285,63 @@ export default {
     // A widget taken for a zone, by its name.
     pick(zone, name) {
       if (name && name !== zone.widget) {
-        this.$refs.tiling.update(zone.id, { widget: name, config: {} });
+        this.updateZone(zone.id, { widget: name, config: {} });
       }
     },
 
+    // A zone's bar while the board is arranged: its widget opened apart
+    // first, once it has one, then what the tiling and the page offer.
     zoneMenuItems(zone, items) {
-      return this.zoneMenu ? this.zoneMenu(zone, items, this.api) : items;
+      const own = this.showsWidget(zone) ? [{
+        value: WORKSPACE_ACTION_OPEN_WINDOW,
+        icon: 'ph:bold/arrow-square-out',
+        label: this.t('zone.open_window'),
+        run: () => window.open(this.zoneUrl(zone), '_blank', 'noopener')
+      }, { separator: true }] : [];
+      const all = [...own, ...items];
+
+      return this.zoneMenu ? this.zoneMenu(zone, all, this.api) : all;
+    },
+
+    zoneUrl(zone) {
+      const url = new URL(window.location.href);
+      url.searchParams.set(WORKSPACE_ZONE_PARAMETER, zone.id);
+
+      return url.toString();
+    },
+
+    findZone(node, id) {
+      if (node.id === id) {
+        return node;
+      }
+
+      for (const child of node.children ?? []) {
+        const found = this.findZone(child, id);
+
+        if (found) {
+          return found;
+        }
+      }
+
+      return null;
+    },
+
+    // What a zone carries changed: through the tiling, or — a zone shown
+    // alone, with no tiling — in the tree itself.
+    updateZone(zoneId, patch) {
+      if (this.$refs.tiling) {
+        this.$refs.tiling.update(zoneId, patch);
+
+        return;
+      }
+
+      const tree = JSON.parse(JSON.stringify(this.tree));
+      const zone = this.findZone(tree, zoneId);
+
+      if (zone) {
+        Object.assign(zone, patch);
+        this.onTreeChange(tree);
+      }
     },
 
     readKept(kept) {

@@ -13,6 +13,13 @@ namespace Wexample\SymfonyWorkspace\Interface;
  * `updateConfig(zoneId, config)`), `context` (what the page hands every
  * widget: addresses, ids), `scope` (what the board's bar holds — a record
  * chosen once for all its widgets) and `zone-id`.
+ *
+ * Every widget stands in the same frame, a zone that scrolls, and draws its
+ * root as a `zone--content` of the design system — the zone's room round it
+ * —, or `zone--content zone--content--flush page--fill` when it fills the
+ * frame edge to edge and insets itself (a stage, a thread). No room of its
+ * own: every widget reads alike, and alike once opened in a window of its
+ * own (`?workspace_zone={id}`, the board's bar over it alone).
  */
 interface WorkspaceWidgetInterface
 {
