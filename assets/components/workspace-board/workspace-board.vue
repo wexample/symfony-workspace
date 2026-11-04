@@ -3,6 +3,7 @@ import ZoneTiling from '@wexample/symfony-design-system/components/zone-tiling/z
 import AbstractDesignSystemVueMixin from '@wexample/symfony-design-system/js/Vue/AbstractDesignSystemVueMixin';
 import { uiStateGet, uiStateSet } from '@wexample/symfony-design-system/js/Helper/UiStateHelper';
 import ChoiceList from '@wexample/symfony-design-system/components/choice-list/choice-list.vue';
+import ButtonMenu from '@wexample/symfony-design-system/components/button-menu/button-menu.vue';
 
 // From how many widgets the choice of one is narrowed by typing.
 const PICKER_FILTER_FROM = 8;
@@ -29,7 +30,8 @@ export const WORKSPACE_ACTION_OPEN_WINDOW = 'workspace:open-window';
 // A screen the reader composes: zones cut and sized as in a zone-tiling, each
 // showing a widget chosen among those the page offers (WorkspaceWidgetInterface
 // on the server, handed as `widgets`), the arrangement kept for the account —
-// or in the visitor's own state without one.
+// or in the visitor's own state without one. An account keeps several of a
+// page, named, chosen and made from the start of the board's bar.
 //
 // The widgets speak to each other through the board (`workspace.emit(type,
 // detail)`, `workspace.on(type, listener)`), and to the rest of the page: each
@@ -51,6 +53,7 @@ export default {
   mixins: [AbstractDesignSystemVueMixin],
 
   components: {
+    ButtonMenu,
     ChoiceList,
     ZoneTiling
   },
@@ -76,8 +79,28 @@ export default {
       type: Object,
       default: null
     },
+    // The page's own arrangement, what a new one starts from.
+    defaultLayout: {
+      type: Object,
+      default: null
+    },
     saveUrl: {
       type: String,
+      default: null
+    },
+    // The arrangements the account keeps of the page, `[{ id, name }]`, the
+    // one shown (`layoutId`, none before the first is kept), and where they
+    // are made, chosen and renamed (`{ create, select, rename }`).
+    layouts: {
+      type: Array,
+      default: () => []
+    },
+    layoutId: {
+      type: String,
+      default: null
+    },
+    layoutUrls: {
+      type: Object,
       default: null
     },
     saveToken: {
@@ -119,6 +142,10 @@ export default {
       ...this.readKept(this.saveUrl ? this.layout : uiStateGet(this.app, this.stateKey(), this.layout)),
       // The board being arranged: its zones offer what can be done to them.
       editing: false,
+      layoutList: [...this.layouts],
+      currentLayoutId: this.layoutId,
+      // An arrangement being named in the bar: `{ mode: 'create'|'rename', value }`.
+      naming: null,
       // The widgets' vues are loaded with the page, after the board may have
       // drawn: they are looked for once the app says everything is in.
       widgetsReady: false,
@@ -130,6 +157,14 @@ export default {
   computed: {
     widgetsByName() {
       return Object.fromEntries(this.widgets.map((widget) => [widget.name, widget]));
+    },
+
+    // What is done to the arrangements, in the menu beside their field.
+    layoutMenuItems() {
+      return [
+        { value: 'create', label: this.t('layouts.create'), icon: 'ph:bold/plus' },
+        { value: 'rename', label: this.t('layouts.rename'), icon: 'ph:bold/pencil-simple' }
+      ];
     },
 
     editLabel() {
@@ -364,7 +399,10 @@ export default {
 
     scheduleSave() {
       window.clearTimeout(this.saveTimer);
-      this.saveTimer = window.setTimeout(() => this.save(), SAVE_DELAY_MS);
+      this.saveTimer = window.setTimeout(() => {
+        this.saveTimer = null;
+        this.save();
+      }, SAVE_DELAY_MS);
     },
 
     // Kept for the account where there is one, in the visitor's state
@@ -377,19 +415,117 @@ export default {
       }
 
       try {
-        await fetch(this.saveUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': this.saveToken ?? '' },
-          body: JSON.stringify({
-            layoutKey: this.layoutKey,
-            subjectType: this.subject?.entityName ?? null,
-            subjectId: this.subject?.id ?? null,
-            tree: { tree: this.tree, values: this.values }
-          })
+        const layout = await this.postLayout(this.saveUrl, {
+          ...this.layoutScope(),
+          id: this.currentLayoutId,
+          tree: { tree: this.tree, values: this.values }
         });
+
+        this.knowLayout(layout);
       } catch {
         // Kept on screen; the next change tries again.
       }
+    },
+
+    // What is kept now, rather than once it settles: before another
+    // arrangement is shown.
+    async saveNow() {
+      if (this.saveTimer) {
+        window.clearTimeout(this.saveTimer);
+        this.saveTimer = null;
+        await this.save();
+      }
+    },
+
+    layoutScope() {
+      return {
+        layoutKey: this.layoutKey,
+        subjectType: this.subject?.entityName ?? null,
+        subjectId: this.subject?.id ?? null
+      };
+    },
+
+    async postLayout(url, payload) {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': this.saveToken ?? '' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error(`The arrangement could not be kept (${response.status}).`);
+      }
+
+      return response.json();
+    },
+
+    // An arrangement the server answered with: the one shown, listed.
+    knowLayout(layout) {
+      if (!layout?.id) {
+        return;
+      }
+
+      this.currentLayoutId = layout.id;
+      this.layoutList = this.layoutList.some((item) => item.id === layout.id)
+        ? this.layoutList.map((item) => (item.id === layout.id ? { id: layout.id, name: layout.name } : item))
+        : [...this.layoutList, { id: layout.id, name: layout.name }];
+    },
+
+    // Its tree and what its bar holds drawn, as when the page opens on it.
+    showLayout(layout) {
+      const kept = this.readKept(layout.tree);
+
+      this.knowLayout(layout);
+      this.tree = kept.tree;
+      this.values = kept.values;
+      this.emit('layout', this.tree);
+      this.emit('values', this.values);
+    },
+
+    layoutLabel(layout) {
+      return layout.name || this.t('layouts.unnamed');
+    },
+
+    async selectLayout(id) {
+      if (!id || id === this.currentLayoutId) {
+        return;
+      }
+
+      await this.saveNow();
+      this.showLayout(await this.postLayout(this.layoutUrls.select, { id }));
+    },
+
+    onLayoutMenu(item) {
+      const current = this.layoutList.find((layout) => layout.id === this.currentLayoutId);
+
+      this.naming = { mode: item.value, value: item.value === 'rename' ? (current?.name ?? '') : '' };
+      this.$nextTick(() => this.$refs.namingInput?.focus());
+    },
+
+    // A new arrangement, from the page's own, or the one shown renamed —
+    // kept first when it never was.
+    async submitNaming() {
+      const { mode, value } = this.naming;
+
+      this.naming = null;
+
+      if (mode === 'create') {
+        await this.saveNow();
+        this.showLayout(await this.postLayout(this.layoutUrls.create, {
+          ...this.layoutScope(),
+          name: value,
+          tree: { tree: this.defaultLayout ?? this.tree, values: this.values }
+        }));
+
+        return;
+      }
+
+      if (!this.currentLayoutId) {
+        window.clearTimeout(this.saveTimer);
+        await this.save();
+      }
+
+      this.knowLayout(await this.postLayout(this.layoutUrls.rename, { id: this.currentLayoutId, name: value }));
     },
 
     // Told to the widgets listening, then to the page.

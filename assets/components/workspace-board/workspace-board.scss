@@ -2,6 +2,8 @@
 @use '@wexample/symfony-design-system/components/zone-tiling/zone-tiling';
 @use '@wexample/symfony-design-system/css/shapes/zone';
 @use '@wexample/symfony-design-system/css/shapes/form/base';
+@use '@wexample/symfony-design-system/css/shapes/form/select';
+@use '@wexample/symfony-design-system/css/shapes/form/addon';
 @use '@wexample/symfony-design-system/css/shapes/toolbar';
 @use '@wexample/symfony-design-system/css/shapes/action-icon';
 @use '@wexample/symfony-design-system/components/choice-list/choice-list';
@@ -88,4 +90,16 @@
   font-size: var(--font-size-2);
   color: var(--text-color-muted);
   text-align: center;
+}
+
+// Its arrangements, at the start of its bar: a field as wide as their names
+// need, within reason.
+.workspace-board--bar-start {
+  display: flex;
+  align-items: center;
+}
+
+.workspace-board--layouts,
+.workspace-board--naming {
+  width: min(16rem, 100%);
 }

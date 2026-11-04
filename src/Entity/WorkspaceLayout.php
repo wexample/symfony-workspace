@@ -17,6 +17,8 @@ use Wexample\SymfonyWorkspace\Repository\WorkspaceLayoutRepository;
  * about, if any (`subjectType` / `subjectId`): the dashboard of one project is
  * not the dashboard of another. Kept for one account, or, without one, for
  * whoever has not arranged their own — the arrangement a page offers first.
+ * An account may keep several of one page, each by its name, and opens on
+ * the one it chose last (`selected`).
  */
 #[ORM\Entity(repositoryClass: WorkspaceLayoutRepository::class)]
 #[ORM\Table(name: 'workspace_layout')]
@@ -52,6 +54,20 @@ class WorkspaceLayout extends AbstractEntity
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     protected DateTimeImmutable $dateUpdated;
+
+    /**
+     * What an account calls it, among the arrangements it keeps of one page:
+     * none, the first one, kept before it was given a name.
+     */
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    protected ?string $name = null;
+
+    /**
+     * The one of them the account chose last: the page opens on it. One at
+     * most, of a page and a record, for an account.
+     */
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
+    protected bool $selected = false;
 
     public function __construct(string $layoutKey)
     {
@@ -119,4 +135,29 @@ class WorkspaceLayout extends AbstractEntity
     {
         return $this->dateUpdated;
     }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function isSelected(): bool
+    {
+        return $this->selected;
+    }
+
+    public function setSelected(bool $selected): self
+    {
+        $this->selected = $selected;
+
+        return $this;
+    }
+
 }

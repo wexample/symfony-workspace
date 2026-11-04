@@ -9,6 +9,14 @@ en:
     none: "No widget is offered here yet."
     title: "Choose a widget"
     unknown: "This zone showed “%name%”, which is no longer offered."
+  layouts:
+    label: "Workspace"
+    unnamed: "Workspace"
+    actions: "Workspace actions"
+    create: "New workspace"
+    rename: "Rename"
+    name: "Workspace name"
+    save: "Save"
 
 fr:
   zone:
@@ -21,6 +29,14 @@ fr:
     none: "Aucun widget n’est encore proposé ici."
     title: "Choisir un widget"
     unknown: "Cette zone affichait « %name% », qui n’est plus proposé."
+  layouts:
+    label: "Espace de travail"
+    unnamed: "Espace de travail"
+    actions: "Actions de l’espace de travail"
+    create: "Nouvel espace de travail"
+    rename: "Renommer"
+    name: "Nom de l’espace de travail"
+    save: "Enregistrer"
 
 zh:
   zone:
@@ -33,6 +49,14 @@ zh:
     none: "此处尚未提供任何组件。"
     title: "选择一个组件"
     unknown: "此区域显示过“%name%”,该组件已不再提供。"
+  layouts:
+    label: "工作区"
+    unnamed: "工作区"
+    actions: "工作区操作"
+    create: "新建工作区"
+    rename: "重命名"
+    name: "工作区名称"
+    save: "保存"
 
 ar:
   zone:
@@ -45,6 +69,14 @@ ar:
     none: "لا توجد أداة متاحة هنا بعد."
     title: "اختر أداة"
     unknown: "كانت هذه المنطقة تعرض «%name%» ولم يعد متاحًا."
+  layouts:
+    label: "مساحة العمل"
+    unnamed: "مساحة العمل"
+    actions: "إجراءات مساحة العمل"
+    create: "مساحة عمل جديدة"
+    rename: "إعادة تسمية"
+    name: "اسم مساحة العمل"
+    save: "حفظ"
 
 hi:
   zone:
@@ -57,6 +89,14 @@ hi:
     none: "यहाँ अभी कोई विजेट उपलब्ध नहीं है।"
     title: "विजेट चुनें"
     unknown: "यह क्षेत्र “%name%” दिखाता था, जो अब उपलब्ध नहीं है।"
+  layouts:
+    label: "कार्यक्षेत्र"
+    unnamed: "कार्यक्षेत्र"
+    actions: "कार्यक्षेत्र क्रियाएँ"
+    create: "नया कार्यक्षेत्र"
+    rename: "नाम बदलें"
+    name: "कार्यक्षेत्र का नाम"
+    save: "सहेजें"
 
 he:
   zone:
@@ -69,6 +109,14 @@ he:
     none: "עדיין לא מוצע כאן וידג׳ט."
     title: "בחירת וידג׳ט"
     unknown: "האזור הזה הציג את „%name%”, שאינו מוצע עוד."
+  layouts:
+    label: "סביבת עבודה"
+    unnamed: "סביבת עבודה"
+    actions: "פעולות סביבת העבודה"
+    create: "סביבת עבודה חדשה"
+    rename: "שינוי שם"
+    name: "שם סביבת העבודה"
+    save: "שמירה"
 
 fa:
   zone:
@@ -81,6 +129,14 @@ fa:
     none: "هنوز هیچ ابزارکی اینجا ارائه نشده است."
     title: "انتخاب ابزارک"
     unknown: "این ناحیه «%name%» را نشان می‌داد که دیگر ارائه نمی‌شود."
+  layouts:
+    label: "فضای کار"
+    unnamed: "فضای کار"
+    actions: "عملیات فضای کار"
+    create: "فضای کار جدید"
+    rename: "تغییر نام"
+    name: "نام فضای کار"
+    save: "ذخیره"
 
 ur:
   zone:
@@ -93,6 +149,14 @@ ur:
     none: "یہاں ابھی کوئی ویجیٹ دستیاب نہیں۔"
     title: "ویجیٹ منتخب کریں"
     unknown: "یہ حصہ “%name%” دکھاتا تھا، جو اب دستیاب نہیں۔"
+  layouts:
+    label: "ورک اسپیس"
+    unnamed: "ورک اسپیس"
+    actions: "ورک اسپیس کی کارروائیاں"
+    create: "نیا ورک اسپیس"
+    rename: "نام تبدیل کریں"
+    name: "ورک اسپیس کا نام"
+    save: "محفوظ کریں"
 
 ja:
   zone:
@@ -105,6 +169,14 @@ ja:
     none: "ここではまだウィジェットが提供されていません。"
     title: "ウィジェットを選択"
     unknown: "この領域は「%name%」を表示していましたが、現在は提供されていません。"
+  layouts:
+    label: "ワークスペース"
+    unnamed: "ワークスペース"
+    actions: "ワークスペースの操作"
+    create: "新しいワークスペース"
+    rename: "名前を変更"
+    name: "ワークスペース名"
+    save: "保存"
 
 ko:
   zone:
@@ -117,6 +189,14 @@ ko:
     none: "아직 여기에 제공되는 위젯이 없습니다."
     title: "위젯 선택"
     unknown: "이 영역은 “%name%”을(를) 표시했지만 더 이상 제공되지 않습니다."
+  layouts:
+    label: "작업 공간"
+    unnamed: "작업 공간"
+    actions: "작업 공간 작업"
+    create: "새 작업 공간"
+    rename: "이름 바꾸기"
+    name: "작업 공간 이름"
+    save: "저장"
 
 bn:
   zone:
@@ -129,6 +209,14 @@ bn:
     none: "এখানে এখনও কোনো উইজেট দেওয়া হয়নি।"
     title: "উইজেট বেছে নিন"
     unknown: "এই অংশে “%name%” দেখানো হত, যা আর দেওয়া হয় না।"
+  layouts:
+    label: "ওয়ার্কস্পেস"
+    unnamed: "ওয়ার্কস্পেস"
+    actions: "ওয়ার্কস্পেসের কাজ"
+    create: "নতুন ওয়ার্কস্পেস"
+    rename: "নাম বদলান"
+    name: "ওয়ার্কস্পেসের নাম"
+    save: "সংরক্ষণ"
 
 th:
   zone:
@@ -141,6 +229,14 @@ th:
     none: "ยังไม่มีวิดเจ็ตให้ใช้ที่นี่"
     title: "เลือกวิดเจ็ต"
     unknown: "พื้นที่นี้เคยแสดง “%name%” ซึ่งไม่มีให้แล้ว"
+  layouts:
+    label: "พื้นที่ทำงาน"
+    unnamed: "พื้นที่ทำงาน"
+    actions: "การทำงานของพื้นที่ทำงาน"
+    create: "พื้นที่ทำงานใหม่"
+    rename: "เปลี่ยนชื่อ"
+    name: "ชื่อพื้นที่ทำงาน"
+    save: "บันทึก"
 
 de:
   zone:
@@ -153,6 +249,14 @@ de:
     none: "Hier wird noch kein Widget angeboten."
     title: "Widget wählen"
     unknown: "Dieser Bereich zeigte „%name%“, das nicht mehr angeboten wird."
+  layouts:
+    label: "Arbeitsbereich"
+    unnamed: "Arbeitsbereich"
+    actions: "Aktionen des Arbeitsbereichs"
+    create: "Neuer Arbeitsbereich"
+    rename: "Umbenennen"
+    name: "Name des Arbeitsbereichs"
+    save: "Speichern"
 
 fi:
   zone:
@@ -165,6 +269,14 @@ fi:
     none: "Täällä ei vielä tarjota pienoisohjelmia."
     title: "Valitse pienoisohjelma"
     unknown: "Tämä alue näytti kohdetta ”%name%”, jota ei enää tarjota."
+  layouts:
+    label: "Työtila"
+    unnamed: "Työtila"
+    actions: "Työtilan toiminnot"
+    create: "Uusi työtila"
+    rename: "Nimeä uudelleen"
+    name: "Työtilan nimi"
+    save: "Tallenna"
 
 ru:
   zone:
@@ -177,6 +289,14 @@ ru:
     none: "Здесь пока не предлагается ни одного виджета."
     title: "Выберите виджет"
     unknown: "Эта зона показывала «%name%», который больше не предлагается."
+  layouts:
+    label: "Рабочая область"
+    unnamed: "Рабочая область"
+    actions: "Действия с рабочей областью"
+    create: "Новая рабочая область"
+    rename: "Переименовать"
+    name: "Название рабочей области"
+    save: "Сохранить"
 
 pl:
   zone:
@@ -189,6 +309,14 @@ pl:
     none: "Nie ma tu jeszcze żadnego widżetu."
     title: "Wybierz widżet"
     unknown: "Ta strefa pokazywała „%name%”, który nie jest już dostępny."
+  layouts:
+    label: "Obszar roboczy"
+    unnamed: "Obszar roboczy"
+    actions: "Działania obszaru roboczego"
+    create: "Nowy obszar roboczy"
+    rename: "Zmień nazwę"
+    name: "Nazwa obszaru roboczego"
+    save: "Zapisz"
 
 es:
   zone:
@@ -201,6 +329,14 @@ es:
     none: "Aún no se ofrece ningún widget aquí."
     title: "Elegir un widget"
     unknown: "Esta zona mostraba «%name%», que ya no se ofrece."
+  layouts:
+    label: "Espacio de trabajo"
+    unnamed: "Espacio de trabajo"
+    actions: "Acciones del espacio de trabajo"
+    create: "Nuevo espacio de trabajo"
+    rename: "Renombrar"
+    name: "Nombre del espacio de trabajo"
+    save: "Guardar"
 
 it:
   zone:
@@ -213,6 +349,14 @@ it:
     none: "Qui non è ancora offerto alcun widget."
     title: "Scegli un widget"
     unknown: "Questa zona mostrava «%name%», che non è più disponibile."
+  layouts:
+    label: "Area di lavoro"
+    unnamed: "Area di lavoro"
+    actions: "Azioni dell’area di lavoro"
+    create: "Nuova area di lavoro"
+    rename: "Rinomina"
+    name: "Nome dell’area di lavoro"
+    save: "Salva"
 
 pt_BR:
   zone:
@@ -225,6 +369,14 @@ pt_BR:
     none: "Nenhum widget é oferecido aqui ainda."
     title: "Escolher um widget"
     unknown: "Esta zona mostrava “%name%”, que não é mais oferecido."
+  layouts:
+    label: "Espaço de trabalho"
+    unnamed: "Espaço de trabalho"
+    actions: "Ações do espaço de trabalho"
+    create: "Novo espaço de trabalho"
+    rename: "Renomear"
+    name: "Nome do espaço de trabalho"
+    save: "Salvar"
 
 tr:
   zone:
@@ -237,6 +389,14 @@ tr:
     none: "Burada henüz bir bileşen sunulmuyor."
     title: "Bir bileşen seçin"
     unknown: "Bu alan artık sunulmayan “%name%” öğesini gösteriyordu."
+  layouts:
+    label: "Çalışma alanı"
+    unnamed: "Çalışma alanı"
+    actions: "Çalışma alanı işlemleri"
+    create: "Yeni çalışma alanı"
+    rename: "Yeniden adlandır"
+    name: "Çalışma alanı adı"
+    save: "Kaydet"
 
 vi:
   zone:
@@ -249,6 +409,14 @@ vi:
     none: "Chưa có tiện ích nào được cung cấp ở đây."
     title: "Chọn tiện ích"
     unknown: "Vùng này từng hiển thị “%name%”, nay không còn được cung cấp."
+  layouts:
+    label: "Không gian làm việc"
+    unnamed: "Không gian làm việc"
+    actions: "Thao tác không gian làm việc"
+    create: "Không gian làm việc mới"
+    rename: "Đổi tên"
+    name: "Tên không gian làm việc"
+    save: "Lưu"
 
 id:
   zone:
@@ -261,6 +429,14 @@ id:
     none: "Belum ada widget yang ditawarkan di sini."
     title: "Pilih widget"
     unknown: "Zona ini menampilkan “%name%”, yang tidak lagi tersedia."
+  layouts:
+    label: "Ruang kerja"
+    unnamed: "Ruang kerja"
+    actions: "Tindakan ruang kerja"
+    create: "Ruang kerja baru"
+    rename: "Ganti nama"
+    name: "Nama ruang kerja"
+    save: "Simpan"
 
 nl:
   zone:
@@ -273,3 +449,11 @@ nl:
     none: "Hier wordt nog geen widget aangeboden."
     title: "Kies een widget"
     unknown: "Deze zone toonde „%name%”, dat niet meer wordt aangeboden."
+  layouts:
+    label: "Werkruimte"
+    unnamed: "Werkruimte"
+    actions: "Acties van de werkruimte"
+    create: "Nieuwe werkruimte"
+    rename: "Hernoemen"
+    name: "Naam van de werkruimte"
+    save: "Opslaan"
