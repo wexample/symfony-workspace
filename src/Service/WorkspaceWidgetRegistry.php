@@ -5,9 +5,9 @@ namespace Wexample\SymfonyWorkspace\Service;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
+use Wexample\SymfonyHelpers\Attribute\WorkerSafe;
 use Wexample\SymfonyLoader\Helper\ComponentPathHelper;
 use Wexample\SymfonyLoader\Twig\VueExtension;
-use Wexample\SymfonyHelpers\Attribute\WorkerSafe;
 use Wexample\SymfonyWorkspace\Interface\WorkspaceWidgetInterface;
 use Wexample\SymfonyWorkspace\Interface\WorkspaceWidgetSizingInterface;
 
