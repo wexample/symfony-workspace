@@ -34,8 +34,11 @@
 
 // The frame every widget stands in: its zone whole, scrolling if the widget
 // asks for more (shapes/zone, `zone--scrollable`); the widget's root is a
-// `zone--content`, with the zone's room round it or none.
+// `zone--content`, with the zone's room round it or none. That room is
+// tighter than a page's: a board is a desk of small zones, and its heads
+// (`zone--head`) read the same room.
 .workspace-board--widget {
+  --zone-padding: var(--space-2);
   display: flex;
   flex-direction: column;
 }
