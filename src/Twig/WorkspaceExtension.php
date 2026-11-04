@@ -19,6 +19,10 @@ use Wexample\SymfonyWorkspace\Service\WorkspaceWidgetRegistry;
  *       workspace_board('project-dashboard', { subject: { entityName: 'project', id: project.id },
  *         widgets: ['traffic', 'errors'], layout: default_tree })) }}
  *
+ * `layoutSubject` keeps the arrangement under something else than the
+ * subject — `{ entityName: 'scenario_lineage', id: scenario.lineage }`: one
+ * arrangement for every version of a record.
+ *
  * The board requires the vues of the widgets it is handed, so a widget it
  * offers is one it can draw.
  */
@@ -48,8 +52,12 @@ class WorkspaceExtension extends AbstractExtension
     public function workspaceBoard(string $layoutKey, array $options = []): array
     {
         $subject = $options['subject'] ?? null;
-        $subjectType = $subject['entityName'] ?? null;
-        $subjectId = isset($subject['id']) ? (string) $subject['id'] : null;
+        // What the arrangement is kept under, when it is not the subject: a
+        // record's lineage rather than one version of it, so that every
+        // version opens on the same arrangement (`layoutSubject`).
+        $layoutSubject = $options['layoutSubject'] ?? $subject;
+        $subjectType = $layoutSubject['entityName'] ?? null;
+        $subjectId = isset($layoutSubject['id']) ? (string) $layoutSubject['id'] : null;
         $user = $this->security->getUser();
         $owner = $user instanceof UserEntityInterface ? $user : null;
         $current = $this->layoutService->findCurrent($layoutKey, $subjectType, $subjectId, $owner);
@@ -57,6 +65,7 @@ class WorkspaceExtension extends AbstractExtension
         return [
             'layoutKey' => $layoutKey,
             'subject' => $subject,
+            'layoutSubject' => $layoutSubject,
             'widgets' => $this->widgetRegistry->describe(
                 $this->widgetRegistry->getWidgets($options['widgets'] ?? null)
             ),

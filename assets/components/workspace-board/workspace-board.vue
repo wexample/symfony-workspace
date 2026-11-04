@@ -68,6 +68,13 @@ export default {
       type: Object,
       default: null
     },
+    // { entityName, id }: what the arrangement is kept under — the subject,
+    // unless the page names another: a record's lineage, its versions sharing
+    // one arrangement.
+    layoutSubject: {
+      type: Object,
+      default: null
+    },
     // [{ name, label, description, icon, view, sizing }]: `sizing`, how a
     // widget sizes its zone itself (WorkspaceWidgetSizingInterface).
     widgets: {
@@ -269,7 +276,9 @@ export default {
     },
 
     stateKey() {
-      return ['ui.workspace.layout', this.layoutKey, this.subject?.entityName, this.subject?.id]
+      const kept = this.layoutSubject ?? this.subject;
+
+      return ['ui.workspace.layout', this.layoutKey, kept?.entityName, kept?.id]
         .filter((part) => part !== undefined && part !== null)
         .join('.');
     },
@@ -438,10 +447,12 @@ export default {
     },
 
     layoutScope() {
+      const kept = this.layoutSubject ?? this.subject;
+
       return {
         layoutKey: this.layoutKey,
-        subjectType: this.subject?.entityName ?? null,
-        subjectId: this.subject?.id ?? null
+        subjectType: kept?.entityName ?? null,
+        subjectId: kept?.id ?? null
       };
     },
 
