@@ -9,6 +9,7 @@ use Wexample\SymfonyHelpers\Attribute\WorkerSafe;
 use Wexample\SymfonyLoader\Helper\ComponentPathHelper;
 use Wexample\SymfonyLoader\Twig\VueExtension;
 use Wexample\SymfonyWorkspace\Interface\WorkspaceWidgetInterface;
+use Wexample\SymfonyWorkspace\Interface\WorkspaceWidgetOpeningInterface;
 use Wexample\SymfonyWorkspace\Interface\WorkspaceWidgetSizingInterface;
 
 /**
@@ -73,8 +74,9 @@ class WorkspaceWidgetRegistry
 
     /**
      * What the browser is told of each: its name, its words in the page's
-     * language, its icon, its vue — and how it sizes its zone, when it does
-     * (WorkspaceWidgetSizingInterface).
+     * language, its icon, its vue — how it sizes its zone, when it does
+     * (WorkspaceWidgetSizingInterface), and the events it is opened by in a
+     * window of its own (WorkspaceWidgetOpeningInterface).
      *
      * @param WorkspaceWidgetInterface[] $widgets
      */
@@ -95,6 +97,7 @@ class WorkspaceWidgetRegistry
                 VueExtension::TEMPLATE_FILE_EXTENSION
             ),
             'sizing' => $widget instanceof WorkspaceWidgetSizingInterface ? $widget->getSizing() : null,
+            'opens' => $widget instanceof WorkspaceWidgetOpeningInterface ? $widget->getOpeningEvents() : [],
         ], $widgets);
     }
 }

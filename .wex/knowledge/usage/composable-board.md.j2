@@ -4,7 +4,7 @@
 
 ## Widgets
 
-A widget is a service implementing `WorkspaceWidgetInterface` — any bundle ships its own, autoconfigured and collected by `WorkspaceWidgetRegistry`: a `name` the saved arrangement keeps (never rename it), a `label` and `description` (translation keys), an `icon`, and the vue drawing it. The vue receives `zone-id`, `config` (what this zone keeps of it), `subject` (the record the zone, or a split above it, is about — the board's at the top) `context` (what the page hands every widget, `workspace_board(…, { context })`: addresses, ids) and `workspace`: `emit(type, detail)`, `on(type, listener)` → off, `updateConfig(zoneId, config)`.
+A widget is a service implementing `WorkspaceWidgetInterface` — any bundle ships its own, autoconfigured and collected by `WorkspaceWidgetRegistry`: a `name` the saved arrangement keeps (never rename it), a `label` and `description` (translation keys), an `icon`, and the vue drawing it. The vue receives `zone-id`, `config` (what this zone keeps of it), `subject` (the record the zone, or a split above it, is about — the board's at the top) `context` (what the page hands every widget, `workspace_board(…, { context })`: addresses, ids) and `workspace`: `emit(type, detail, { open })` → taken, `on(type, listener)` → off, `updateConfig(zoneId, config)`.
 
 ## The page
 
@@ -26,6 +26,8 @@ The board's bar holds, after its « Edit the layout », the page's own (`toolbar
 ## Events
 
 Widgets speak through the board. Every event is told on the board's element as `workspace:event` (`{ layoutKey, type, detail }`), and the page speaks to the widgets by dispatching `workspace:emit` (`{ type, detail }`) on it. With `live`, what the server publishes about the subject reaches them as `live`. The board also tells `layout` when the arrangement changes.
+
+`emit(type, detail, { open: true })` is for an event the reader expects to see answered — a slot's id pointed at. A listener returns `true` when it shows what the event names (a slot's editor, the slot); a widget only following the event, or pinned to something else, returns nothing. `emit` returns whether one took it. Taken by none, it opens the widget offered that declares it among its opening events (`WorkspaceWidgetOpeningInterface::getOpeningEvents()`, sent as `opens`) in a new window: the same page with `workspace_widget`, `workspace_event` and `workspace_detail` (JSON) in its address, the widget alone under the board's bar, and the event handed to its first listener of that type, as its zone would have heard it. That window keeps nothing: its widget's `config` lives as long as the window. No widget declares the event, nothing opens. An event told without `open` — a selection that follows the pointer — never opens anything.
 
 ## Keeping it
 
