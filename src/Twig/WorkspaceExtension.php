@@ -3,6 +3,7 @@
 namespace Wexample\SymfonyWorkspace\Twig;
 
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Twig\Extension\AbstractExtension;
@@ -25,10 +26,19 @@ use Wexample\SymfonyWorkspace\Service\WorkspaceWidgetRegistry;
  *
  * The board requires the vues of the widgets it is handed, so a widget it
  * offers is one it can draw.
+ *
+ * A page asked with `workspace_widget` — the board opening, in a panel, the
+ * widget an event no zone took opens — draws that widget alone, handed the
+ * event (`workspace_event`, `workspace_detail` as JSON).
  */
 class WorkspaceExtension extends AbstractExtension
 {
+    public const string PARAMETER_WIDGET = 'workspace_widget';
+    public const string PARAMETER_EVENT = 'workspace_event';
+    public const string PARAMETER_DETAIL = 'workspace_detail';
+
     public function __construct(
+        private readonly RequestStack $requestStack,
         private readonly WorkspaceWidgetRegistry $widgetRegistry,
         private readonly WorkspaceLayoutService $layoutService,
         private readonly Security $security,
@@ -95,6 +105,30 @@ class WorkspaceExtension extends AbstractExtension
             // What the page hands every widget: addresses, ids, the props of
             // what a widget draws of the page's own.
             'context' => $options['context'] ?? [],
+            'opened' => $this->opened(),
+        ];
+    }
+
+    /**
+     * The widget the page is asked to draw alone, and the event it is handed:
+     * `{ widget, type, detail }`, or none.
+     */
+    private function opened(): ?array
+    {
+        $query = $this->requestStack->getCurrentRequest()?->query;
+        $widget = $query?->get(self::PARAMETER_WIDGET);
+
+        if (! is_string($widget) || $widget === '') {
+            return null;
+        }
+
+        $type = $query->get(self::PARAMETER_EVENT);
+        $detail = $query->get(self::PARAMETER_DETAIL);
+
+        return [
+            'widget' => $widget,
+            'type' => is_string($type) && $type !== '' ? $type : null,
+            'detail' => is_string($detail) ? json_decode($detail, true) : null,
         ];
     }
 }

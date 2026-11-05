@@ -111,9 +111,10 @@
                         :workspace="api"
                 ></component>
                 {#- Arranging the board, last: an icon, its words its tooltip.
-                    A zone alone in its window leads back to the board. -#}
+                    A zone alone in its window leads back to the board; a
+                    widget opened in a panel has the panel's close. -#}
                 <a
-                        v-if="soloZone"
+                        v-if="soloZone && !openedZone"
                         class="action-icon"
                         :href="boardUrl"
                         :aria-label="t('zone.back')"
@@ -121,7 +122,7 @@
                         v-html="renderIcon('ph:bold/squares-four')"
                 ></a>
                 <button
-                        v-else
+                        v-else-if="!openedZone"
                         type="button"
                         class="action-icon"
                         :aria-pressed="editing ? 'true' : 'false'"
@@ -133,7 +134,8 @@
             </div>
         </div>
         {#- One zone alone, in a window of its own (`workspace_zone` in the
-            address): its widget, the board's bar over it. -#}
+            address), or the widget opened in a panel on an event (`opened`):
+            its widget, the board's bar over it. -#}
         <div v-if="soloZone" class="zone zone--panel workspace-board--solo">
             <template v-for="zone in [soloZone]" :key="zone.id">
                 {{ widget_frame }}

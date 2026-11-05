@@ -4,6 +4,7 @@ import AbstractDesignSystemVueMixin from '@wexample/symfony-design-system/js/Vue
 import { uiStateGet, uiStateSet } from '@wexample/symfony-design-system/js/Helper/UiStateHelper';
 import ChoiceList from '@wexample/symfony-design-system/components/choice-list/choice-list.vue';
 import ButtonMenu from '@wexample/symfony-design-system/components/button-menu/button-menu.vue';
+import { loadIntoTarget, TARGET_PANEL } from '@wexample/symfony-design-system/js/Helper/TargetHelper';
 
 // From how many widgets the choice of one is narrowed by typing.
 const PICKER_FILTER_FROM = 8;
@@ -22,14 +23,16 @@ const DOMAIN = 'WexampleSymfonyWorkspaceBundle.components.workspace-board.worksp
 // The address parameter naming the one zone a window shows, opened apart.
 export const WORKSPACE_ZONE_PARAMETER = 'workspace_zone';
 
-// The address parameters of a window opened on an event no zone took: the
-// widget it shows alone, and the event handed to it (`type`, `detail` as JSON).
+// The address parameters of the page a panel opens on an event no zone
+// took: the widget it shows alone, and the event handed to it (`type`,
+// `detail` as JSON). Read by the server (WorkspaceExtension), handed back as
+// `opened`.
 export const WORKSPACE_WIDGET_PARAMETER = 'workspace_widget';
 export const WORKSPACE_EVENT_PARAMETER = 'workspace_event';
 export const WORKSPACE_DETAIL_PARAMETER = 'workspace_detail';
 
-// The zone a window opened on an event shows: none of the arrangement's.
-const WINDOW_ZONE_ID = 'workspace-window';
+// The zone of a board opened on an event: none of the arrangement's.
+const OPENED_ZONE_ID = 'workspace-opened';
 
 // The entry each zone's bar offers while the board is arranged: its widget
 // in a window of its own.
@@ -60,9 +63,9 @@ export const WORKSPACE_ACTION_OPEN_WINDOW = 'workspace:open-window';
 // A listener returns `true` when it shows what the event names — a slot's
 // editor, the slot —; a widget only following it, or pinned to something
 // else, returns nothing. An event told with `{ open: true }` that no zone
-// takes opens, in a window of its own, the widget offered that is opened by
-// it (`opens`, WorkspaceWidgetOpeningInterface): alone under the board's bar,
-// handed the event as its zone would have heard it, kept with nothing.
+// takes opens the widget offered that is opened by it (`opens`, WorkspaceWidgetOpeningInterface) in a panel: the same page,
+// the widget alone under the board's bar (`opened`), handed the event as its
+// zone would have heard it, kept with nothing.
 export default {
   template: '#vue-template-wexample-symfony-workspace-bundle-components-workspace-board-workspace-board',
 
@@ -155,6 +158,12 @@ export default {
     zoneMenu: {
       type: Function,
       default: null
+    },
+    // `{ widget, type, detail }`: the widget this board shows alone — opened
+    // in a panel on an event no zone took —, and that event.
+    opened: {
+      type: Object,
+      default: null
     }
   },
 
@@ -174,9 +183,9 @@ export default {
       widgetsReady: false,
       // The zone this window shows alone, opened apart from the board.
       soloZoneId: new URLSearchParams(window.location.search).get(WORKSPACE_ZONE_PARAMETER),
-      // The widget this window shows alone, opened on an event: a zone of
+      // The widget this board shows alone, opened on an event: a zone of
       // its own, kept with nothing.
-      windowZone: this.readWindowZone()
+      openedZone: this.opened ? { id: OPENED_ZONE_ID, widget: this.opened.widget, config: {} } : null
     };
   },
 
@@ -218,8 +227,8 @@ export default {
     // The zone shown alone, while it still is one of the board's; gone from
     // it, the board whole.
     soloZone() {
-      if (this.windowZone) {
-        return this.windowZone;
+      if (this.openedZone) {
+        return this.openedZone;
       }
 
       return this.soloZoneId && this.tree ? this.findZone(this.tree, this.soloZoneId) : null;
@@ -254,6 +263,8 @@ export default {
 
   created() {
     this.listeners = new Map();
+    // The event this board was opened on, for the first to listen for it.
+    this.openedEvent = this.opened?.type ? { type: this.opened.type, detail: this.opened.detail } : null;
     this.definitions = {};
     this.saveTimer = null;
     // What a widget is handed to speak through: the board's words, not the
@@ -397,8 +408,8 @@ export default {
     // What a zone carries changed: through the tiling, or — a zone shown
     // alone, with no tiling — in the tree itself.
     updateZone(zoneId, patch) {
-      if (zoneId === this.windowZone?.id) {
-        this.windowZone = { ...this.windowZone, ...patch };
+      if (zoneId === this.openedZone?.id) {
+        this.openedZone = { ...this.openedZone, ...patch };
 
         return;
       }
@@ -570,8 +581,8 @@ export default {
     },
 
     // Told to the widgets listening, then to the page; taken by none of
-    // them and told to `open`, the widget opened by it in a window of its
-    // own. Whether a widget took it.
+    // them and told to `open`, the widget opened by it in a panel. Whether a
+    // widget took it.
     emit(type, detail, { open = false } = {}) {
       const taken = this.tell(type, detail);
 
@@ -581,7 +592,7 @@ export default {
       }));
 
       if (open && !taken) {
-        this.openWindow(type, detail);
+        this.openPanel(type, detail);
       }
 
       return taken;
@@ -601,7 +612,7 @@ export default {
     },
 
     // Returns what stops listening; a widget calls it as it goes. The event
-    // this window was opened on reaches the first to listen for it.
+    // this board was opened on reaches the first to listen for it.
     on(type, listener) {
       if (!this.listeners.has(type)) {
         this.listeners.set(type, new Set());
@@ -609,19 +620,19 @@ export default {
 
       this.listeners.get(type).add(listener);
 
-      if (this.windowEvent?.type === type) {
-        const { detail } = this.windowEvent;
+      if (this.openedEvent?.type === type) {
+        const { detail } = this.openedEvent;
 
-        this.windowEvent = null;
+        this.openedEvent = null;
         queueMicrotask(() => listener(detail));
       }
 
       return () => this.listeners.get(type)?.delete(listener);
     },
 
-    // The widget offered that is opened by the event, alone in a window of
-    // its own; none, nothing.
-    openWindow(type, detail) {
+    // The widget offered that is opened by the event, alone in a panel —
+    // this page, asked to draw it alone —; none, nothing.
+    openPanel(type, detail) {
       const widget = this.widgets.find((item) => (item.opens ?? []).includes(type));
 
       if (!widget) {
@@ -633,22 +644,7 @@ export default {
       url.searchParams.set(WORKSPACE_EVENT_PARAMETER, type);
       url.searchParams.set(WORKSPACE_DETAIL_PARAMETER, JSON.stringify(detail ?? null));
 
-      window.open(url.toString(), '_blank', 'noopener');
-    },
-
-    // The zone of a window opened on an event, and the event it is handed.
-    readWindowZone() {
-      const parameters = new URLSearchParams(window.location.search);
-      const widget = parameters.get(WORKSPACE_WIDGET_PARAMETER);
-
-      if (!widget) {
-        return null;
-      }
-
-      const type = parameters.get(WORKSPACE_EVENT_PARAMETER);
-      this.windowEvent = type ? { type, detail: JSON.parse(parameters.get(WORKSPACE_DETAIL_PARAMETER) ?? 'null') } : null;
-
-      return { id: WINDOW_ZONE_ID, widget, config: {} };
+      loadIntoTarget(this.app, TARGET_PANEL, url.toString());
     },
 
     onPageEmit(event) {
