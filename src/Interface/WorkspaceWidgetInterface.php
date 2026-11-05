@@ -12,7 +12,9 @@ namespace Wexample\SymfonyWorkspace\Interface;
  * `workspace` (the board: `emit(type, detail)`, `on(type, listener)`,
  * `updateConfig(zoneId, config)`), `context` (what the page hands every
  * widget: addresses, ids), `scope` (what the board's bar holds — a record
- * chosen once for all its widgets) and `zone-id`.
+ * chosen once for all its widgets), `zone-id` and `alone` (shown by itself —
+ * a zone in its own window, a widget opened in a panel —, no other zone
+ * beside it: what only matters among others, a pin, is left out).
  *
  * Every widget stands in the same frame, a zone that scrolls, and draws its
  * root as a `zone--content` of the design system — the zone's room round it
