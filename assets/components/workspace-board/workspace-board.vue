@@ -41,9 +41,9 @@ export const WORKSPACE_ACTION_OPEN_WINDOW = 'workspace:open-window';
 
 // A screen the reader composes: zones cut and sized as in a zone-tiling, each
 // showing a widget chosen among those the page offers (WorkspaceWidgetInterface
-// on the server, handed as `widgets`), the arrangement kept for the account —
-// or in the visitor's own state without one. An account keeps several of a
-// page, named, chosen and made from the start of the board's bar.
+// on the server, handed as `widgets`), the arrangement kept for everyone who
+// opens the page — or in the visitor's own state without an account. A page
+// keeps several, named, chosen and made from the start of the board's bar.
 //
 // The widgets speak to each other through the board (`workspace.emit(type,
 // detail)`, `workspace.on(type, listener)`), and to the rest of the page: each
@@ -114,7 +114,7 @@ export default {
       type: String,
       default: null
     },
-    // The arrangements the account keeps of the page, `[{ id, name }]`, the
+    // The arrangements the page keeps, `[{ id, name }]`, the
     // one shown (`layoutId`, none before the first is kept), and where they
     // are made, chosen and renamed (`{ create, select, rename }`).
     layouts: {
@@ -457,8 +457,8 @@ export default {
       }, SAVE_DELAY_MS);
     },
 
-    // Kept for the account where there is one, in the visitor's state
-    // otherwise. A failed save loses nothing on screen.
+    // Kept for everyone where an account is signed in, in the visitor's
+    // state otherwise. A failed save loses nothing on screen.
     async save() {
       if (!this.saveUrl) {
         uiStateSet(this.app, this.stateKey(), { tree: this.tree, values: this.values });

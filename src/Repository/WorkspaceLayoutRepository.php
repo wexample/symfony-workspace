@@ -3,7 +3,6 @@
 namespace Wexample\SymfonyWorkspace\Repository;
 
 use Doctrine\ORM\QueryBuilder;
-use Wexample\SymfonyHelpers\Entity\Interfaces\UserEntityInterface;
 use Wexample\SymfonyHelpers\Repository\AbstractRepository;
 use Wexample\SymfonyWorkspace\Entity\WorkspaceLayout;
 
@@ -19,23 +18,8 @@ class WorkspaceLayoutRepository extends AbstractRepository
     }
 
     /**
-     * The one arrangement of a page, about a record or not, for an account or
-     * offered to everyone (`owner` null).
-     */
-    public function findOneByKey(
-        string $layoutKey,
-        ?string $subjectType,
-        ?string $subjectId,
-        ?UserEntityInterface $owner,
-    ): ?WorkspaceLayout {
-        return $this->queryByKey($layoutKey, $subjectType, $subjectId, $owner)
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
-    /**
-     * The arrangements an account keeps of a page, in the order it made them.
+     * The arrangements of a page, about a record or not, in the order they
+     * were made.
      *
      * @return WorkspaceLayout[]
      */
@@ -43,22 +27,20 @@ class WorkspaceLayoutRepository extends AbstractRepository
         string $layoutKey,
         ?string $subjectType,
         ?string $subjectId,
-        UserEntityInterface $owner,
     ): array {
-        return $this->queryByKey($layoutKey, $subjectType, $subjectId, $owner)
+        return $this->queryByKey($layoutKey, $subjectType, $subjectId)
             ->orderBy('layout.id', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
-    /** The one of them the account chose last, or else the one changed last. */
+    /** The one of them chosen last, or else the one changed last. */
     public function findCurrent(
         string $layoutKey,
         ?string $subjectType,
         ?string $subjectId,
-        UserEntityInterface $owner,
     ): ?WorkspaceLayout {
-        return $this->queryByKey($layoutKey, $subjectType, $subjectId, $owner)
+        return $this->queryByKey($layoutKey, $subjectType, $subjectId)
             ->orderBy('layout.selected', 'DESC')
             ->addOrderBy('layout.dateUpdated', 'DESC')
             ->setMaxResults(1)
@@ -70,13 +52,12 @@ class WorkspaceLayoutRepository extends AbstractRepository
         string $layoutKey,
         ?string $subjectType,
         ?string $subjectId,
-        ?UserEntityInterface $owner,
     ): QueryBuilder {
         $builder = $this->createQueryBuilder('layout')
             ->andWhere('layout.layoutKey = :key')
             ->setParameter('key', $layoutKey);
 
-        foreach (['subjectType' => $subjectType, 'subjectId' => $subjectId, 'owner' => $owner] as $field => $value) {
+        foreach (['subjectType' => $subjectType, 'subjectId' => $subjectId] as $field => $value) {
             if ($value === null) {
                 $builder->andWhere("layout.$field IS NULL");
             } else {

@@ -12,10 +12,10 @@ use Wexample\SymfonyWorkspace\Entity\WorkspaceLayout;
 use Wexample\SymfonyWorkspace\Service\WorkspaceLayoutService;
 
 /**
- * Where a workspace keeps how it was cut, for the account arranging it — and
- * the arrangements it keeps of one page, made, chosen and renamed. Without an
- * account nothing is written here: the board keeps it in the visitor's own
- * state instead.
+ * Where a workspace keeps how it was cut, for everyone who opens the page —
+ * and the arrangements it keeps of one page, made, chosen and renamed. Only
+ * a signed-in account writes here: a visitor's board keeps it in the
+ * visitor's own state instead.
  */
 #[Route(path: '_workspace/layout/', name: 'workspace_layout_')]
 final class WorkspaceLayoutController extends AbstractController
@@ -35,11 +35,11 @@ final class WorkspaceLayoutController extends AbstractController
 
     private const int NAME_LENGTH_MAX = 255;
 
-    /** Into the arrangement named (`id`), or the account's current one: answered with its id. */
+    /** Into the arrangement named (`id`), or the page's current one: answered with its id. */
     #[Route(path: self::ROUTE_SAVE, name: self::ROUTE_SAVE, methods: ['POST'])]
     public function save(Request $request, WorkspaceLayoutService $layoutService): Response
     {
-        return $this->handle($request, function (array $payload, UserEntityInterface $user) use ($layoutService): Response {
+        return $this->handle($request, function (array $payload) use ($layoutService): Response {
             if (! is_string($payload['layoutKey'] ?? null) || ! is_array($payload['tree'] ?? null)) {
                 return $this->invalid();
             }
@@ -49,7 +49,6 @@ final class WorkspaceLayoutController extends AbstractController
                 tree: $payload['tree'],
                 subjectType: $this->subjectType($payload),
                 subjectId: $this->subjectId($payload),
-                owner: $user,
                 id: is_string($payload['id'] ?? null) ? $payload['id'] : null,
             ));
         });
@@ -59,7 +58,7 @@ final class WorkspaceLayoutController extends AbstractController
     #[Route(path: self::ROUTE_CREATE, name: self::ROUTE_CREATE, methods: ['POST'])]
     public function create(Request $request, WorkspaceLayoutService $layoutService): Response
     {
-        return $this->handle($request, function (array $payload, UserEntityInterface $user) use ($layoutService): Response {
+        return $this->handle($request, function (array $payload) use ($layoutService): Response {
             if (! is_string($payload['layoutKey'] ?? null) || ! is_array($payload['tree'] ?? null)) {
                 return $this->invalid();
             }
@@ -70,17 +69,16 @@ final class WorkspaceLayoutController extends AbstractController
                 name: $this->name($payload),
                 subjectType: $this->subjectType($payload),
                 subjectId: $this->subjectId($payload),
-                owner: $user,
             ));
         });
     }
 
-    /** One of the account's arrangements chosen: answered with its tree. */
+    /** One of the page's arrangements chosen: answered with its tree. */
     #[Route(path: self::ROUTE_SELECT, name: self::ROUTE_SELECT, methods: ['POST'])]
     public function select(Request $request, WorkspaceLayoutService $layoutService): Response
     {
-        return $this->handle($request, function (array $payload, UserEntityInterface $user) use ($layoutService): Response {
-            $layout = is_string($payload['id'] ?? null) ? $layoutService->select($payload['id'], $user) : null;
+        return $this->handle($request, function (array $payload) use ($layoutService): Response {
+            $layout = is_string($payload['id'] ?? null) ? $layoutService->select($payload['id']) : null;
 
             return $layout ? $this->answer($layout) : $this->notFound();
         });
@@ -89,8 +87,8 @@ final class WorkspaceLayoutController extends AbstractController
     #[Route(path: self::ROUTE_RENAME, name: self::ROUTE_RENAME, methods: ['POST'])]
     public function rename(Request $request, WorkspaceLayoutService $layoutService): Response
     {
-        return $this->handle($request, function (array $payload, UserEntityInterface $user) use ($layoutService): Response {
-            $layout = is_string($payload['id'] ?? null) ? $layoutService->rename($payload['id'], $this->name($payload), $user) : null;
+        return $this->handle($request, function (array $payload) use ($layoutService): Response {
+            $layout = is_string($payload['id'] ?? null) ? $layoutService->rename($payload['id'], $this->name($payload)) : null;
 
             return $layout ? $this->answer($layout) : $this->notFound();
         });
@@ -105,7 +103,7 @@ final class WorkspaceLayoutController extends AbstractController
         $user = $this->getUser();
 
         if (! $user instanceof UserEntityInterface) {
-            return new JsonResponse(['error' => 'No account to keep it for.'], Response::HTTP_FORBIDDEN);
+            return new JsonResponse(['error' => 'Only a signed-in account arranges it.'], Response::HTTP_FORBIDDEN);
         }
 
         if (! $this->isCsrfTokenValid(self::CSRF_TOKEN_ID, $request->headers->get('X-CSRF-Token'))) {
@@ -115,7 +113,7 @@ final class WorkspaceLayoutController extends AbstractController
         $content = $request->getContent();
         $payload = strlen($content) <= self::TREE_LENGTH_MAX ? json_decode($content, true) : null;
 
-        return is_array($payload) ? $then($payload, $user) : $this->invalid();
+        return is_array($payload) ? $then($payload) : $this->invalid();
     }
 
     private function answer(WorkspaceLayout $layout): JsonResponse

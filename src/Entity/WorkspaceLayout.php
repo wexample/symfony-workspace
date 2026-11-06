@@ -6,7 +6,6 @@ use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Wexample\SymfonyHelpers\Entity\AbstractEntity;
-use Wexample\SymfonyHelpers\Entity\Interfaces\UserEntityInterface;
 use Wexample\SymfonyWorkspace\Repository\WorkspaceLayoutRepository;
 
 /**
@@ -15,10 +14,10 @@ use Wexample\SymfonyWorkspace\Repository\WorkspaceLayoutRepository;
  *
  * Found by what the page names it (`layoutKey`), and by the record it is
  * about, if any (`subjectType` / `subjectId`): the dashboard of one project is
- * not the dashboard of another. Kept for one account, or, without one, for
- * whoever has not arranged their own — the arrangement a page offers first.
- * An account may keep several of one page, each by its name, and opens on
- * the one it chose last (`selected`).
+ * not the dashboard of another. Shared by everyone who opens the page: what
+ * one arranges, the others find — two arranging at once, the last one kept.
+ * A page may keep several, each by its name, and opens on the one chosen
+ * last (`selected`).
  */
 #[ORM\Entity(repositoryClass: WorkspaceLayoutRepository::class)]
 #[ORM\Table(name: 'workspace_layout')]
@@ -41,10 +40,6 @@ class WorkspaceLayout extends AbstractEntity
     #[ORM\Column(type: Types::STRING, length: 64, nullable: true)]
     protected ?string $subjectId = null;
 
-    /** Whose it is; none, the arrangement offered to everyone. */
-    #[ORM\ManyToOne(targetEntity: UserEntityInterface::class)]
-    #[ORM\JoinColumn(name: 'owner_id', nullable: true, onDelete: 'CASCADE')]
-    protected ?UserEntityInterface $owner = null;
 
     #[ORM\Column(type: Types::JSON)]
     protected array $tree = [];
@@ -56,15 +51,15 @@ class WorkspaceLayout extends AbstractEntity
     protected DateTimeImmutable $dateUpdated;
 
     /**
-     * What an account calls it, among the arrangements it keeps of one page:
-     * none, the first one, kept before it was given a name.
+     * What it is called among the arrangements of one page: none, the first
+     * one, kept before it was given a name.
      */
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     protected ?string $name = null;
 
     /**
-     * The one of them the account chose last: the page opens on it. One at
-     * most, of a page and a record, for an account.
+     * The one of them chosen last: the page opens on it. One at most, of a
+     * page and a record.
      */
     #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
     protected bool $selected = false;
@@ -96,18 +91,6 @@ class WorkspaceLayout extends AbstractEntity
     {
         $this->subjectType = $type;
         $this->subjectId = $id;
-
-        return $this;
-    }
-
-    public function getOwner(): ?UserEntityInterface
-    {
-        return $this->owner;
-    }
-
-    public function setOwner(?UserEntityInterface $owner): self
-    {
-        $this->owner = $owner;
 
         return $this;
     }

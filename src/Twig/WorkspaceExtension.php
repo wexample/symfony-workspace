@@ -56,8 +56,8 @@ class WorkspaceExtension extends AbstractExtension
 
     /**
      * The props of a board: its key, what it is about, the widgets it offers,
-     * the arrangement the account left — or the one offered to everyone, or
-     * the page's `layout` —, and where to keep it when there is an account.
+     * the arrangement chosen last — or the page's `layout` —, and where to
+     * keep it when an account is signed in.
      */
     public function workspaceBoard(string $layoutKey, array $options = []): array
     {
@@ -68,9 +68,8 @@ class WorkspaceExtension extends AbstractExtension
         $layoutSubject = $options['layoutSubject'] ?? $subject;
         $subjectType = $layoutSubject['entityName'] ?? null;
         $subjectId = isset($layoutSubject['id']) ? (string) $layoutSubject['id'] : null;
-        $user = $this->security->getUser();
-        $owner = $user instanceof UserEntityInterface ? $user : null;
-        $current = $this->layoutService->findCurrent($layoutKey, $subjectType, $subjectId, $owner);
+        $signedIn = $this->security->getUser() instanceof UserEntityInterface;
+        $current = $this->layoutService->findCurrent($layoutKey, $subjectType, $subjectId);
 
         return [
             'layoutKey' => $layoutKey,
@@ -85,19 +84,19 @@ class WorkspaceExtension extends AbstractExtension
             'layout' => $current?->getTree() ?? ($options['layout'] ?? null),
             // The page's own arrangement, what a new one starts from.
             'defaultLayout' => $options['layout'] ?? null,
-            'saveUrl' => $owner
+            'saveUrl' => $signedIn
                 ? $this->urlGenerator->generate('workspace_layout_'.WorkspaceLayoutController::ROUTE_SAVE)
                 : null,
-            // The arrangements the account keeps of the page — the one shown
-            // among them —, and where they are made, chosen and renamed.
-            'layouts' => $owner ? $this->layoutService->describeOwned($layoutKey, $subjectType, $subjectId, $owner) : [],
-            'layoutId' => $current && $current->getOwner() ? (string) $current->getId() : null,
-            'layoutUrls' => $owner ? [
+            // The arrangements the page keeps — the one shown among them —,
+            // and where they are made, chosen and renamed.
+            'layouts' => $signedIn ? $this->layoutService->describeAll($layoutKey, $subjectType, $subjectId) : [],
+            'layoutId' => $current ? (string) $current->getId() : null,
+            'layoutUrls' => $signedIn ? [
                 'create' => $this->urlGenerator->generate('workspace_layout_'.WorkspaceLayoutController::ROUTE_CREATE),
                 'select' => $this->urlGenerator->generate('workspace_layout_'.WorkspaceLayoutController::ROUTE_SELECT),
                 'rename' => $this->urlGenerator->generate('workspace_layout_'.WorkspaceLayoutController::ROUTE_RENAME),
             ] : null,
-            'saveToken' => $owner
+            'saveToken' => $signedIn
                 ? $this->csrfTokenManager->getToken(WorkspaceLayoutController::CSRF_TOKEN_ID)->getValue()
                 : null,
             'flush' => $options['flush'] ?? false,

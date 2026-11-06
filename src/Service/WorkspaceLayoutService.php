@@ -4,13 +4,12 @@ namespace Wexample\SymfonyWorkspace\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Uid\Uuid;
-use Wexample\SymfonyHelpers\Entity\Interfaces\UserEntityInterface;
 use Wexample\SymfonyWorkspace\Entity\WorkspaceLayout;
 use Wexample\SymfonyWorkspace\Repository\WorkspaceLayoutRepository;
 
 /**
- * Reads and keeps the arrangements of workspaces. What an account left wins
- * over what is offered to everyone; nothing kept, the page's own is drawn.
+ * Reads and keeps the arrangements of workspaces, the same for everyone who
+ * opens the page; nothing kept, the page's own is drawn.
  */
 class WorkspaceLayoutService
 {
@@ -20,40 +19,36 @@ class WorkspaceLayoutService
     ) {
     }
 
-    /** The arrangement a page opens on: the account's current one, or the one offered to everyone. */
+    /** The arrangement a page opens on: the one chosen last. */
     public function findTree(
         string $layoutKey,
         ?string $subjectType = null,
         ?string $subjectId = null,
-        ?UserEntityInterface $owner = null,
     ): ?array {
-        return $this->findCurrent($layoutKey, $subjectType, $subjectId, $owner)?->getTree();
+        return $this->findCurrent($layoutKey, $subjectType, $subjectId)?->getTree();
     }
 
     public function findCurrent(
         string $layoutKey,
         ?string $subjectType = null,
         ?string $subjectId = null,
-        ?UserEntityInterface $owner = null,
     ): ?WorkspaceLayout {
-        return ($owner ? $this->repository->findCurrent($layoutKey, $subjectType, $subjectId, $owner) : null)
-            ?? $this->repository->findOneByKey($layoutKey, $subjectType, $subjectId, null);
+        return $this->repository->findCurrent($layoutKey, $subjectType, $subjectId);
     }
 
     /**
-     * The arrangements an account keeps of a page, as its board lists them.
+     * The arrangements a page keeps, as its board lists them.
      *
      * @return array<array{id: string, name: ?string}>
      */
-    public function describeOwned(
+    public function describeAll(
         string $layoutKey,
         ?string $subjectType,
         ?string $subjectId,
-        UserEntityInterface $owner,
     ): array {
         return array_map(
             fn (WorkspaceLayout $layout): array => self::describe($layout),
-            $this->repository->findByKey($layoutKey, $subjectType, $subjectId, $owner),
+            $this->repository->findByKey($layoutKey, $subjectType, $subjectId),
         );
     }
 
@@ -64,28 +59,21 @@ class WorkspaceLayoutService
     }
 
     /**
-     * Kept for the account, or offered to everyone without one: which of the
-     * two a caller may write is the caller's to decide. Into the arrangement
-     * named (`id`) when it is the account's, into its current one else — made
-     * the first time.
+     * Into the arrangement named (`id`) when it is one of the page's, into
+     * its current one else — made the first time.
      */
     public function saveTree(
         string $layoutKey,
         array $tree,
         ?string $subjectType = null,
         ?string $subjectId = null,
-        ?UserEntityInterface $owner = null,
         ?string $id = null,
     ): WorkspaceLayout {
-        $layout = ($id && $owner ? $this->findOwned($id, $owner) : null)
-            ?? ($owner
-                ? $this->repository->findCurrent($layoutKey, $subjectType, $subjectId, $owner)
-                : $this->repository->findOneByKey($layoutKey, $subjectType, $subjectId, null));
+        $layout = ($id ? $this->findOfPage($id, $layoutKey, $subjectType, $subjectId) : null)
+            ?? $this->repository->findCurrent($layoutKey, $subjectType, $subjectId);
 
         if (! $layout) {
-            $layout = (new WorkspaceLayout($layoutKey))
-                ->setSubject($subjectType, $subjectId)
-                ->setOwner($owner);
+            $layout = (new WorkspaceLayout($layoutKey))->setSubject($subjectType, $subjectId);
             $this->entityManager->persist($layout);
         }
 
@@ -95,18 +83,16 @@ class WorkspaceLayoutService
         return $layout;
     }
 
-    /** One more arrangement of a page for the account, named, chosen at once. */
+    /** One more arrangement of a page, named, chosen at once. */
     public function create(
         string $layoutKey,
         array $tree,
         ?string $name,
         ?string $subjectType,
         ?string $subjectId,
-        UserEntityInterface $owner,
     ): WorkspaceLayout {
         $layout = (new WorkspaceLayout($layoutKey))
             ->setSubject($subjectType, $subjectId)
-            ->setOwner($owner)
             ->setName($name)
             ->setTree($tree);
         $this->entityManager->persist($layout);
@@ -116,10 +102,10 @@ class WorkspaceLayoutService
         return $layout;
     }
 
-    /** One of the account's arrangements chosen: the page opens on it from now on. */
-    public function select(string $id, UserEntityInterface $owner): ?WorkspaceLayout
+    /** One of the arrangements chosen: the page opens on it from now on. */
+    public function select(string $id): ?WorkspaceLayout
     {
-        $layout = $this->findOwned($id, $owner);
+        $layout = $this->find($id);
 
         if ($layout) {
             $this->markSelected($layout);
@@ -129,9 +115,9 @@ class WorkspaceLayoutService
         return $layout;
     }
 
-    public function rename(string $id, ?string $name, UserEntityInterface $owner): ?WorkspaceLayout
+    public function rename(string $id, ?string $name): ?WorkspaceLayout
     {
-        $layout = $this->findOwned($id, $owner)?->setName($name);
+        $layout = $this->find($id)?->setName($name);
         $this->entityManager->flush();
 
         return $layout;
@@ -144,7 +130,6 @@ class WorkspaceLayoutService
             $layout->getLayoutKey(),
             $layout->getSubjectType(),
             $layout->getSubjectId(),
-            $layout->getOwner(),
         );
 
         foreach ($siblings as $sibling) {
@@ -154,11 +139,21 @@ class WorkspaceLayoutService
         $layout->setSelected(true);
     }
 
-    /** An arrangement by its id, when it is the account's: none else. */
-    private function findOwned(string $id, UserEntityInterface $owner): ?WorkspaceLayout
+    private function find(string $id): ?WorkspaceLayout
     {
-        $layout = Uuid::isValid($id) ? $this->repository->find($id) : null;
+        return Uuid::isValid($id) ? $this->repository->find($id) : null;
+    }
 
-        return $layout && $layout->getOwner() === $owner ? $layout : null;
+    /** An arrangement by its id, when it is one of this page's: none else. */
+    private function findOfPage(string $id, string $layoutKey, ?string $subjectType, ?string $subjectId): ?WorkspaceLayout
+    {
+        $layout = $this->find($id);
+
+        return $layout
+            && $layout->getLayoutKey() === $layoutKey
+            && $layout->getSubjectType() === $subjectType
+            && $layout->getSubjectId() === $subjectId
+            ? $layout
+            : null;
     }
 }
