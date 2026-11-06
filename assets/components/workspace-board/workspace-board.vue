@@ -357,8 +357,10 @@ export default {
     },
 
     // How the widget a zone shows sizes it, if it does: `{ height: 'content' }`.
+    // Not while the board is arranged: the zone shows the widgets to choose
+    // from, not its widget, and is sized by hand like any other.
     zoneSizing(zone) {
-      return this.widgetsByName[zone.widget]?.sizing ?? null;
+      return this.editing ? null : this.widgetsByName[zone.widget]?.sizing ?? null;
     },
 
     // A widget taken for a zone, by its name.
