@@ -10,6 +10,7 @@
     {{- vue_require(render_pass, '@WexampleSymfonyDesignSystemBundle/components/choice-list') -}}
     {{- vue_require(render_pass, '@WexampleSymfonyDesignSystemBundle/components/button-menu') -}}
     {{- vue_require(render_pass, '@WexampleSymfonyDesignSystemBundle/components/form/dynamic-form') -}}
+    {{- vue_require(render_pass, '@WexampleSymfonyDesignSystemBundle/components/tab') -}}
     {#- The widgets it offers are the widgets it can draw: their vues are
         required with it. -#}
     {%- for widget in widgets|default([]) -%}
@@ -32,10 +33,14 @@
                             :label="t('picker.title')"
                             @change="pick(zone, $event)"
                     ></choice-list>
-                    {#- The widget chosen has settings of its own: its form
-                        under it, in a block named by the widget, what it
-                        validates kept with the zone. -#}
-                    <section v-if="settingsFormOf(zone)" class="block block--compact">
+                </div>
+{%- endset -%}
+
+{#- The settings of the widget a zone shows, in a block named by it: what its
+    form validates kept with the zone. -#}
+{%- set settings -%}
+<div class="zone--content">
+                    <section class="block block--compact">
                         <div class="block--title">
                             <span v-if="widgetsByName[zone.widget].icon" class="block--title-leading" v-html="renderIcon(widgetsByName[zone.widget].icon)"></span>
                             <span class="block--title-label">[[ widgetsByName[zone.widget].label ]]</span>
@@ -174,10 +179,24 @@
                 {{ widget_frame }}
             </template>
             {#- The board being arranged: in every zone, the widgets to put in
-                it, the one it shows marked. -#}
+                it, the one it shows marked — and, a tab beside, the settings
+                of that one when it has some, the tab it opens on. -#}
             <template #edit="{ zone }">
                 <div class="workspace-board--choose">
-                    {{ picker }}
+                    <template v-if="settingsFormOf(zone)">
+                        <div class="toolbar toolbar--compact zone--head">
+                            <tab :items="editTabs" :active-key="editTabOf(zone)" compact @change="editTab[zone.id] = $event"></tab>
+                        </div>
+                        <div v-if="editTabOf(zone) === 'settings'" class="zone zone--scrollable">
+                            {{ settings }}
+                        </div>
+                        <template v-else>
+                            {{ picker }}
+                        </template>
+                    </template>
+                    <template v-else>
+                        {{ picker }}
+                    </template>
                 </div>
             </template>
         </zone-tiling>

@@ -5,6 +5,7 @@ import { uiStateGet, uiStateSet } from '@wexample/symfony-design-system/js/Helpe
 import ChoiceList from '@wexample/symfony-design-system/components/choice-list/choice-list.vue';
 import ButtonMenu from '@wexample/symfony-design-system/components/button-menu/button-menu.vue';
 import DynamicForm from '@wexample/symfony-design-system/components/form/dynamic-form/dynamic-form.vue';
+import Tab from '@wexample/symfony-design-system/components/tab/tab.vue';
 import { loadIntoTarget, TARGET_PANEL } from '@wexample/symfony-design-system/js/Helper/TargetHelper';
 
 // From how many widgets the choice of one is narrowed by typing.
@@ -76,6 +77,7 @@ export default {
     ButtonMenu,
     ChoiceList,
     DynamicForm,
+    Tab,
     ZoneTiling
   },
 
@@ -178,6 +180,9 @@ export default {
       ...this.readKept(this.saveUrl ? this.layout : uiStateGet(this.app, this.stateKey(), this.layout)),
       // The board being arranged: its zones offer what can be done to them.
       editing: false,
+      // While arranged, the tab each zone shows, by its id: its widget's
+      // settings unless the widgets to choose from were asked.
+      editTab: {},
       layoutList: [...this.layouts],
       currentLayoutId: this.layoutId,
       // An arrangement being named in the bar: `{ mode: 'create'|'rename', value }`.
@@ -194,6 +199,14 @@ export default {
   },
 
   computed: {
+    // The tabs of a zone whose widget has settings, while the board is arranged.
+    editTabs() {
+      return [
+        { key: 'widget', label: this.t('edit.tab_widget'), icon: 'ph:bold/squares-four' },
+        { key: 'settings', label: this.t('edit.tab_settings'), icon: 'ph:bold/sliders' }
+      ];
+    },
+
     widgetsByName() {
       return Object.fromEntries(this.widgets.map((widget) => [widget.name, widget]));
     },
@@ -365,6 +378,11 @@ export default {
     // from, not its widget, and is sized by hand like any other.
     zoneSizing(zone) {
       return this.editing ? null : this.widgetsByName[zone.widget]?.sizing ?? null;
+    },
+
+    // The tab a zone shows while the board is arranged.
+    editTabOf(zone) {
+      return this.editTab[zone.id] ?? 'settings';
     },
 
     // The form of the settings of the widget a zone shows, if it has some.
