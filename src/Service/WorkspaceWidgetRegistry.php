@@ -10,6 +10,7 @@ use Wexample\SymfonyLoader\Helper\ComponentPathHelper;
 use Wexample\SymfonyLoader\Twig\VueExtension;
 use Wexample\SymfonyWorkspace\Interface\WorkspaceWidgetInterface;
 use Wexample\SymfonyWorkspace\Interface\WorkspaceWidgetOpeningInterface;
+use Wexample\SymfonyWorkspace\Interface\WorkspaceWidgetSettingsInterface;
 use Wexample\SymfonyWorkspace\Interface\WorkspaceWidgetSizingInterface;
 
 /**
@@ -98,6 +99,19 @@ class WorkspaceWidgetRegistry
             ),
             'sizing' => $widget instanceof WorkspaceWidgetSizingInterface ? $widget->getSizing() : null,
             'opens' => $widget instanceof WorkspaceWidgetOpeningInterface ? $widget->getOpeningEvents() : [],
+            'settingsForm' => $widget instanceof WorkspaceWidgetSettingsInterface ? $this->settingsForm($widget->getSettingsForm()) : null,
         ], $widgets);
+    }
+
+    /**
+     * The form of a widget's settings as the board draws it, by symfony-forms
+     * — which this package does not require: only a widget with settings needs it.
+     */
+    private function settingsForm(string $formClass): array
+    {
+        $definition = $this->twig->getFunction('form_definition_for')
+            ?? throw new \LogicException('A widget with settings needs symfony-forms, for form_definition_for().');
+
+        return ($definition->getCallable())($formClass);
     }
 }

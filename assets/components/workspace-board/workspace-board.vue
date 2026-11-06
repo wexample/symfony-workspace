@@ -4,6 +4,7 @@ import AbstractDesignSystemVueMixin from '@wexample/symfony-design-system/js/Vue
 import { uiStateGet, uiStateSet } from '@wexample/symfony-design-system/js/Helper/UiStateHelper';
 import ChoiceList from '@wexample/symfony-design-system/components/choice-list/choice-list.vue';
 import ButtonMenu from '@wexample/symfony-design-system/components/button-menu/button-menu.vue';
+import DynamicForm from '@wexample/symfony-design-system/components/form/dynamic-form/dynamic-form.vue';
 import { loadIntoTarget, TARGET_PANEL } from '@wexample/symfony-design-system/js/Helper/TargetHelper';
 
 // From how many widgets the choice of one is narrowed by typing.
@@ -74,6 +75,7 @@ export default {
   components: {
     ButtonMenu,
     ChoiceList,
+    DynamicForm,
     ZoneTiling
   },
 
@@ -94,8 +96,10 @@ export default {
       type: Object,
       default: null
     },
-    // [{ name, label, description, icon, view, sizing }]: `sizing`, how a
-    // widget sizes its zone itself (WorkspaceWidgetSizingInterface).
+    // [{ name, label, description, icon, view, sizing, settingsForm }]:
+    // `sizing`, how a widget sizes its zone itself
+    // (WorkspaceWidgetSizingInterface); `settingsForm`, the form of its own
+    // settings (WorkspaceWidgetSettingsInterface).
     widgets: {
       type: Array,
       default: () => []
@@ -361,6 +365,17 @@ export default {
     // from, not its widget, and is sized by hand like any other.
     zoneSizing(zone) {
       return this.editing ? null : this.widgetsByName[zone.widget]?.sizing ?? null;
+    },
+
+    // The form of the settings of the widget a zone shows, if it has some.
+    settingsFormOf(zone) {
+      return this.widgetsByName[zone.widget]?.settingsForm ?? null;
+    },
+
+    // Its settings validated by their form's processor: kept with the zone,
+    // read by its widget.
+    saveSettings(zone, { values }) {
+      this.updateZone(zone.id, { config: { ...(zone.config || {}), settings: values } });
     },
 
     // A widget taken for a zone, by its name.

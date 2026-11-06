@@ -9,6 +9,7 @@
     {{- vue_require(render_pass, '@WexampleSymfonyDesignSystemBundle/components/zone-tiling') -}}
     {{- vue_require(render_pass, '@WexampleSymfonyDesignSystemBundle/components/choice-list') -}}
     {{- vue_require(render_pass, '@WexampleSymfonyDesignSystemBundle/components/button-menu') -}}
+    {{- vue_require(render_pass, '@WexampleSymfonyDesignSystemBundle/components/form/dynamic-form') -}}
     {#- The widgets it offers are the widgets it can draw: their vues are
         required with it. -#}
     {%- for widget in widgets|default([]) -%}
@@ -31,6 +32,23 @@
                             :label="t('picker.title')"
                             @change="pick(zone, $event)"
                     ></choice-list>
+                    {#- The widget chosen has settings of its own: its form
+                        under it, in a block named by the widget, what it
+                        validates kept with the zone. -#}
+                    <section v-if="settingsFormOf(zone)" class="block block--compact">
+                        <div class="block--title">
+                            <span v-if="widgetsByName[zone.widget].icon" class="block--title-leading" v-html="renderIcon(widgetsByName[zone.widget].icon)"></span>
+                            <span class="block--title-label">[[ widgetsByName[zone.widget].label ]]</span>
+                        </div>
+                        <div class="block--body">
+                            <dynamic-form
+                                    :key="zone.id + ':' + zone.widget"
+                                    :form="settingsFormOf(zone)"
+                                    :values="zone.config?.settings || {}"
+                                    @saved="saveSettings(zone, $event)"
+                            ></dynamic-form>
+                        </div>
+                    </section>
                 </div>
 {%- endset -%}
 
