@@ -144,8 +144,10 @@
                         :data-tooltip="t('zone.back')"
                         v-html="renderIcon('ph:bold/squares-four')"
                 ></a>
+                {#- The page's own actions (`menu`), with arranging the board, in
+                    a menu; while arranged, the way out of it alone, at hand. -#}
                 <button
-                        v-else-if="!openedZone"
+                        v-else-if="!openedZone && (editing || !menu.length)"
                         type="button"
                         class="action-icon"
                         :aria-pressed="editing ? 'true' : 'false'"
@@ -154,6 +156,13 @@
                         @click="editing = !editing"
                         v-html="editIconHtml"
                 ></button>
+                <button-menu
+                        v-else-if="!openedZone"
+                        icon="ph:bold/dots-three-vertical"
+                        :items="boardMenuItems"
+                        :attr="{ 'aria-label': t('menu.label'), 'data-tooltip': t('menu.label') }"
+                        @select="onBoardMenu"
+                ></button-menu>
             </div>
         </div>
         {#- One zone alone, in a window of its own (`workspace_zone` in the

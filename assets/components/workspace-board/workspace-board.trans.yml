@@ -2,6 +2,8 @@ en:
   zone:
     open_window: "Open in a new window"
     back: "Back to the board"
+  menu:
+    label: "More actions"
   edit:
     start: "Edit the layout"
     done: "Done"
@@ -24,6 +26,8 @@ fr:
   zone:
     open_window: "Ouvrir dans une nouvelle fenêtre"
     back: "Retour au tableau"
+  menu:
+    label: "Plus d’actions"
   edit:
     start: "Modifier la disposition"
     done: "Terminé"
@@ -46,6 +50,8 @@ zh:
   zone:
     open_window: "在新窗口中打开"
     back: "返回看板"
+  menu:
+    label: "更多操作"
   edit:
     start: "编辑布局"
     done: "完成"
@@ -68,6 +74,8 @@ ar:
   zone:
     open_window: "فتح في نافذة جديدة"
     back: "العودة إلى اللوحة"
+  menu:
+    label: "إجراءات أخرى"
   edit:
     start: "تعديل التخطيط"
     done: "تم"
@@ -90,6 +98,8 @@ hi:
   zone:
     open_window: "नई विंडो में खोलें"
     back: "बोर्ड पर लौटें"
+  menu:
+    label: "और क्रियाएँ"
   edit:
     start: "लेआउट संपादित करें"
     done: "हो गया"
@@ -112,6 +122,8 @@ he:
   zone:
     open_window: "פתיחה בחלון חדש"
     back: "חזרה ללוח"
+  menu:
+    label: "פעולות נוספות"
   edit:
     start: "עריכת הפריסה"
     done: "סיום"
@@ -134,6 +146,8 @@ fa:
   zone:
     open_window: "باز کردن در پنجره جدید"
     back: "بازگشت به تخته"
+  menu:
+    label: "اقدامات بیشتر"
   edit:
     start: "ویرایش چیدمان"
     done: "انجام شد"
@@ -156,6 +170,8 @@ ur:
   zone:
     open_window: "نئی ونڈو میں کھولیں"
     back: "بورڈ پر واپس"
+  menu:
+    label: "مزید اقدامات"
   edit:
     start: "ترتیب میں ترمیم کریں"
     done: "مکمل"
@@ -178,6 +194,8 @@ ja:
   zone:
     open_window: "新しいウィンドウで開く"
     back: "ボードに戻る"
+  menu:
+    label: "その他の操作"
   edit:
     start: "レイアウトを編集"
     done: "完了"
@@ -200,6 +218,8 @@ ko:
   zone:
     open_window: "새 창에서 열기"
     back: "보드로 돌아가기"
+  menu:
+    label: "추가 작업"
   edit:
     start: "레이아웃 편집"
     done: "완료"
@@ -222,6 +242,8 @@ bn:
   zone:
     open_window: "নতুন উইন্ডোতে খুলুন"
     back: "বোর্ডে ফিরুন"
+  menu:
+    label: "আরও কাজ"
   edit:
     start: "বিন্যাস সম্পাদনা"
     done: "সম্পন্ন"
@@ -244,6 +266,8 @@ th:
   zone:
     open_window: "เปิดในหน้าต่างใหม่"
     back: "กลับไปที่บอร์ด"
+  menu:
+    label: "การทำงานเพิ่มเติม"
   edit:
     start: "แก้ไขเลย์เอาต์"
     done: "เสร็จ"
@@ -266,6 +290,8 @@ de:
   zone:
     open_window: "In neuem Fenster öffnen"
     back: "Zurück zum Board"
+  menu:
+    label: "Weitere Aktionen"
   edit:
     start: "Anordnung bearbeiten"
     done: "Fertig"
@@ -288,6 +314,8 @@ fi:
   zone:
     open_window: "Avaa uudessa ikkunassa"
     back: "Takaisin tauluun"
+  menu:
+    label: "Lisää toimintoja"
   edit:
     start: "Muokkaa asettelua"
     done: "Valmis"
@@ -310,6 +338,8 @@ ru:
   zone:
     open_window: "Открыть в новом окне"
     back: "Вернуться к доске"
+  menu:
+    label: "Другие действия"
   edit:
     start: "Изменить расположение"
     done: "Готово"
@@ -332,6 +362,8 @@ pl:
   zone:
     open_window: "Otwórz w nowym oknie"
     back: "Wróć do tablicy"
+  menu:
+    label: "Więcej działań"
   edit:
     start: "Edytuj układ"
     done: "Gotowe"
@@ -354,6 +386,8 @@ es:
   zone:
     open_window: "Abrir en una ventana nueva"
     back: "Volver al tablero"
+  menu:
+    label: "Más acciones"
   edit:
     start: "Editar la disposición"
     done: "Listo"
@@ -376,6 +410,8 @@ it:
   zone:
     open_window: "Apri in una nuova finestra"
     back: "Torna alla bacheca"
+  menu:
+    label: "Altre azioni"
   edit:
     start: "Modifica la disposizione"
     done: "Fatto"
@@ -398,6 +434,8 @@ pt_BR:
   zone:
     open_window: "Abrir em uma nova janela"
     back: "Voltar ao quadro"
+  menu:
+    label: "Mais ações"
   edit:
     start: "Editar o layout"
     done: "Concluído"
@@ -420,6 +458,8 @@ tr:
   zone:
     open_window: "Yeni pencerede aç"
     back: "Panoya dön"
+  menu:
+    label: "Diğer işlemler"
   edit:
     start: "Düzeni düzenle"
     done: "Bitti"
@@ -442,6 +482,8 @@ vi:
   zone:
     open_window: "Mở trong cửa sổ mới"
     back: "Quay lại bảng"
+  menu:
+    label: "Thao tác khác"
   edit:
     start: "Sửa bố cục"
     done: "Xong"
@@ -464,6 +506,8 @@ id:
   zone:
     open_window: "Buka di jendela baru"
     back: "Kembali ke papan"
+  menu:
+    label: "Tindakan lainnya"
   edit:
     start: "Ubah tata letak"
     done: "Selesai"
@@ -486,6 +530,8 @@ nl:
   zone:
     open_window: "Openen in een nieuw venster"
     back: "Terug naar het bord"
+  menu:
+    label: "Meer acties"
   edit:
     start: "Indeling bewerken"
     done: "Klaar"

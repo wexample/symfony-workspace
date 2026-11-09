@@ -143,6 +143,13 @@ export default {
       type: Boolean,
       default: false
     },
+    // What the page does from the board's bar, beside arranging it — a
+    // download —, in a menu at its end: `[{ value, icon, label, url }]`, an
+    // item with a `url` going there.
+    menu: {
+      type: Array,
+      default: () => []
+    },
     live: {
       type: Boolean,
       default: false
@@ -216,6 +223,15 @@ export default {
       return [
         { value: 'create', label: this.t('layouts.create'), icon: 'ph:bold/plus' },
         { value: 'rename', label: this.t('layouts.rename'), icon: 'ph:bold/pencil-simple' }
+      ];
+    },
+
+    // Arranging the board, then the page's own actions.
+    boardMenuItems() {
+      return [
+        { value: 'edit', label: this.t('edit.start'), icon: 'ph:bold/layout' },
+        { type: 'separator' },
+        ...this.menu
       ];
     },
 
@@ -580,6 +596,15 @@ export default {
 
       await this.saveNow();
       this.showLayout(await this.postLayout(this.layoutUrls.select, { id }));
+    },
+
+    onBoardMenu(item) {
+      if (item.value === 'edit') {
+        this.editing = true;
+      } else if (item.url) {
+        // A download, or the page's other address: the board stays.
+        window.location.assign(item.url);
+      }
     },
 
     onLayoutMenu(item) {

@@ -100,6 +100,9 @@ class WorkspaceExtension extends AbstractExtension
                 ? $this->csrfTokenManager->getToken(WorkspaceLayoutController::CSRF_TOKEN_ID)->getValue()
                 : null,
             'flush' => $options['flush'] ?? false,
+            // What the page does from the board's bar, in its menu:
+            // `[{ value, icon, label, url }]`.
+            'menu' => $options['menu'] ?? [],
             'live' => $options['live'] ?? false,
             // What the page hands every widget: addresses, ids, the props of
             // what a widget draws of the page's own.
