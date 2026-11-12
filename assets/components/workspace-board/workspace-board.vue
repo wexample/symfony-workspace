@@ -6,6 +6,7 @@ import ChoiceList from '@wexample/symfony-design-system/components/choice-list/c
 import ButtonMenu from '@wexample/symfony-design-system/components/button-menu/button-menu.vue';
 import DynamicForm from '@wexample/symfony-design-system/components/form/dynamic-form/dynamic-form.vue';
 import Tab from '@wexample/symfony-design-system/components/tab/tab.vue';
+import { flash } from '@wexample/symfony-design-system/js/Helper/FlashHelper';
 import { loadIntoTarget, TARGET_PANEL } from '@wexample/symfony-design-system/js/Helper/TargetHelper';
 
 // From how many widgets the choice of one is narrowed by typing.
@@ -67,7 +68,9 @@ export const WORKSPACE_ACTION_OPEN_WINDOW = 'workspace:open-window';
 // else, returns nothing. An event told with `{ open: true }` that no zone
 // takes opens the widget offered that is opened by it (`opens`, WorkspaceWidgetOpeningInterface) in a panel: the same page,
 // the widget alone under the board's bar (`opened`), handed the event as its
-// zone would have heard it, kept with nothing.
+// zone would have heard it, kept with nothing. The zones that took it flash a
+// moment — the reader sees what answered, even what showed it already: each
+// zone's widget is handed the board's words bound to its zone (`apiFor`).
 export default {
   template: '#vue-template-wexample-symfony-workspace-bundle-components-workspace-board-workspace-board',
 
@@ -292,6 +295,9 @@ export default {
 
   created() {
     this.listeners = new Map();
+    // The zone each listener speaks for, when a zone's widget took it.
+    this.listenerZones = new WeakMap();
+    this.zoneApis = new Map();
     // The event this board was opened on, for the first to listen for it.
     this.openedEvent = this.opened?.type ? { type: this.opened.type, detail: this.opened.detail } : null;
     this.definitions = {};
@@ -652,22 +658,54 @@ export default {
       return taken;
     },
 
-    // Told to the widgets listening: taken when one of them shows it (`true`).
+    // Told to the widgets listening: taken when one of them shows it (`true`),
+    // the zones that did flashed.
     tell(type, detail) {
-      let taken = false;
+      const zones = [];
 
       (this.listeners.get(type) ?? []).forEach((listener) => {
         if (listener(detail) === true) {
-          taken = true;
+          zones.push(this.listenerZones.get(listener) ?? null);
         }
       });
 
-      return taken;
+      this.flashZones(zones.filter(Boolean));
+
+      return zones.length > 0;
+    },
+
+    // Once they have drawn what they took: a zone of the board, not one
+    // alone in its window — nothing beside it to tell it from.
+    flashZones(zoneIds) {
+      if (!zoneIds.length || this.soloZone) {
+        return;
+      }
+
+      this.$nextTick(() => zoneIds.forEach((id) => {
+        flash(this.$el?.querySelector(`[data-zone-id="${CSS.escape(id)}"]`));
+      }));
+    },
+
+    // The board's words for the widget of one zone: what it listens to is
+    // known as that zone's.
+    apiFor(zoneId) {
+      if (!this.zoneApis.has(zoneId)) {
+        this.zoneApis.set(zoneId, Object.freeze({
+          ...this.api,
+          on: (type, listener) => this.on(type, listener, zoneId)
+        }));
+      }
+
+      return this.zoneApis.get(zoneId);
     },
 
     // Returns what stops listening; a widget calls it as it goes. The event
     // this board was opened on reaches the first to listen for it.
-    on(type, listener) {
+    on(type, listener, zoneId = null) {
+      if (zoneId) {
+        this.listenerZones.set(listener, zoneId);
+      }
+
       if (!this.listeners.has(type)) {
         this.listeners.set(type, new Set());
       }
