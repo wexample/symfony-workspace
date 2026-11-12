@@ -68,7 +68,10 @@ export const WORKSPACE_ACTION_OPEN_WINDOW = 'workspace:open-window';
 // else, returns nothing. An event told with `{ open: true }` that no zone
 // takes opens the widget offered that is opened by it (`opens`, WorkspaceWidgetOpeningInterface) in a panel: the same page,
 // the widget alone under the board's bar (`opened`), handed the event as its
-// zone would have heard it, kept with nothing. The zones that took it flash a
+// zone would have heard it, kept with nothing. Told with `{ apart: true }` —
+// a key held on the click —, it is opened so whatever the zones show. A
+// widget opened so speaks to the page's board too: what it tells, the
+// board's zones hear (`workspace:event` of a board of the same key). The zones that took it flash a
 // moment — the reader sees what answered, even what showed it already: each
 // zone's widget is handed the board's words bound to its zone (`apiFor`).
 export default {
@@ -319,6 +322,7 @@ export default {
       this.widgetsReady = true;
     });
     this.$el.addEventListener(WORKSPACE_EMIT_EVENT, this.onPageEmit);
+    document.addEventListener(WORKSPACE_EVENT, this.onOtherBoardEvent);
 
     if (this.live && this.subject) {
       this.app.services.liveUpdates?.connectToEntity({
@@ -332,6 +336,7 @@ export default {
 
   beforeUnmount() {
     this.$el.removeEventListener(WORKSPACE_EMIT_EVENT, this.onPageEmit);
+    document.removeEventListener(WORKSPACE_EVENT, this.onOtherBoardEvent);
     this.app.services.liveUpdates?.disconnectOwner(this);
     window.clearTimeout(this.saveTimer);
   },
@@ -643,7 +648,14 @@ export default {
     // Told to the widgets listening, then to the page; taken by none of
     // them and told to `open`, the widget opened by it in a panel. Whether a
     // widget took it.
-    emit(type, detail, { open = false } = {}) {
+    emit(type, detail, { open = false, apart = false } = {}) {
+      // Wanted apart: the widget opened by it, whatever the zones show.
+      if (apart && this.widgets.some((item) => (item.opens ?? []).includes(type))) {
+        this.openPanel(type, detail);
+
+        return true;
+      }
+
       const taken = this.tell(type, detail);
 
       this.$el?.dispatchEvent(new CustomEvent(WORKSPACE_EVENT, {
@@ -737,6 +749,16 @@ export default {
       url.searchParams.set(WORKSPACE_DETAIL_PARAMETER, JSON.stringify(detail ?? null));
 
       loadIntoTarget(this.app, TARGET_PANEL, url.toString());
+    },
+
+    // What a board of the same page key told — a widget opened apart, in a
+    // panel —, heard by this one's zones; not its own, not told back.
+    onOtherBoardEvent(event) {
+      if (this.opened || this.$el?.contains(event.target) || event.detail?.layoutKey !== this.layoutKey || !event.detail?.type) {
+        return;
+      }
+
+      this.tell(event.detail.type, event.detail.detail);
     },
 
     onPageEmit(event) {
