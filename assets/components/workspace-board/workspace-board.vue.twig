@@ -74,10 +74,11 @@
                             :alone="Boolean(soloZone)"
                     ></component>
                 </div>
-                {#- Nothing chosen yet — or something no longer offered —: the
-                    widgets the page offers, to choose one. -#}
-                <div v-else class="workspace-board--choose">
-                    {{ picker }}
+                {#- Nothing chosen yet — or something no longer offered —: said,
+                    the widgets to choose from being the board's arranging. -#}
+                <div v-else class="empty">
+                    <span v-if="zone.widget">[[ t('picker.unknown', { '%name%': zone.widget }) ]]</span>
+                    <span v-else>[[ t('zone.empty') ]]</span>
                 </div>
 {%- endset -%}
 
@@ -144,10 +145,10 @@
                         :data-tooltip="t('zone.back')"
                         v-html="renderIcon('ph:bold/squares-four')"
                 ></a>
-                {#- The page's own actions (`menu`), with arranging the board, in
-                    a menu; while arranged, the way out of it alone, at hand. -#}
+                {#- Arranging the board, at hand; the page's own actions
+                    (`menu`) in a menu after it, but while arranged. -#}
                 <button
-                        v-else-if="!openedZone && (editing || !menu.length)"
+                        v-else-if="!openedZone"
                         type="button"
                         class="action-icon"
                         :aria-pressed="editing ? 'true' : 'false'"
@@ -157,7 +158,7 @@
                         v-html="editIconHtml"
                 ></button>
                 <button-menu
-                        v-else-if="!openedZone"
+                        v-if="!soloZone && !openedZone && !editing && menu.length"
                         icon="ph:bold/dots-three-vertical"
                         :items="boardMenuItems"
                         :attr="{ 'aria-label': t('menu.label'), 'data-tooltip': t('menu.label') }"

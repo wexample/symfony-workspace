@@ -228,11 +228,7 @@ export default {
 
     // Arranging the board, then the page's own actions.
     boardMenuItems() {
-      return [
-        { value: 'edit', label: this.t('edit.start'), icon: 'ph:bold/layout' },
-        { type: 'separator' },
-        ...this.menu
-      ];
+      return this.menu;
     },
 
     editLabel() {
@@ -599,9 +595,7 @@ export default {
     },
 
     onBoardMenu(item) {
-      if (item.value === 'edit') {
-        this.editing = true;
-      } else if (item.url) {
+      if (item.url) {
         // A download, or the page's other address: the board stays.
         window.location.assign(item.url);
       }

@@ -2,6 +2,7 @@ en:
   zone:
     open_window: "Open in a new window"
     back: "Back to the board"
+    empty: "No widget selected"
   menu:
     label: "More actions"
   edit:
@@ -26,6 +27,7 @@ fr:
   zone:
     open_window: "Ouvrir dans une nouvelle fenêtre"
     back: "Retour au tableau"
+    empty: "Aucun widget choisi"
   menu:
     label: "Plus d’actions"
   edit:
@@ -50,6 +52,7 @@ zh:
   zone:
     open_window: "在新窗口中打开"
     back: "返回看板"
+    empty: "未选择组件"
   menu:
     label: "更多操作"
   edit:
@@ -74,6 +77,7 @@ ar:
   zone:
     open_window: "فتح في نافذة جديدة"
     back: "العودة إلى اللوحة"
+    empty: "لم يتم اختيار أداة"
   menu:
     label: "إجراءات أخرى"
   edit:
@@ -98,6 +102,7 @@ hi:
   zone:
     open_window: "नई विंडो में खोलें"
     back: "बोर्ड पर लौटें"
+    empty: "कोई विजेट नहीं चुना गया"
   menu:
     label: "और क्रियाएँ"
   edit:
@@ -122,6 +127,7 @@ he:
   zone:
     open_window: "פתיחה בחלון חדש"
     back: "חזרה ללוח"
+    empty: "לא נבחר וידג׳ט"
   menu:
     label: "פעולות נוספות"
   edit:
@@ -146,6 +152,7 @@ fa:
   zone:
     open_window: "باز کردن در پنجره جدید"
     back: "بازگشت به تخته"
+    empty: "هیچ ابزارکی انتخاب نشده"
   menu:
     label: "اقدامات بیشتر"
   edit:
@@ -170,6 +177,7 @@ ur:
   zone:
     open_window: "نئی ونڈو میں کھولیں"
     back: "بورڈ پر واپس"
+    empty: "کوئی ویجیٹ منتخب نہیں"
   menu:
     label: "مزید اقدامات"
   edit:
@@ -194,6 +202,7 @@ ja:
   zone:
     open_window: "新しいウィンドウで開く"
     back: "ボードに戻る"
+    empty: "ウィジェットが選択されていません"
   menu:
     label: "その他の操作"
   edit:
@@ -218,6 +227,7 @@ ko:
   zone:
     open_window: "새 창에서 열기"
     back: "보드로 돌아가기"
+    empty: "선택된 위젯이 없습니다"
   menu:
     label: "추가 작업"
   edit:
@@ -242,6 +252,7 @@ bn:
   zone:
     open_window: "নতুন উইন্ডোতে খুলুন"
     back: "বোর্ডে ফিরুন"
+    empty: "কোনো উইজেট বেছে নেওয়া হয়নি"
   menu:
     label: "আরও কাজ"
   edit:
@@ -266,6 +277,7 @@ th:
   zone:
     open_window: "เปิดในหน้าต่างใหม่"
     back: "กลับไปที่บอร์ด"
+    empty: "ยังไม่ได้เลือกวิดเจ็ต"
   menu:
     label: "การทำงานเพิ่มเติม"
   edit:
@@ -290,6 +302,7 @@ de:
   zone:
     open_window: "In neuem Fenster öffnen"
     back: "Zurück zum Board"
+    empty: "Kein Widget ausgewählt"
   menu:
     label: "Weitere Aktionen"
   edit:
@@ -314,6 +327,7 @@ fi:
   zone:
     open_window: "Avaa uudessa ikkunassa"
     back: "Takaisin tauluun"
+    empty: "Pienoisohjelmaa ei ole valittu"
   menu:
     label: "Lisää toimintoja"
   edit:
@@ -338,6 +352,7 @@ ru:
   zone:
     open_window: "Открыть в новом окне"
     back: "Вернуться к доске"
+    empty: "Виджет не выбран"
   menu:
     label: "Другие действия"
   edit:
@@ -362,6 +377,7 @@ pl:
   zone:
     open_window: "Otwórz w nowym oknie"
     back: "Wróć do tablicy"
+    empty: "Nie wybrano widżetu"
   menu:
     label: "Więcej działań"
   edit:
@@ -386,6 +402,7 @@ es:
   zone:
     open_window: "Abrir en una ventana nueva"
     back: "Volver al tablero"
+    empty: "Ningún widget seleccionado"
   menu:
     label: "Más acciones"
   edit:
@@ -410,6 +427,7 @@ it:
   zone:
     open_window: "Apri in una nuova finestra"
     back: "Torna alla bacheca"
+    empty: "Nessun widget selezionato"
   menu:
     label: "Altre azioni"
   edit:
@@ -434,6 +452,7 @@ pt_BR:
   zone:
     open_window: "Abrir em uma nova janela"
     back: "Voltar ao quadro"
+    empty: "Nenhum widget selecionado"
   menu:
     label: "Mais ações"
   edit:
@@ -458,6 +477,7 @@ tr:
   zone:
     open_window: "Yeni pencerede aç"
     back: "Panoya dön"
+    empty: "Bileşen seçilmedi"
   menu:
     label: "Diğer işlemler"
   edit:
@@ -482,6 +502,7 @@ vi:
   zone:
     open_window: "Mở trong cửa sổ mới"
     back: "Quay lại bảng"
+    empty: "Chưa chọn tiện ích"
   menu:
     label: "Thao tác khác"
   edit:
@@ -506,6 +527,7 @@ id:
   zone:
     open_window: "Buka di jendela baru"
     back: "Kembali ke papan"
+    empty: "Tidak ada widget yang dipilih"
   menu:
     label: "Tindakan lainnya"
   edit:
@@ -530,6 +552,7 @@ nl:
   zone:
     open_window: "Openen in een nieuw venster"
     back: "Terug naar het bord"
+    empty: "Geen widget gekozen"
   menu:
     label: "Meer acties"
   edit:

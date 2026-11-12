@@ -6,6 +6,7 @@
 @use '@wexample/symfony-design-system/css/shapes/form/addon';
 @use '@wexample/symfony-design-system/css/shapes/toolbar';
 @use '@wexample/symfony-design-system/css/shapes/action-icon';
+@use '@wexample/symfony-design-system/css/shapes/empty';
 @use '@wexample/symfony-design-system/components/choice-list/choice-list';
 
 // Its bar over its zones, a toolbar standing against them: no room between.
@@ -60,6 +61,13 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
+}
+
+// A zone with no widget, out of arranging: said in the middle of its room.
+.zone-tiling .empty,
+.workspace-board--solo > .empty {
+  flex: 1;
+  min-height: 0;
 }
 
 // The choice of a widget, in the middle of an empty zone: as many as the zone
