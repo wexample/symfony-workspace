@@ -88,7 +88,11 @@
             arrangements the page keeps; its end concerns this
             one: the page's own bar — what its widgets share —, then arranging
             it. -#}
-        <div class="toolbar toolbar--compact workspace-board--bar">
+        {#- Not shown in a panel opened on an event: what it shows is the
+            event's — a log, a request —, its session and its version with
+            it. Kept drawn all the same: the page's own bar may give the
+            widgets what they share (the session). -#}
+        <div v-show="!openedZone" class="toolbar toolbar--compact workspace-board--bar">
             <div v-if="layoutUrls && !soloZone" class="toolbar--group workspace-board--bar-start">
                 {#- An arrangement named in place: made, or the one shown renamed. -#}
                 <form v-if="naming" class="form--input-group workspace-board--naming" @submit.prevent="submitNaming">
