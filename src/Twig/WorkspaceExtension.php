@@ -51,6 +51,7 @@ class WorkspaceExtension extends AbstractExtension
     {
         return [
             new TwigFunction('workspace_board', $this->workspaceBoard(...)),
+            new TwigFunction('workspace_opened_widget', $this->openedWidget(...)),
         ];
     }
 
@@ -109,6 +110,22 @@ class WorkspaceExtension extends AbstractExtension
             'context' => $options['context'] ?? [],
             'opened' => $this->opened(),
         ];
+    }
+
+    /**
+     * The widget the page is asked to draw alone, as the board describes it —
+     * `{ name, label, icon, … }` —, or none: what a page opened in a panel
+     * on an event is titled by, rather than by the board it stands for.
+     *
+     *   {%- set opened_widget = workspace_opened_widget() -%}
+     *   {%- set page_title = opened_widget ? opened_widget.label : page_title -%}
+     */
+    public function openedWidget(): ?array
+    {
+        $name = $this->opened()['widget'] ?? null;
+        $widget = $name ? $this->widgetRegistry->getWidget($name) : null;
+
+        return $widget ? $this->widgetRegistry->describe([$widget])[0] : null;
     }
 
     /**
