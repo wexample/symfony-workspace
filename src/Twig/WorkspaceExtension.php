@@ -101,6 +101,9 @@ class WorkspaceExtension extends AbstractExtension
                 ? $this->csrfTokenManager->getToken(WorkspaceLayoutController::CSRF_TOKEN_ID)->getValue()
                 : null,
             'flush' => $options['flush'] ?? false,
+            // Whether whoever reads the board may change its widgets'
+            // settings, from an icon in their zone.
+            'configurable' => $options['configurable'] ?? true,
             // What the page does from the board's bar, in its menu:
             // `[{ value, icon, label, url }]`.
             'menu' => $options['menu'] ?? [],

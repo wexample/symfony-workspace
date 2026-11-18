@@ -10,7 +10,7 @@
     {{- vue_require(render_pass, '@WexampleSymfonyDesignSystemBundle/components/choice-list') -}}
     {{- vue_require(render_pass, '@WexampleSymfonyDesignSystemBundle/components/button-menu') -}}
     {{- vue_require(render_pass, '@WexampleSymfonyDesignSystemBundle/components/form/dynamic-form') -}}
-    {{- vue_require(render_pass, '@WexampleSymfonyDesignSystemBundle/components/tab') -}}
+    {{- vue_require(render_pass, '@WexampleSymfonyDesignSystemBundle/components/zone-head-actions') -}}
     {#- The widgets it offers are the widgets it can draw: their vues are
         required with it. -#}
     {%- for widget in widgets|default([]) -%}
@@ -36,14 +36,23 @@
                 </div>
 {%- endset -%}
 
-{#- The settings of the widget a zone shows, in a block named by it: what its
-    form validates kept with the zone. -#}
+{#- The settings of the widget a zone shows, in its place: a block named by
+    it, the way back to the widget at its end; what its form validates kept
+    with the zone, the widget shown again. -#}
 {%- set settings -%}
 <div class="zone--content">
                     <section class="block block--compact">
                         <div class="block--title">
                             <span v-if="widgetsByName[zone.widget].icon" class="block--title-leading" v-html="renderIcon(widgetsByName[zone.widget].icon)"></span>
-                            <span class="block--title-label">[[ widgetsByName[zone.widget].label ]]</span>
+                            <span class="block--title-label">[[ t('zone.settings_of', { '%widget%': widgetsByName[zone.widget].label }) ]]</span>
+                            <button
+                                    type="button"
+                                    class="action-icon block--title-trailing"
+                                    :aria-label="t('zone.settings_close')"
+                                    :data-tooltip="t('zone.settings_close')"
+                                    @click="closeSettings(zone)"
+                                    v-html="renderIcon('ph:bold/x')"
+                            ></button>
                         </div>
                         <div class="block--body">
                             <dynamic-form
@@ -62,6 +71,23 @@
     widgets to choose one from. -#}
 {%- set widget_frame -%}
                 <div v-if="showsWidget(zone)" class="zone zone--scrollable workspace-board--widget">
+                    <template v-if="settingsOpen[zone.id]">
+                        {{ settings }}
+                    </template>
+                    <template v-else>
+                    {#- Its settings, when it has some and they may be changed:
+                        an icon in the widget's head — its `data-zone-head-actions`
+                        —, else in a bar of its own over it. -#}
+                    <zone-head-actions v-if="configurableZone(zone) && widgetComponent(zone.widget)" :page="false">
+                        <button
+                                type="button"
+                                class="action-icon"
+                                :aria-label="t('zone.settings')"
+                                :data-tooltip="t('zone.settings')"
+                                @click="openSettings(zone)"
+                                v-html="renderIcon('ph:bold/sliders')"
+                        ></button>
+                    </zone-head-actions>
                     <component
                             v-if="widgetComponent(zone.widget)"
                             :is="widgetComponent(zone.widget)"
@@ -73,6 +99,7 @@
                             :workspace="apiFor(zone.id)"
                             :alone="Boolean(soloZone)"
                     ></component>
+                    </template>
                 </div>
                 {#- Nothing chosen yet — or something no longer offered —: said,
                     the widgets to choose from being the board's arranging. -#}
@@ -193,24 +220,10 @@
                 {{ widget_frame }}
             </template>
             {#- The board being arranged: in every zone, the widgets to put in
-                it, the one it shows marked — and, a tab beside, the settings
-                of that one when it has some, the tab it opens on. -#}
+                it, the one it shows marked. -#}
             <template #edit="{ zone }">
                 <div class="workspace-board--choose">
-                    <template v-if="settingsFormOf(zone)">
-                        <div class="toolbar toolbar--compact zone--head">
-                            <tab :items="editTabs" :active-key="editTabOf(zone)" compact @change="editTab[zone.id] = $event"></tab>
-                        </div>
-                        <div v-if="editTabOf(zone) === 'settings'" class="zone zone--scrollable">
-                            {{ settings }}
-                        </div>
-                        <template v-else>
-                            {{ picker }}
-                        </template>
-                    </template>
-                    <template v-else>
-                        {{ picker }}
-                    </template>
+                    {{ picker }}
                 </div>
             </template>
         </zone-tiling>

@@ -3,13 +3,14 @@ en:
     open_window: "Open in a new window"
     back: "Back to the board"
     empty: "No widget selected"
+    settings: "Settings"
+    settings_of: "%widget% · Settings"
+    settings_close: "Back to the widget"
   menu:
     label: "More actions"
   edit:
     start: "Edit the layout"
     done: "Done"
-    tab_widget: "Widget"
-    tab_settings: "Settings"
   picker:
     none: "No widget is offered here yet."
     title: "Choose a widget"
@@ -28,13 +29,14 @@ fr:
     open_window: "Ouvrir dans une nouvelle fenêtre"
     back: "Retour au tableau"
     empty: "Aucun widget choisi"
+    settings: "Réglages"
+    settings_of: "%widget% · Réglages"
+    settings_close: "Retour au widget"
   menu:
     label: "Plus d’actions"
   edit:
     start: "Modifier la disposition"
     done: "Terminé"
-    tab_widget: "Widget"
-    tab_settings: "Réglages"
   picker:
     none: "Aucun widget n’est encore proposé ici."
     title: "Choisir un widget"
@@ -53,13 +55,14 @@ zh:
     open_window: "在新窗口中打开"
     back: "返回看板"
     empty: "未选择组件"
+    settings: "设置"
+    settings_of: "%widget% · 设置"
+    settings_close: "返回组件"
   menu:
     label: "更多操作"
   edit:
     start: "编辑布局"
     done: "完成"
-    tab_widget: "组件"
-    tab_settings: "设置"
   picker:
     none: "此处尚未提供任何组件。"
     title: "选择一个组件"
@@ -78,13 +81,14 @@ ar:
     open_window: "فتح في نافذة جديدة"
     back: "العودة إلى اللوحة"
     empty: "لم يتم اختيار أداة"
+    settings: "الإعدادات"
+    settings_of: "%widget% · الإعدادات"
+    settings_close: "العودة إلى الأداة"
   menu:
     label: "إجراءات أخرى"
   edit:
     start: "تعديل التخطيط"
     done: "تم"
-    tab_widget: "أداة"
-    tab_settings: "الإعدادات"
   picker:
     none: "لا توجد أداة متاحة هنا بعد."
     title: "اختر أداة"
@@ -103,13 +107,14 @@ hi:
     open_window: "नई विंडो में खोलें"
     back: "बोर्ड पर लौटें"
     empty: "कोई विजेट नहीं चुना गया"
+    settings: "सेटिंग्स"
+    settings_of: "%widget% · सेटिंग्स"
+    settings_close: "विजेट पर वापस जाएँ"
   menu:
     label: "और क्रियाएँ"
   edit:
     start: "लेआउट संपादित करें"
     done: "हो गया"
-    tab_widget: "विजेट"
-    tab_settings: "सेटिंग्स"
   picker:
     none: "यहाँ अभी कोई विजेट उपलब्ध नहीं है।"
     title: "विजेट चुनें"
@@ -128,13 +133,14 @@ he:
     open_window: "פתיחה בחלון חדש"
     back: "חזרה ללוח"
     empty: "לא נבחר וידג׳ט"
+    settings: "הגדרות"
+    settings_of: "%widget% · הגדרות"
+    settings_close: "חזרה לווידג׳ט"
   menu:
     label: "פעולות נוספות"
   edit:
     start: "עריכת הפריסה"
     done: "סיום"
-    tab_widget: "וידג׳ט"
-    tab_settings: "הגדרות"
   picker:
     none: "עדיין לא מוצע כאן וידג׳ט."
     title: "בחירת וידג׳ט"
@@ -153,13 +159,14 @@ fa:
     open_window: "باز کردن در پنجره جدید"
     back: "بازگشت به تخته"
     empty: "هیچ ابزارکی انتخاب نشده"
+    settings: "تنظیمات"
+    settings_of: "%widget% · تنظیمات"
+    settings_close: "بازگشت به ابزارک"
   menu:
     label: "اقدامات بیشتر"
   edit:
     start: "ویرایش چیدمان"
     done: "انجام شد"
-    tab_widget: "ابزارک"
-    tab_settings: "تنظیمات"
   picker:
     none: "هنوز هیچ ابزارکی اینجا ارائه نشده است."
     title: "انتخاب ابزارک"
@@ -178,13 +185,14 @@ ur:
     open_window: "نئی ونڈو میں کھولیں"
     back: "بورڈ پر واپس"
     empty: "کوئی ویجیٹ منتخب نہیں"
+    settings: "ترتیبات"
+    settings_of: "%widget% · ترتیبات"
+    settings_close: "ویجیٹ پر واپس جائیں"
   menu:
     label: "مزید اقدامات"
   edit:
     start: "ترتیب میں ترمیم کریں"
     done: "مکمل"
-    tab_widget: "ویجیٹ"
-    tab_settings: "ترتیبات"
   picker:
     none: "یہاں ابھی کوئی ویجیٹ دستیاب نہیں۔"
     title: "ویجیٹ منتخب کریں"
@@ -203,13 +211,14 @@ ja:
     open_window: "新しいウィンドウで開く"
     back: "ボードに戻る"
     empty: "ウィジェットが選択されていません"
+    settings: "設定"
+    settings_of: "%widget% · 設定"
+    settings_close: "ウィジェットに戻る"
   menu:
     label: "その他の操作"
   edit:
     start: "レイアウトを編集"
     done: "完了"
-    tab_widget: "ウィジェット"
-    tab_settings: "設定"
   picker:
     none: "ここではまだウィジェットが提供されていません。"
     title: "ウィジェットを選択"
@@ -228,13 +237,14 @@ ko:
     open_window: "새 창에서 열기"
     back: "보드로 돌아가기"
     empty: "선택된 위젯이 없습니다"
+    settings: "설정"
+    settings_of: "%widget% · 설정"
+    settings_close: "위젯으로 돌아가기"
   menu:
     label: "추가 작업"
   edit:
     start: "레이아웃 편집"
     done: "완료"
-    tab_widget: "위젯"
-    tab_settings: "설정"
   picker:
     none: "아직 여기에 제공되는 위젯이 없습니다."
     title: "위젯 선택"
@@ -253,13 +263,14 @@ bn:
     open_window: "নতুন উইন্ডোতে খুলুন"
     back: "বোর্ডে ফিরুন"
     empty: "কোনো উইজেট বেছে নেওয়া হয়নি"
+    settings: "সেটিংস"
+    settings_of: "%widget% · সেটিংস"
+    settings_close: "উইজেটে ফিরে যান"
   menu:
     label: "আরও কাজ"
   edit:
     start: "বিন্যাস সম্পাদনা"
     done: "সম্পন্ন"
-    tab_widget: "উইজেট"
-    tab_settings: "সেটিংস"
   picker:
     none: "এখানে এখনও কোনো উইজেট দেওয়া হয়নি।"
     title: "উইজেট বেছে নিন"
@@ -278,13 +289,14 @@ th:
     open_window: "เปิดในหน้าต่างใหม่"
     back: "กลับไปที่บอร์ด"
     empty: "ยังไม่ได้เลือกวิดเจ็ต"
+    settings: "การตั้งค่า"
+    settings_of: "%widget% · การตั้งค่า"
+    settings_close: "กลับไปที่วิดเจ็ต"
   menu:
     label: "การทำงานเพิ่มเติม"
   edit:
     start: "แก้ไขเลย์เอาต์"
     done: "เสร็จ"
-    tab_widget: "วิดเจ็ต"
-    tab_settings: "การตั้งค่า"
   picker:
     none: "ยังไม่มีวิดเจ็ตให้ใช้ที่นี่"
     title: "เลือกวิดเจ็ต"
@@ -303,13 +315,14 @@ de:
     open_window: "In neuem Fenster öffnen"
     back: "Zurück zum Board"
     empty: "Kein Widget ausgewählt"
+    settings: "Einstellungen"
+    settings_of: "%widget% · Einstellungen"
+    settings_close: "Zurück zum Widget"
   menu:
     label: "Weitere Aktionen"
   edit:
     start: "Anordnung bearbeiten"
     done: "Fertig"
-    tab_widget: "Widget"
-    tab_settings: "Einstellungen"
   picker:
     none: "Hier wird noch kein Widget angeboten."
     title: "Widget wählen"
@@ -328,13 +341,14 @@ fi:
     open_window: "Avaa uudessa ikkunassa"
     back: "Takaisin tauluun"
     empty: "Pienoisohjelmaa ei ole valittu"
+    settings: "Asetukset"
+    settings_of: "%widget% · Asetukset"
+    settings_close: "Takaisin widgetiin"
   menu:
     label: "Lisää toimintoja"
   edit:
     start: "Muokkaa asettelua"
     done: "Valmis"
-    tab_widget: "Pienoisohjelma"
-    tab_settings: "Asetukset"
   picker:
     none: "Täällä ei vielä tarjota pienoisohjelmia."
     title: "Valitse pienoisohjelma"
@@ -353,13 +367,14 @@ ru:
     open_window: "Открыть в новом окне"
     back: "Вернуться к доске"
     empty: "Виджет не выбран"
+    settings: "Настройки"
+    settings_of: "%widget% · Настройки"
+    settings_close: "Назад к виджету"
   menu:
     label: "Другие действия"
   edit:
     start: "Изменить расположение"
     done: "Готово"
-    tab_widget: "Виджет"
-    tab_settings: "Настройки"
   picker:
     none: "Здесь пока не предлагается ни одного виджета."
     title: "Выберите виджет"
@@ -378,13 +393,14 @@ pl:
     open_window: "Otwórz w nowym oknie"
     back: "Wróć do tablicy"
     empty: "Nie wybrano widżetu"
+    settings: "Ustawienia"
+    settings_of: "%widget% · Ustawienia"
+    settings_close: "Wróć do widżetu"
   menu:
     label: "Więcej działań"
   edit:
     start: "Edytuj układ"
     done: "Gotowe"
-    tab_widget: "Widżet"
-    tab_settings: "Ustawienia"
   picker:
     none: "Nie ma tu jeszcze żadnego widżetu."
     title: "Wybierz widżet"
@@ -403,13 +419,14 @@ es:
     open_window: "Abrir en una ventana nueva"
     back: "Volver al tablero"
     empty: "Ningún widget seleccionado"
+    settings: "Ajustes"
+    settings_of: "%widget% · Ajustes"
+    settings_close: "Volver al widget"
   menu:
     label: "Más acciones"
   edit:
     start: "Editar la disposición"
     done: "Listo"
-    tab_widget: "Widget"
-    tab_settings: "Ajustes"
   picker:
     none: "Aún no se ofrece ningún widget aquí."
     title: "Elegir un widget"
@@ -428,13 +445,14 @@ it:
     open_window: "Apri in una nuova finestra"
     back: "Torna alla bacheca"
     empty: "Nessun widget selezionato"
+    settings: "Impostazioni"
+    settings_of: "%widget% · Impostazioni"
+    settings_close: "Torna al widget"
   menu:
     label: "Altre azioni"
   edit:
     start: "Modifica la disposizione"
     done: "Fatto"
-    tab_widget: "Widget"
-    tab_settings: "Impostazioni"
   picker:
     none: "Qui non è ancora offerto alcun widget."
     title: "Scegli un widget"
@@ -453,13 +471,14 @@ pt_BR:
     open_window: "Abrir em uma nova janela"
     back: "Voltar ao quadro"
     empty: "Nenhum widget selecionado"
+    settings: "Configurações"
+    settings_of: "%widget% · Configurações"
+    settings_close: "Voltar ao widget"
   menu:
     label: "Mais ações"
   edit:
     start: "Editar o layout"
     done: "Concluído"
-    tab_widget: "Widget"
-    tab_settings: "Configurações"
   picker:
     none: "Nenhum widget é oferecido aqui ainda."
     title: "Escolher um widget"
@@ -478,13 +497,14 @@ tr:
     open_window: "Yeni pencerede aç"
     back: "Panoya dön"
     empty: "Bileşen seçilmedi"
+    settings: "Ayarlar"
+    settings_of: "%widget% · Ayarlar"
+    settings_close: "Widget'a dön"
   menu:
     label: "Diğer işlemler"
   edit:
     start: "Düzeni düzenle"
     done: "Bitti"
-    tab_widget: "Bileşen"
-    tab_settings: "Ayarlar"
   picker:
     none: "Burada henüz bir bileşen sunulmuyor."
     title: "Bir bileşen seçin"
@@ -503,13 +523,14 @@ vi:
     open_window: "Mở trong cửa sổ mới"
     back: "Quay lại bảng"
     empty: "Chưa chọn tiện ích"
+    settings: "Cài đặt"
+    settings_of: "%widget% · Cài đặt"
+    settings_close: "Quay lại tiện ích"
   menu:
     label: "Thao tác khác"
   edit:
     start: "Sửa bố cục"
     done: "Xong"
-    tab_widget: "Tiện ích"
-    tab_settings: "Cài đặt"
   picker:
     none: "Chưa có tiện ích nào được cung cấp ở đây."
     title: "Chọn tiện ích"
@@ -528,13 +549,14 @@ id:
     open_window: "Buka di jendela baru"
     back: "Kembali ke papan"
     empty: "Tidak ada widget yang dipilih"
+    settings: "Pengaturan"
+    settings_of: "%widget% · Pengaturan"
+    settings_close: "Kembali ke widget"
   menu:
     label: "Tindakan lainnya"
   edit:
     start: "Ubah tata letak"
     done: "Selesai"
-    tab_widget: "Widget"
-    tab_settings: "Pengaturan"
   picker:
     none: "Belum ada widget yang ditawarkan di sini."
     title: "Pilih widget"
@@ -553,13 +575,14 @@ nl:
     open_window: "Openen in een nieuw venster"
     back: "Terug naar het bord"
     empty: "Geen widget gekozen"
+    settings: "Instellingen"
+    settings_of: "%widget% · Instellingen"
+    settings_close: "Terug naar de widget"
   menu:
     label: "Meer acties"
   edit:
     start: "Indeling bewerken"
     done: "Klaar"
-    tab_widget: "Widget"
-    tab_settings: "Instellingen"
   picker:
     none: "Hier wordt nog geen widget aangeboden."
     title: "Kies een widget"
