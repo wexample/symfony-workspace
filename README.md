@@ -1,6 +1,6 @@
 # symfony-workspace
 
-Version: 2.3.2
+Version: 2.3.3
 
 Screens of regions side by side, and the selection they share
 
