@@ -1,6 +1,6 @@
 {
   "name": "wexample/symfony-workspace",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "type": "library",
   "license": "MIT",
   "autoload": {
@@ -17,7 +17,7 @@
   ],
   "require": {
     "php": ">=8.5",
-    "wexample/symfony-design-system": ">=52.0.0",
+    "wexample/symfony-design-system": ">=53.0.0",
     "wexample/symfony-helpers": ">=19.3.0"
   },
   "extra": {
