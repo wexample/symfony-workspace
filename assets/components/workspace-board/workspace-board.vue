@@ -383,6 +383,77 @@ export default {
       return this.definitions[view] ?? null;
     },
 
+    // What an agent reads (`workspace-board.ai.yml`): the zones and the
+    // widget each shows, the arrangements; what this board is for, the
+    // page's (`agentDescription`).
+    getAgentLabel() {
+      return this.layoutKey;
+    },
+
+    getAgentState() {
+      const shown = this.agentZones().filter((zone) => zone.widget);
+      const current = this.layoutList.find((layout) => layout.id === this.currentLayoutId);
+
+      return {
+        ...(current ? { arrangement: this.layoutLabel(current) } : {}),
+        widgets: shown.map((zone) => this.widgetsByName[zone.widget]?.label ?? zone.widget),
+        ...(this.soloZone ? { alone: true } : {}),
+        ...(this.editing ? { arranging: true } : {})
+      };
+    },
+
+    getAgentFrameElement() {
+      return this.$el;
+    },
+
+    getAgentActions() {
+      return {
+        widgets: () => {
+          const zones = this.agentZones();
+          const shown = new Set(zones.map((zone) => zone.widget).filter(Boolean));
+
+          return {
+            zones: zones.map((zone) => ({
+              zone: zone.id,
+              widget: zone.widget ?? null,
+              label: this.widgetsByName[zone.widget]?.label ?? null,
+              ...(this.widgetsByName[zone.widget]?.description ? { shows: this.widgetsByName[zone.widget].description } : {}),
+              ...(this.subjects[zone.id] && this.subjects[zone.id] !== this.subject ? { about: this.subjects[zone.id] } : {})
+            })),
+            offered: this.widgets
+              .filter((widget) => !shown.has(widget.name))
+              .map((widget) => ({ widget: widget.name, label: widget.label })),
+            ...(this.soloZone ? { alone: true } : {})
+          };
+        },
+        layouts: () => this.layoutList.map((layout) => ({
+          layout: this.layoutLabel(layout),
+          current: layout.id === this.currentLayoutId
+        }))
+      };
+    },
+
+    // The zones shown — the one alone in the window when it is —, the
+    // arrangement's leaves: a split holds zones, a zone holds a widget.
+    agentZones() {
+      const zones = [];
+      const walk = (node) => {
+        if (!node) {
+          return;
+        }
+
+        if (node.children?.length) {
+          node.children.forEach(walk);
+        } else {
+          zones.push(node);
+        }
+      };
+
+      walk(this.soloZone ?? this.tree);
+
+      return zones;
+    },
+
     // A zone showing a widget offered: drawn, or about to be.
     showsWidget(zone) {
       return Boolean(zone.widget && this.widgetsByName[zone.widget]);

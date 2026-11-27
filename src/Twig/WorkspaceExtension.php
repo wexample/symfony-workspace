@@ -108,6 +108,10 @@ class WorkspaceExtension extends AbstractExtension
             // `[{ value, icon, label, url }]`.
             'menu' => $options['menu'] ?? [],
             'live' => $options['live'] ?? false,
+            // What this board is for, said to an agent in place of the
+            // board's contract — the scenario's editor, a pipeline's —, in
+            // english (`agentDescription`, workspace-board.ai.yml).
+            'agentDescription' => $options['agentDescription'] ?? null,
             // What the page hands every widget: addresses, ids, the props of
             // what a widget draws of the page's own.
             'context' => $options['context'] ?? [],

@@ -1,0 +1,15 @@
+# What an agent is told about a workspace: a screen made of zones, each
+# showing a widget the page offers, the widgets answering each other. The
+# page says what this one is for (`agentDescription`). The vue runs the
+# actions. In english, never translated: see AgentContractService.
+type: workspace
+description: "A screen made of zones, each showing a widget chosen among those the page offers. The widgets answer each other: what is chosen in one is shown in another — or, when no zone shows that kind of thing, in a panel opened over the screen. A widget is a piece of its own inside the zone that shows it, with its own actions."
+actions:
+  widgets:
+    description: "The zones of the arrangement shown, each with the widget it shows — its name, its label, what it shows —, then the widgets the page offers that no zone shows. A widget alone in the screen — opened from another — is said too."
+    annotations:
+      readOnlyHint: true
+  layouts:
+    description: "The arrangements kept for this screen — each a name —, the one shown marked."
+    annotations:
+      readOnlyHint: true
